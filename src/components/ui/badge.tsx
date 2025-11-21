@@ -92,10 +92,15 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
 
 interface PriorityBadgeProps {
   priority: "low" | "medium" | "high" | "urgent";
+  size?: BadgeProps["size"];
   className?: string;
 }
 
-export function PriorityBadge({ priority, className }: PriorityBadgeProps) {
+export function PriorityBadge({
+  priority,
+  size,
+  className,
+}: PriorityBadgeProps) {
   const variants: Record<
     typeof priority,
     { variant: BadgeProps["variant"]; label: string }
@@ -109,7 +114,7 @@ export function PriorityBadge({ priority, className }: PriorityBadgeProps) {
   const config = variants[priority];
 
   return (
-    <Badge variant={config.variant} className={className}>
+    <Badge variant={config.variant} size={size} className={className}>
       {config.label}
     </Badge>
   );
