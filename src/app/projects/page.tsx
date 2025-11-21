@@ -1,6 +1,7 @@
 import { Shell } from "@/components/layout/Shell";
-import { KanbanBoard } from "@/components/projects/KanbanBoard";
+import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { KanbanBoard } from "@/components/projects/KanbanBoard";
 import { prisma } from "@/lib/prisma";
 
 export default async function ProjectsPage() {
@@ -11,31 +12,59 @@ export default async function ProjectsPage() {
     },
   });
 
-  // Transform DB tasks to the format KanbanBoard expects
-  const initialTasks = tasks.map((task) => ({
-    id: task.id,
-    title: task.title,
-    status: task.status,
-    priority: task.priority,
-    dueDate: task.dueDate?.toISOString().split("T")[0],
-  }));
+  // Simple hash function for deterministic "random" values
+  const hashCode = (str: string) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = (hash << 5) - hash + char;
+      hash = hash & hash;
+    }
+    return Math.abs(hash);
+  };
+
+  // Transform database tasks to match our rich UI format
+  const richTasks = tasks.map((task) => {
+    const hash = hashCode(task.id);
+    return {
+      id: task.id,
+      title: task.title,
+      description: task.description || undefined,
+      status: task.status,
+      priority: task.priority as "LOW" | "MEDIUM" | "HIGH" | "URGENT",
+      dueDate: task.dueDate?.toISOString(),
+      assignees: [
+        {
+          alt: task.creator?.name || "User",
+          fallback: task.creator?.name?.charAt(0) || "U",
+        },
+        {
+          fallback: "JD",
+        },
+      ],
+      progress: hash % 100, // Deterministic progress based on ID
+      comments: hash % 10,
+      attachments: hash % 5,
+      tags: ["Design", "Frontend", "High Priority"].slice(0, (hash % 3) + 1),
+    };
+  });
 
   return (
     <Shell>
-      <div className="flex flex-col gap-6 h-full">
-        <div className="flex items-center justify-between">
+      <div className="flex flex-col h-full">
+        <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Projects</h1>
             <p className="text-muted-foreground">
-              Manage your tasks and workflows.
+              Manage your projects and tasks with an intuitive Kanban board.
             </p>
           </div>
-          <button className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors">
-            <Plus className="h-4 w-4" />
+          <Button>
+            <Plus className="h-4 w-4 mr-2" />
             New Task
-          </button>
+          </Button>
         </div>
-        <KanbanBoard initialTasks={initialTasks} />
+        <KanbanBoard initialTasks={richTasks} />
       </div>
     </Shell>
   );

@@ -1,38 +1,68 @@
 import { useDroppable } from "@dnd-kit/core";
-import {
-  SortableContext,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import { SortableContext } from "@dnd-kit/sortable";
 import { TaskCard } from "./TaskCard";
-import { cn } from "@/lib/utils";
 
-interface ColumnProps {
+interface Task {
   id: string;
   title: string;
-  tasks: any[];
+  description?: string;
+  status: string;
+  priority: "LOW" | "MEDIUM" | "HIGH" | "URGENT";
+  dueDate?: string;
+  assignees?: Array<{
+    src?: string;
+    alt?: string;
+    fallback?: string;
+  }>;
+  progress?: number;
+  comments?: number;
+  attachments?: number;
+  tags?: string[];
 }
 
-export function KanbanColumn({ id, title, tasks }: ColumnProps) {
-  const { setNodeRef } = useDroppable({ id });
+interface KanbanColumnProps {
+  id: string;
+  title: string;
+  tasks: Task[];
+}
+
+export function KanbanColumn({ id, title, tasks }: KanbanColumnProps) {
+  const { setNodeRef, isOver } = useDroppable({ id });
 
   return (
-    <div className="flex flex-col h-full min-w-[300px] rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
-      <div className="p-4 border-b border-white/10 flex items-center justify-between">
-        <h3 className="font-semibold text-sm">{title}</h3>
-        <span className="text-xs text-muted-foreground bg-white/5 px-2 py-0.5 rounded-full">
-          {tasks.length}
-        </span>
+    <div
+      ref={setNodeRef}
+      className="flex flex-col min-w-[320px] h-full rounded-xl border border-white/10 bg-white/5 p-4"
+    >
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">
+          {title} ({tasks.length})
+        </h3>
+        <div
+          className={`h-2 w-2 rounded-full transition-colors ${
+            isOver ? "bg-primary" : "bg-transparent"
+          }`}
+        />
       </div>
-      <div ref={setNodeRef} className="flex-1 p-3 space-y-3 overflow-y-auto">
-        <SortableContext
-          items={tasks.map((t) => t.id)}
-          strategy={verticalListSortingStrategy}
-        >
+      <SortableContext items={tasks}>
+        <div className="flex flex-col gap-3 flex-1 overflow-y-auto">
           {tasks.map((task) => (
-            <TaskCard key={task.id} {...task} />
+            <TaskCard
+              key={task.id}
+              id={task.id}
+              title={task.title}
+              description={task.description}
+              priority={task.priority}
+              dueDate={task.dueDate}
+              assignees={task.assignees}
+              progress={task.progress}
+              comments={task.comments}
+              attachments={task.attachments}
+              tags={task.tags}
+            />
           ))}
-        </SortableContext>
-      </div>
+        </div>
+      </SortableContext>
     </div>
   );
 }
