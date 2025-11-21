@@ -1,0 +1,182 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  MEMBER
+  CLIENT
+}
+
+enum Status {
+  TODO
+  IN_PROGRESS
+  REVIEW
+  DONE
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  role          Role      @default(MEMBER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  projects           Project[]
+  tasks              Task[]       @relation("AssignedTasks")
+  createdTasks       Task[]       @relation("CreatedTasks")
+  expenses           Expense[]
+  createdAutomations Automation[]
+  employee           Employee?
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  startDate   DateTime?
+  endDate     DateTime?
+  status      String    @default("ACTIVE")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id])
+  tasks   Task[]
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  status      Status    @default(TODO)
+  priority    Priority  @default(MEDIUM)
+  dueDate     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
+
+  assigneeId String?
+  assignee   User?   @relation("AssignedTasks", fields: [assigneeId], references: [id])
+
+  creatorId String
+  creator   User   @relation("CreatedTasks", fields: [creatorId], references: [id])
+}
+
+model Contact {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String?
+  email     String?
+  phone     String?
+  company   String?
+  status    String   @default("LEAD")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  invoices Invoice[]
+}
+
+model Invoice {
+  id            String   @id @default(cuid())
+  invoiceNumber String   @unique
+  status        String   @default("PENDING") // PENDING, PAID, OVERDUE
+  dueDate       DateTime
+  totalAmount   Float
+  currency      String   @default("USD")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  clientId String?
+  client   Contact? @relation(fields: [clientId], references: [id])
+
+  items InvoiceItem[]
+}
+
+model InvoiceItem {
+  id          String @id @default(cuid())
+  description String
+  quantity    Int
+  unitPrice   Float
+  total       Float
+
+  invoiceId String
+  invoice   Invoice @relation(fields: [invoiceId], references: [id])
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  description String
+  amount      Float
+  category    String
+  date        DateTime
+  status      String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Automation {
+  id        String   @id @default(cuid())
+  name      String
+  trigger   String
+  action    String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  creatorId String
+  creator   User   @relation(fields: [creatorId], references: [id])
+}
+
+model Employee {
+  id         String   @id @default(cuid())
+  firstName  String
+  lastName   String
+  email      String   @unique
+  phone      String?
+  position   String
+  department String
+  salary     Float
+  hireDate   DateTime
+  status     String   @default("ACTIVE") // ACTIVE, INACTIVE, ON_LEAVE
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  userId String? @unique
+  user   User?   @relation(fields: [userId], references: [id])
+
+  payrolls Payroll[]
+}
+
+model Payroll {
+  id          String    @id @default(cuid())
+  payPeriod   String // e.g., "Oct 2023"
+  amount      Float
+  status      String    @default("PENDING") // PENDING, PROCESSED, PAID
+  paymentDate DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id])
+}
