@@ -64,11 +64,18 @@ export function Badge({
 }
 
 interface StatusBadgeProps {
-  status: "active" | "inactive" | "pending" | "completed" | "cancelled";
+  status:
+    | "active"
+    | "inactive"
+    | "pending"
+    | "completed"
+    | "cancelled"
+    | "lead";
+  size?: BadgeProps["size"];
   className?: string;
 }
 
-export function StatusBadge({ status, className }: StatusBadgeProps) {
+export function StatusBadge({ status, size, className }: StatusBadgeProps) {
   const variants: Record<
     typeof status,
     { variant: BadgeProps["variant"]; label: string }
@@ -78,12 +85,13 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
     pending: { variant: "warning", label: "Pending" },
     completed: { variant: "info", label: "Completed" },
     cancelled: { variant: "error", label: "Cancelled" },
+    lead: { variant: "info", label: "Lead" },
   };
 
   const config = variants[status];
 
   return (
-    <Badge variant={config.variant} className={className}>
+    <Badge variant={config.variant} size={size} className={className}>
       <span className="h-1.5 w-1.5 rounded-full bg-current" />
       {config.label}
     </Badge>

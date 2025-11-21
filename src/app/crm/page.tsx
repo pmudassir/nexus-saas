@@ -1,46 +1,83 @@
 import { Shell } from "@/components/layout/Shell";
 import { Button } from "@/components/ui/button";
-import { Plus, Mail, Phone, MoreHorizontal } from "lucide-react";
+import { ContactCard } from "@/components/crm/ContactCard";
+import { StatCard } from "@/components/dashboard/StatCard";
+import { Plus, Users, UserCheck, UserPlus } from "lucide-react";
 
 const contacts = [
   {
     id: "1",
     name: "John Smith",
-    email: "john@example.com",
+    email: "john@techcorp.com",
     company: "Tech Corp",
     phone: "+1 234 567 8900",
-    status: "ACTIVE",
+    status: "active" as const,
+    role: "CEO",
+    lastContact: "2 days ago",
   },
   {
     id: "2",
     name: "Sarah Johnson",
-    email: "sarah@example.com",
+    email: "sarah@designstudio.com",
     company: "Design Studio",
     phone: "+1 234 567 8901",
-    status: "ACTIVE",
+    status: "active" as const,
+    role: "Creative Director",
+    lastContact: "1 week ago",
   },
   {
     id: "3",
     name: "Mike Wilson",
-    email: "mike@example.com",
+    email: "mike@marketinginc.com",
     company: "Marketing Inc",
     phone: "+1 234 567 8902",
-    status: "LEAD",
+    status: "lead" as const,
+    role: "Marketing Manager",
+    lastContact: "3 days ago",
   },
   {
     id: "4",
     name: "Emily Davis",
-    email: "emily@example.com",
+    email: "emily@salesco.com",
     company: "Sales Co",
     phone: "+1 234 567 8903",
-    status: "ACTIVE",
+    status: "active" as const,
+    role: "VP Sales",
+    lastContact: "5 days ago",
+  },
+  {
+    id: "5",
+    name: "David Brown",
+    email: "david@startup.io",
+    company: "Startup Inc",
+    phone: "+1 234 567 8904",
+    status: "lead" as const,
+    role: "Founder",
+    lastContact: "1 day ago",
+  },
+  {
+    id: "6",
+    name: "Lisa Anderson",
+    email: "lisa@consulting.com",
+    company: "Consulting Group",
+    phone: "+1 234 567 8905",
+    status: "inactive" as const,
+    role: "Senior Consultant",
+    lastContact: "2 months ago",
   },
 ];
 
 export default function CRMPage() {
+  const activeContacts = contacts.filter((c) => c.status === "active").length;
+  const leads = contacts.filter((c) => c.status === "lead").length;
+  const inactiveContacts = contacts.filter(
+    (c) => c.status === "inactive"
+  ).length;
+
   return (
     <Shell>
       <div className="flex flex-col gap-6">
+        {/* Header */}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">CRM</h1>
@@ -54,93 +91,39 @@ export default function CRMPage() {
           </Button>
         </div>
 
+        {/* Stats */}
         <div className="grid gap-6 md:grid-cols-3">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
-            <h3 className="text-sm font-medium text-muted-foreground mb-2">
-              Total Contacts
-            </h3>
-            <div className="text-3xl font-bold">{contacts.length}</div>
-          </div>
-          <div className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
-            <h3 className="text-sm font-medium text-muted-foreground mb-2">
-              Active Clients
-            </h3>
-            <div className="text-3xl font-bold">
-              {contacts.filter((c) => c.status === "ACTIVE").length}
-            </div>
-          </div>
-          <div className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
-            <h3 className="text-sm font-medium text-muted-foreground mb-2">
-              Leads
-            </h3>
-            <div className="text-3xl font-bold">
-              {contacts.filter((c) => c.status === "LEAD").length}
-            </div>
-          </div>
+          <StatCard
+            title="Total Contacts"
+            value={contacts.length}
+            description="All contacts in your CRM"
+            icon={<Users className="h-5 w-5" />}
+            trend={{ value: 12, isPositive: true }}
+          />
+          <StatCard
+            title="Active Clients"
+            value={activeContacts}
+            description="Currently active customers"
+            icon={<UserCheck className="h-5 w-5" />}
+            trend={{ value: 8, isPositive: true }}
+          />
+          <StatCard
+            title="New Leads"
+            value={leads}
+            description="Potential customers"
+            icon={<UserPlus className="h-5 w-5" />}
+            trend={{ value: 25, isPositive: true }}
+          />
         </div>
 
-        <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-md overflow-hidden">
-          <table className="w-full text-sm text-left">
-            <thead className="bg-white/5 text-muted-foreground font-medium">
-              <tr>
-                <th className="px-6 py-4">Name</th>
-                <th className="px-6 py-4">Company</th>
-                <th className="px-6 py-4">Contact</th>
-                <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/10">
-              {contacts.map((contact) => (
-                <tr
-                  key={contact.id}
-                  className="hover:bg-white/5 transition-colors"
-                >
-                  <td className="px-6 py-4 font-medium">
-                    <div className="flex items-center gap-3">
-                      <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
-                        {contact.name.charAt(0)}
-                      </div>
-                      {contact.name}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">{contact.company}</td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2 text-muted-foreground">
-                      <a
-                        href={`mailto:${contact.email}`}
-                        className="hover:text-primary"
-                      >
-                        <Mail className="h-4 w-4" />
-                      </a>
-                      <a
-                        href={`tel:${contact.phone}`}
-                        className="hover:text-primary"
-                      >
-                        <Phone className="h-4 w-4" />
-                      </a>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        contact.status === "ACTIVE"
-                          ? "bg-green-500/10 text-green-500"
-                          : "bg-blue-500/10 text-blue-500"
-                      }`}
-                    >
-                      {contact.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <button className="text-muted-foreground hover:text-foreground">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        {/* Contact Cards Grid */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4">All Contacts</h2>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {contacts.map((contact) => (
+              <ContactCard key={contact.id} {...contact} />
+            ))}
+          </div>
         </div>
       </div>
     </Shell>
