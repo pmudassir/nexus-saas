@@ -2,34 +2,38 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import { authConfig } from "./auth.config";
+import { prisma } from "@/lib/prisma";
+import bcrypt from "bcryptjs";
+import { User } from "@prisma/client";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+async function getUser(email: string): Promise<User | null> {
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    return user;
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
+    throw new Error("Failed to fetch user.");
+  }
+}
+
+export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
-      authorize: async (credentials) => {
+      async authorize(credentials) {
         const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(6) })
           .safeParse(credentials);
 
         if (parsedCredentials.success) {
-          // Mock user for MVP
-          if (
-            parsedCredentials.data.email === "admin@nexus.com" &&
-            parsedCredentials.data.password === "password"
-          ) {
-            return {
-              id: "1",
-              name: "Admin User",
-              email: "admin@nexus.com",
-              role: "ADMIN",
-            };
-          }
+          const { email, password } = parsedCredentials.data;
+          const user = await getUser(email);
+          if (!user || !user.password) return null;
+
+          const passwordsMatch = await bcrypt.compare(password, user.password);
+          if (passwordsMatch) return user;
         }
+        console.log("Invalid credentials");
         return null;
       },
     }),

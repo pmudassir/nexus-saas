@@ -1,9 +1,25 @@
 import { Shell } from "@/components/layout/Shell";
 import { KanbanBoard } from "@/components/projects/KanbanBoard";
-import { Button } from "@/components/ui/button"; // Assuming we might add this later, but for now standard button
 import { Plus } from "lucide-react";
+import { prisma } from "@/lib/prisma";
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const tasks = await prisma.task.findMany({
+    include: {
+      project: true,
+      creator: true,
+    },
+  });
+
+  // Transform DB tasks to the format KanbanBoard expects
+  const initialTasks = tasks.map((task) => ({
+    id: task.id,
+    title: task.title,
+    status: task.status,
+    priority: task.priority,
+    dueDate: task.dueDate?.toISOString().split("T")[0],
+  }));
+
   return (
     <Shell>
       <div className="flex flex-col gap-6 h-full">
@@ -19,7 +35,7 @@ export default function ProjectsPage() {
             New Task
           </button>
         </div>
-        <KanbanBoard />
+        <KanbanBoard initialTasks={initialTasks} />
       </div>
     </Shell>
   );

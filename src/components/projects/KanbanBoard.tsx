@@ -47,8 +47,38 @@ const initialData = {
   ],
 };
 
-export function KanbanBoard() {
-  const [tasks, setTasks] = useState<any>(initialData);
+interface Task {
+  id: string;
+  title: string;
+  priority: string;
+  dueDate?: string;
+  status?: string;
+}
+
+interface KanbanBoardProps {
+  initialTasks?: Task[];
+}
+
+export function KanbanBoard({ initialTasks = [] }: KanbanBoardProps) {
+  // Transform initialTasks array into grouped object by status
+  const groupedTasks = initialTasks.reduce(
+    (acc: any, task) => {
+      const status = task.status || "TODO";
+      if (!acc[status]) acc[status] = [];
+      acc[status].push(task);
+      return acc;
+    },
+    {
+      TODO: [],
+      IN_PROGRESS: [],
+      REVIEW: [],
+      DONE: [],
+    }
+  );
+
+  const [tasks, setTasks] = useState<any>(
+    initialTasks.length > 0 ? groupedTasks : initialData
+  );
   const [activeId, setActiveId] = useState<string | null>(null);
 
   function handleDragStart(event: DragStartEvent) {
