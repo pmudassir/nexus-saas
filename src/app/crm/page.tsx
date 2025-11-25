@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { prisma } from "@/lib/prisma";
 import { requireTenantMembership } from "@/lib/tenant-auth";
-import { createContact } from "@/actions/crm";
+import { upsertContact } from "@/actions/crm";
 import { formatDistanceToNow } from "date-fns";
 
 function getInitials(firstName: string, lastName?: string | null) {

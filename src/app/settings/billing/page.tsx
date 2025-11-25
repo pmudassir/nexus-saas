@@ -82,8 +82,10 @@ export default async function BillingPage() {
                   Current Plan: {activeSubscription.plan.name}
                 </h2>
                 <p className="text-sm text-slate-400 mt-1">
-                  Renews on{' '}
-                  {new Date(activeSubscription.currentPeriodEnd).toLocaleDateString()}
+                  {activeSubscription.currentPeriodEnd 
+                    ? `Renews on ${new Date(activeSubscription.currentPeriodEnd).toLocaleDateString()}`
+                    : 'Active subscription'
+                  }
                 </p>
               </div>
               <form action={createPortalSession}>
