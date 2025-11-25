@@ -8,7 +8,7 @@ import { requireTenantMembership } from '@/lib/tenant-auth';
  * Create expense with receipt
  */
 export async function createExpense(formData: FormData) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant, session } = await requireTenantMembership();
 
   const description = formData.get('description') as string;
   const amount = parseFloat(formData.get('amount') as string);
@@ -16,6 +16,7 @@ export async function createExpense(formData: FormData) {
   const currency = (formData.get('currency') as string) || 'USD';
   const receiptUrl = formData.get('receiptUrl') as string | null;
   const date = formData.get('date') ? new Date(formData.get('date') as string) : new Date();
+  const userId = (session.user as { id: string }).id;
 
   await prisma.expense.create({
     data: {
@@ -26,6 +27,7 @@ export async function createExpense(formData: FormData) {
       receiptUrl,
       date,
       tenantId: tenant.id,
+      userId,
     },
   });
 
@@ -106,19 +108,4 @@ export async function rejectExpense(formData: FormData) {
   revalidatePath('/finance/expenses');
 }
 
-/**
- * Get expense categories
- */
-export const EXPENSE_CATEGORIES = [
-  'Office Supplies',
-  'Travel',
-  'Meals & Entertainment',
-  'Software & Subscriptions',
-  'Marketing',
-  'Utilities',
-  'Rent',
-  'Insurance',
-  'Professional Services',
-  'Equipment',
-  'Other',
-] as const;
+

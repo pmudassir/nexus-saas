@@ -1,9 +1,15 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { stripe, STRIPE_PLANS } from '@/lib/stripe';
+import { stripe, STRIPE_PRICE_IDS } from '@/lib/stripe';
 import { prisma } from '@/lib/prisma';
 import { requireTenantMembership } from '@/lib/tenant-auth';
+
+const STRIPE_PLANS = {
+  STARTER: { priceId: STRIPE_PRICE_IDS.STARTER },
+  PROFESSIONAL: { priceId: STRIPE_PRICE_IDS.PROFESSIONAL },
+  ENTERPRISE: { priceId: STRIPE_PRICE_IDS.ENTERPRISE },
+};
 
 /**
  * Create a Stripe Checkout session for subscription
@@ -113,7 +119,7 @@ export async function cancelSubscription() {
     
     await prisma.subscription.update({
       where: { id: subscription.id },
-      data: { status: 'CANCELLED' },
+      data: { status: 'CANCELED' },
     });
   } catch (error) {
     console.error('Stripe cancellation error:', error);

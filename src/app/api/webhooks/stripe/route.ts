@@ -93,8 +93,8 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       where: { id: existingSubscription.id },
       data: {
         status: 'ACTIVE',
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+        currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
+        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
       },
     });
   } else {
@@ -109,7 +109,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
         data: {
           name: session.metadata?.plan || 'Starter',
           description: 'Default plan',
-          price: 0,
+          priceMonthly: 0,
         },
       });
     }
@@ -120,8 +120,8 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
         planId: plan.id,
         status: 'ACTIVE',
         stripeSubscriptionId: subscription.id,
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+        currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
+        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
       },
     });
   }
@@ -150,8 +150,8 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
       where: { id: existing.id },
       data: {
         status: subscription.status === 'active' ? 'ACTIVE' : 'CANCELED',
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+        currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
+        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
       },
     });
   }
@@ -176,9 +176,9 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
 
 async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
   // Log successful payment
-  const subscriptionId = typeof invoice.subscription === 'string' 
-    ? invoice.subscription 
-    : invoice.subscription?.id;
+  const subscriptionId = typeof (invoice as any).subscription === 'string' 
+    ? (invoice as any).subscription 
+    : (invoice as any).subscription?.id;
     
   if (subscriptionId) {
     const subscription = await prisma.subscription.findFirst({
@@ -206,9 +206,9 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
 
 async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
   // Log failed payment
-  const subscriptionId = typeof invoice.subscription === 'string' 
-    ? invoice.subscription 
-    : invoice.subscription?.id;
+  const subscriptionId = typeof (invoice as any).subscription === 'string' 
+    ? (invoice as any).subscription 
+    : (invoice as any).subscription?.id;
     
   if (subscriptionId) {
     const subscription = await prisma.subscription.findFirst({

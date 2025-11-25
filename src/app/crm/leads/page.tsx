@@ -1,7 +1,8 @@
 import { Shell } from '@/components/layout/Shell';
 import { requireTenantMembership } from '@/lib/tenant-auth';
 import { prisma } from '@/lib/prisma';
-import { createLead, updateLeadStage, LEAD_STAGES } from '@/actions/leads';
+import { createLead, updateLeadStage } from '@/actions/leads';
+import { LEAD_STAGES } from '@/lib/constants';
 import { Target, TrendingUp, DollarSign, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 

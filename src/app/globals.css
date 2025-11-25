@@ -56,49 +56,37 @@
   --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
   --animate-shimmer: shimmer 2s linear infinite;
   --animate-aurora: aurora 60s linear infinite;
+  --animate-enter: enter 0.5s ease-out forwards;
+  --animate-float: float 6s ease-in-out infinite;
 
   /* Keyframe Animations */
   @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
   }
   @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
   }
   @keyframes spotlight {
-    0% {
-      opacity: 0;
-      transform: translate(-72%, -62%) scale(0.5);
-    }
-    100% {
-      opacity: 1;
-      transform: translate(-50%, -40%) scale(1);
-    }
+    0% { opacity: 0; transform: translate(-72%, -62%) scale(0.5); }
+    100% { opacity: 1; transform: translate(-50%, -40%) scale(1); }
   }
   @keyframes shimmer {
-    from {
-      background-position: 0 0;
-    }
-    to {
-      background-position: -200% 0;
-    }
+    from { background-position: 0 0; }
+    to { background-position: -200% 0; }
   }
   @keyframes aurora {
-    from {
-      background-position: 50% 50%, 50% 50%;
-    }
-    to {
-      background-position: 350% 50%, 350% 50%;
-    }
+    from { background-position: 50% 50%, 50% 50%; }
+    to { background-position: 350% 50%, 350% 50%; }
+  }
+  @keyframes enter {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
   }
 }
 
@@ -113,73 +101,70 @@
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='16' height='16' fill='none'%3e%3ccircle fill='rgb(255 255 255 / 0.05)' cx='10' cy='10' r='1.6'/%3e%3c/svg%3e");
 }
 
-/* Aurora Gradient Utility */
-@utility bg-aurora {
-  background-image: repeating-linear-gradient(
-    100deg,
-    #60a5fa 10%,
-    #e879f9 15%,
-    #60a5fa 20%,
-    #5eead4 25%,
-    #60a5fa 30%
-  );
-  background-size: 200% 200%;
-  animation: aurora 60s linear infinite;
-  opacity: 0.5;
-  filter: blur(100px);
+/* Glassmorphism Utilities */
+@utility glass-panel {
+  @apply bg-slate-950/60 backdrop-blur-xl border border-white/10;
+}
+@utility glass-card {
+  @apply bg-white/5 backdrop-blur-lg border border-white/10 hover:border-white/20 transition-all duration-300;
+}
+@utility text-gradient {
+  @apply bg-clip-text text-transparent bg-linear-to-r from-indigo-400 via-purple-400 to-cyan-400;
 }
 
-/* Theme Colors - Vibrant Production (Indigo/Violet/Cyan) */
+/* Theme Colors - Deep Space (Indigo/Violet/Cyan) */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 3.9%;
-
-  /* Vibrant Indigo Primary */
-  --primary: 262 83% 58%;
-  --primary-foreground: 210 40% 98%;
-
-  --secondary: 240 4.8% 95.9%;
-  --secondary-foreground: 240 5.9% 10%;
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
-  --accent: 240 4.8% 95.9%;
-  --accent-foreground: 240 5.9% 10%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  --ring: 262 83% 58%;
-  --radius: 0.75rem;
-
-  /* Semantic Colors */
-  --success: 142 76% 36%;
-  --success-foreground: 355 100% 100%;
-  --warning: 38 92% 50%;
-  --warning-foreground: 48 96% 89%;
-  --error: 0 84.2% 60.2%;
-  --error-foreground: 210 40% 98%;
-  --info: 221 83% 53%;
-  --info-foreground: 210 40% 98%;
-}
-
-.dark {
-  /* Deep Slate Background (Not Pure Black) */
-  --background: 222.2 84% 4.9%;
+  --background: 222.2 84% 4.9%; /* Deep Space Blue */
   --foreground: 210 40% 98%;
-
+  
   --card: 222.2 84% 4.9%;
   --card-foreground: 210 40% 98%;
   --popover: 222.2 84% 4.9%;
   --popover-foreground: 210 40% 98%;
 
-  /* Vibrant Indigo Primary */
+  /* Electric Violet Primary */
   --primary: 263.4 70% 50.4%;
   --primary-foreground: 210 40% 98%;
 
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 263.4 70% 50.4%;
+  
+  --radius: 0.75rem;
+
+  /* Semantic Colors */
+  --success: 142 70% 50%;
+  --success-foreground: 144 100% 97%;
+  --warning: 48 96% 89%;
+  --warning-foreground: 38 92% 50%;
+  --error: 0 84.2% 60.2%;
+  --error-foreground: 210 40% 98%;
+  --info: 217 91% 60%;
+  --info-foreground: 210 40% 98%;
+}
+
+.dark {
+  /* Same as root for now, enforcing dark mode aesthetic */
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 263.4 70% 50.4%;
+  --primary-foreground: 210 40% 98%;
   --secondary: 217.2 32.6% 17.5%;
   --secondary-foreground: 210 40% 98%;
   --muted: 217.2 32.6% 17.5%;
@@ -191,16 +176,6 @@
   --border: 217.2 32.6% 17.5%;
   --input: 217.2 32.6% 17.5%;
   --ring: 263.4 70% 50.4%;
-
-  /* Semantic Colors - Dark Mode */
-  --success: 142 70% 50%;
-  --success-foreground: 144 100% 97%;
-  --warning: 48 96% 89%;
-  --warning-foreground: 38 92% 50%;
-  --error: 0 84.2% 60.2%;
-  --error-foreground: 210 40% 98%;
-  --info: 217 91% 60%;
-  --info-foreground: 210 40% 98%;
 }
 
 @layer base {
@@ -208,7 +183,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased selection:bg-primary/30 selection:text-primary-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
@@ -216,5 +191,17 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
   }
 }

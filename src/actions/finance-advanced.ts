@@ -3,35 +3,9 @@
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/prisma';
 import { requireTenantMembership } from '@/lib/tenant-auth';
+import { SUPPORTED_CURRENCIES, getCurrencySymbol, formatCurrency } from '@/lib/currency';
 
-/**
- * Supported currencies
- */
-export const SUPPORTED_CURRENCIES = [
-  { code: 'USD', symbol: '$', name: 'US Dollar' },
-  { code: 'EUR', symbol: '€', name: 'Euro' },
-  { code: 'GBP', symbol: '£', name: 'British Pound' },
-  { code: 'JPY', symbol: '¥', name: 'Japanese Yen' },
-  { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
-  { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar' },
-  { code: 'AUD', symbol: 'A$', name: 'Australian Dollar' },
-] as const;
-
-/**
- * Get currency symbol
- */
-export function getCurrencySymbol(code: string): string {
-  const currency = SUPPORTED_CURRENCIES.find((c) => c.code === code);
-  return currency?.symbol || '$';
-}
-
-/**
- * Format amount with currency
- */
-export function formatCurrency(amount: number, currencyCode: string = 'USD'): string {
-  const symbol = getCurrencySymbol(currencyCode);
-  return `${symbol}${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-}
+export { SUPPORTED_CURRENCIES, getCurrencySymbol, formatCurrency };
 
 /**
  * Create recurring invoice
@@ -119,8 +93,9 @@ export async function generateRecurringInvoices() {
         items: {
           create: invoice.items.map((item) => ({
             description: item.description,
-            amount: item.amount,
+            unitPrice: item.unitPrice,
             quantity: item.quantity,
+            total: item.total,
           })),
         },
       },

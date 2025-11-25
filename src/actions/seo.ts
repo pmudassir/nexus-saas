@@ -71,7 +71,12 @@ export async function generateSitemap() {
     },
   });
 
-  const domain = tenant.customDomain || `${tenant.slug}.yoursaas.com`;
+  const tenantWithDomains = await prisma.tenant.findUnique({
+    where: { id: tenant.id },
+    include: { domains: true },
+  });
+
+  const domain = tenantWithDomains?.domains[0]?.domain || `${tenant.slug}.yoursaas.com`;
   
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

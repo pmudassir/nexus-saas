@@ -2,9 +2,10 @@ import { Shell } from '@/components/layout/Shell';
 import { prisma } from '@/lib/prisma';
 import { requireTenantMembership } from '@/lib/tenant-auth';
 import { Button } from '@/components/ui/button';
-import { createExpense, approveExpense, rejectExpense, EXPENSE_CATEGORIES } from '@/actions/expenses';
+import { createExpense, approveExpense, rejectExpense } from '@/actions/expenses';
+import { EXPENSE_CATEGORIES } from '@/lib/constants';
 import { Receipt, Check, X, Upload } from 'lucide-react';
-import { formatCurrency } from '@/actions/finance-advanced';
+import { formatCurrency } from '@/lib/currency';
 
 export default async function ExpensesPage() {
   const { tenant } = await requireTenantMembership();
