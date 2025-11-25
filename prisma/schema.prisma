@@ -149,8 +149,15 @@ model Invoice {
   dueDate       DateTime
   totalAmount   Float
   currency      String   @default("USD")
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  
+  // Recurring invoice fields
+  isRecurring      Boolean  @default(false)
+  recurringInterval String? // MONTHLY, QUARTERLY, YEARLY
+  nextInvoiceDate  DateTime?
+  lastGeneratedAt  DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   clientId String?
   client   Contact? @relation(fields: [clientId], references: [id])
@@ -176,8 +183,16 @@ model Expense {
   description String
   amount      Float
   category    String
-  date        DateTime
-  status      String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  date        DateTime @default(now())
+  currency    String   @default("USD")
+  
+  // Receipt and approval
+  receiptUrl  String?
+  approvalStatus String @default("PENDING") // PENDING, APPROVED, REJECTED
+  approvedBy     String?
+  approvedAt     DateTime?
+  rejectionReason String?
+  
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
