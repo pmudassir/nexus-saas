@@ -78,9 +78,10 @@ model User {
   createdTasks       Task[]       @relation("CreatedTasks")
   expenses           Expense[]
   createdAutomations Automation[]
-  employee           Employee?
+  employee           Employee?    @relation(fields: [employeeId], references: [id])
   tenantMemberships  TenantUser[]
   auditLogs          AuditLog[]
+  employeeId         String?
 }
 
 model Project {
@@ -127,7 +128,7 @@ model Contact {
   id        String   @id @default(cuid())
   firstName String
   lastName  String?
-  name      String?  // Full name for convenience
+  name      String? // Full name for convenience
   email     String?
   phone     String?
   company   String?
@@ -138,7 +139,7 @@ model Contact {
   updatedAt DateTime @updatedAt
 
   tenantId String
-  tenant   Tenant  @relation(fields: [tenantId], references: [id])
+  tenant   Tenant    @relation(fields: [tenantId], references: [id])
   invoices Invoice[]
 }
 
@@ -149,13 +150,13 @@ model Invoice {
   dueDate       DateTime
   totalAmount   Float
   currency      String   @default("USD")
-  
+
   // Recurring invoice fields
-  isRecurring      Boolean  @default(false)
+  isRecurring       Boolean   @default(false)
   recurringInterval String? // MONTHLY, QUARTERLY, YEARLY
-  nextInvoiceDate  DateTime?
-  lastGeneratedAt  DateTime?
-  
+  nextInvoiceDate   DateTime?
+  lastGeneratedAt   DateTime?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -163,7 +164,7 @@ model Invoice {
   client   Contact? @relation(fields: [clientId], references: [id])
 
   tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  tenant   Tenant        @relation(fields: [tenantId], references: [id])
   items    InvoiceItem[]
 }
 
@@ -185,16 +186,16 @@ model Expense {
   category    String
   date        DateTime @default(now())
   currency    String   @default("USD")
-  
+
   // Receipt and approval
-  receiptUrl  String?
-  approvalStatus String @default("PENDING") // PENDING, APPROVED, REJECTED
-  approvedBy     String?
-  approvedAt     DateTime?
+  receiptUrl      String?
+  approvalStatus  String    @default("PENDING") // PENDING, APPROVED, REJECTED
+  approvedBy      String?
+  approvedAt      DateTime?
   rejectionReason String?
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   userId   String
   user     User   @relation(fields: [userId], references: [id])
@@ -203,13 +204,20 @@ model Expense {
 }
 
 model Product {
-  id        String   @id @default(cuid())
-  name      String
-  category  String?
-  sku       String   @unique
-  stock     Int
-  price     Float
-  status    String   @default("IN_STOCK") // IN_STOCK, LOW_STOCK, OUT_OF_STOCK
+  id       String  @id @default(cuid())
+  name     String
+  category String?
+  sku      String  @unique
+  stock    Int
+  price    Float
+  status   String  @default("IN_STOCK") // IN_STOCK, LOW_STOCK, OUT_OF_STOCK
+
+  // Inventory relations
+  supplierId         String?
+  supplier           Supplier?           @relation(fields: [supplierId], references: [id])
+  stockMovements     StockMovement[]
+  purchaseOrderItems PurchaseOrderItem[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -234,24 +242,25 @@ model Automation {
 
 model Employee {
   id         String   @id @default(cuid())
-  firstName  String
-  lastName   String
-  email      String   @unique
-  phone      String?
+  name       String
+  email      String
   position   String
-  department String
-  salary     Float
-  hireDate   DateTime
-  status     String   @default("ACTIVE") // ACTIVE, INACTIVE, ON_LEAVE
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  department String?
+  salary     Float?
+  hireDate   DateTime @default(now())
+  status     String   @default("ACTIVE") // ACTIVE, ON_LEAVE, TERMINATED
 
-  userId String? @unique
-  user   User?   @relation(fields: [userId], references: [id])
+  // HR Relations
+  leaveRequests LeaveRequest[]
+  attendance    Attendance[]
+  payroll       Payroll[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   tenantId String
-  tenant   Tenant   @relation(fields: [tenantId], references: [id])
-  payrolls Payroll[]
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  users    User[]
 }
 
 model Payroll {
@@ -267,20 +276,20 @@ model Payroll {
   employee   Employee @relation(fields: [employeeId], references: [id])
 
   tenantId String
-  tenant   Tenant   @relation(fields: [tenantId], references: [id])
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
 }
 
 model Tenant {
-  id             String         @id @default(cuid())
+  id             String       @id @default(cuid())
   name           String
-  slug           String         @unique
-  status         TenantStatus   @default(ACTIVE)
+  slug           String       @unique
+  status         TenantStatus @default(ACTIVE)
   region         String?
   logoUrl        String?
   primaryColor   String?
   secondaryColor String?
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 
   // Platform-level relations
   domains       Domain[]
@@ -290,29 +299,39 @@ model Tenant {
   auditLogs     AuditLog[]
 
   // Tenant-scoped data
-  projects  Project[]
-  tasks     Task[]
-  contacts  Contact[]
-  invoices  Invoice[]
-  expenses  Expense[]
-  products  Product[]
+  projects    Project[]
+  tasks       Task[]
+  contacts    Contact[]
+  invoices    Invoice[]
+  expenses    Expense[]
+  products    Product[]
   automations Automation[]
-  employees Employee[]
-  payrolls  Payroll[]
-  sitePages SitePage[]
+  employees   Employee[]
+  payrolls    Payroll[]
+  sitePages   SitePage[]
+
+  // New module relations
+  leaveRequests     LeaveRequest[]
+  attendanceRecords Attendance[]
+  suppliers         Supplier[]
+  purchaseOrders    PurchaseOrder[]
+  stockMovements    StockMovement[]
+  leads             Lead[]
+  leadActivities    LeadActivity[]
+  dashboardWidgets  DashboardWidget[]
 }
 
 model Plan {
-  id                  String          @id @default(cuid())
+  id                  String   @id @default(cuid())
   name                String
   description         String?
   priceMonthly        Int
-  currency            String          @default("USD")
+  currency            String   @default("USD")
   maxUsers            Int?
   maxStorageMb        Int?
   maxApiCallsPerMonth Int?
-  createdAt           DateTime        @default(now())
-  updatedAt           DateTime        @updatedAt
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
   subscriptions Subscription[]
 }
@@ -327,8 +346,8 @@ model Subscription {
   currentPeriodStart   DateTime?
   currentPeriodEnd     DateTime?
   cancelAt             DateTime?
-  createdAt            DateTime          @default(now())
-  updatedAt            DateTime          @updatedAt
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
 
   tenant Tenant @relation(fields: [tenantId], references: [id])
   plan   Plan   @relation(fields: [planId], references: [id])
@@ -357,7 +376,7 @@ model TenantFeature {
   key       String
   enabled   Boolean  @default(true)
   config    Json?
-  metadata  Json?    // Storage limits, API quotas, custom settings
+  metadata  Json? // Storage limits, API quotas, custom settings
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -370,8 +389,8 @@ model TenantFeature {
 model Permission {
   id          String   @id @default(cuid())
   key         String   @unique // e.g., "finance.invoice.create"
-  module      String   // e.g., "finance", "hr", "inventory"
-  action      String   // e.g., "create", "read", "update", "delete"
+  module      String // e.g., "finance", "hr", "inventory"
+  action      String // e.g., "create", "read", "update", "delete"
   description String?
   createdAt   DateTime @default(now())
 
@@ -433,13 +452,13 @@ model SitePage {
   path      String
   isHome    Boolean     @default(false)
   blocks    SiteBlock[]
-  
+
   // SEO fields
   metaTitle       String?
   metaDescription String?
   metaKeywords    String?
   ogImage         String?
-  
+
   @@unique([tenantId, path])
   @@index([tenantId])
 }
@@ -453,4 +472,214 @@ model SiteBlock {
   data      Json
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
+}
+
+// ============================================
+// HR MANAGEMENT MODELS
+// ============================================
+
+model LeaveRequest {
+  id         String   @id @default(cuid())
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id])
+
+  leaveType String // VACATION, SICK, PERSONAL, UNPAID
+  startDate DateTime
+  endDate   DateTime
+  days      Int
+  reason    String   @db.Text
+
+  status          String    @default("PENDING") // PENDING, APPROVED, REJECTED
+  approvedBy      String?
+  approvedAt      DateTime?
+  rejectionReason String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+}
+
+model Attendance {
+  id         String   @id @default(cuid())
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id])
+
+  date         DateTime  @default(now())
+  clockIn      DateTime
+  clockOut     DateTime?
+  breakMinutes Int       @default(0)
+  totalHours   Float?
+  overtime     Float     @default(0)
+
+  location String? // GPS coordinates or office location
+  notes    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+
+  @@index([employeeId, date])
+}
+
+// ============================================
+// INVENTORY MANAGEMENT MODELS
+// ============================================
+
+model Supplier {
+  id          String  @id @default(cuid())
+  name        String
+  contactName String?
+  email       String?
+  phone       String?
+  address     String? @db.Text
+
+  paymentTerms String? // NET30, NET60, etc
+  notes        String? @db.Text
+  status       String  @default("ACTIVE") // ACTIVE, INACTIVE
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenantId       String
+  tenant         Tenant          @relation(fields: [tenantId], references: [id])
+  products       Product[]
+  purchaseOrders PurchaseOrder[]
+}
+
+model PurchaseOrder {
+  id          String   @id @default(cuid())
+  orderNumber String   @unique
+  supplierId  String
+  supplier    Supplier @relation(fields: [supplierId], references: [id])
+
+  orderDate    DateTime  @default(now())
+  expectedDate DateTime?
+  receivedDate DateTime?
+
+  totalAmount Float
+  status      String @default("PENDING") // PENDING, RECEIVED, CANCELLED
+
+  notes String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenantId String
+  tenant   Tenant              @relation(fields: [tenantId], references: [id])
+  items    PurchaseOrderItem[]
+}
+
+model PurchaseOrderItem {
+  id              String        @id @default(cuid())
+  purchaseOrderId String
+  purchaseOrder   PurchaseOrder @relation(fields: [purchaseOrderId], references: [id])
+  productId       String
+  product         Product       @relation(fields: [productId], references: [id])
+
+  quantity  Int
+  unitPrice Float
+  total     Float
+
+  createdAt DateTime @default(now())
+}
+
+model StockMovement {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  type      String // IN, OUT, ADJUSTMENT
+  quantity  Int
+  reason    String?
+  reference String? // PO number, Sale ID, etc
+
+  beforeStock Int
+  afterStock  Int
+
+  createdAt DateTime @default(now())
+
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+}
+
+// ============================================
+// CRM LEAD PIPELINE MODELS
+// ============================================
+
+model Lead {
+  id      String  @id @default(cuid())
+  name    String
+  email   String?
+  phone   String?
+  company String?
+
+  source String? // WEBSITE, REFERRAL, COLD_CALL, etc
+  stage  String  @default("NEW") // NEW, CONTACTED, QUALIFIED, PROPOSAL, NEGOTIATION, WON, LOST
+  score  Int     @default(0) // 0-100 lead scoring
+  value  Float? // Estimated deal value
+
+  assignedTo String?
+  notes      String?  @db.Text
+  tags       String[] @default([])
+
+  wonDate    DateTime?
+  lostReason String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenantId   String
+  tenant     Tenant         @relation(fields: [tenantId], references: [id])
+  activities LeadActivity[]
+}
+
+model LeadActivity {
+  id     String @id @default(cuid())
+  leadId String
+  lead   Lead   @relation(fields: [leadId], references: [id])
+
+  type        String // CALL, EMAIL, MEETING, NOTE
+  subject     String
+  description String?   @db.Text
+  dueDate     DateTime?
+  completed   Boolean   @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+}
+
+// ============================================
+// ANALYTICS DASHBOARD MODELS
+// ============================================
+
+model DashboardWidget {
+  id   String @id @default(cuid())
+  name String
+  type String // METRIC, CHART, TABLE, LIST
+
+  // Widget configuration
+  dataSource String // Revenue, Expenses, Invoices, etc
+  metric     String? // total, count, average, etc
+  chartType  String? // LINE, BAR, PIE, DOUGHNUT
+
+  // Layout
+  position Int    @default(0)
+  size     String @default("MEDIUM") // SMALL, MEDIUM, LARGE
+
+  // Filters
+  dateRange String? // MONTH, QUARTER, YEAR, CUSTOM
+  filters   Json? // Custom filters
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
 }
