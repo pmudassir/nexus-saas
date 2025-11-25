@@ -80,25 +80,51 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     session.subscription as string
   );
 
-  // Update or create subscription
-  await prisma.subscription.upsert({
+  // First, try to find existing subscription
+  const existingSubscription = await prisma.subscription.findUnique({
     where: {
       stripeSubscriptionId: subscription.id,
     },
-    update: {
-      status: 'ACTIVE',
-      currentPeriodStart: new Date(subscription.current_period_start * 1000),
-      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-    },
-    create: {
-      tenantId,
-      planId: 'default-plan', // You should map this from Stripe price ID
-      status: 'ACTIVE',
-      stripeSubscriptionId: subscription.id,
-      currentPeriodStart: new Date(subscription.current_period_start * 1000),
-      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-    },
   });
+
+  if (existingSubscription) {
+    // Update existing
+    await prisma.subscription.update({
+      where: { id: existingSubscription.id },
+      data: {
+        status: 'ACTIVE',
+        currentPeriodStart: new Date(subscription.current_period_start * 1000),
+        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+      },
+    });
+  } else {
+    // Create new - find or create plan first
+    let plan = await prisma.plan.findFirst({
+      where: { name: session.metadata?.plan || 'Starter' },
+    });
+
+    if (!plan) {
+      // Create default plan if it doesn't exist
+      plan = await prisma.plan.create({
+        data: {
+          name: session.metadata?.plan || 'Starter',
+          description: 'Default plan',
+          price: 0,
+        },
+      });
+    }
+
+    await prisma.subscription.create({
+      data: {
+        tenantId,
+        planId: plan.id,
+        status: 'ACTIVE',
+        stripeSubscriptionId: subscription.id,
+        currentPeriodStart: new Date(subscription.current_period_start * 1000),
+        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+      },
+    });
+  }
 
   // Log the event
   await prisma.auditLog.create({
@@ -113,27 +139,39 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 }
 
 async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
-  await prisma.subscription.update({
+  const existing = await prisma.subscription.findUnique({
     where: {
       stripeSubscriptionId: subscription.id,
     },
-    data: {
-      status: subscription.status === 'active' ? 'ACTIVE' : 'CANCELLED',
-      currentPeriodStart: new Date(subscription.current_period_start * 1000),
-      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-    },
   });
+
+  if (existing) {
+    await prisma.subscription.update({
+      where: { id: existing.id },
+      data: {
+        status: subscription.status === 'active' ? 'ACTIVE' : 'CANCELED',
+        currentPeriodStart: new Date(subscription.current_period_start * 1000),
+        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+      },
+    });
+  }
 }
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
-  await prisma.subscription.update({
+  const existing = await prisma.subscription.findUnique({
     where: {
       stripeSubscriptionId: subscription.id,
     },
-    data: {
-      status: 'CANCELLED',
-    },
   });
+
+  if (existing) {
+    await prisma.subscription.update({
+      where: { id: existing.id },
+      data: {
+        status: 'CANCELED',
+      },
+    });
+  }
 }
 
 async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
