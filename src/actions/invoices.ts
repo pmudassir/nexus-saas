@@ -22,17 +22,19 @@ export async function sendInvoice(formData: FormData) {
       tenantId: tenant.id,
     },
     include: {
-      user: {
-        select: {
-          name: true,
-          email: true,
-        },
-      },
+      client: true,
     },
   });
 
   if (!invoice) {
     throw new Error('Invoice not found');
+  }
+
+  const clientEmail = invoice.client?.email;
+  const clientName = invoice.client ? `${invoice.client.firstName} ${invoice.client.lastName || ''}`.trim() : 'Valued Customer';
+
+  if (!clientEmail) {
+    throw new Error('Client email not found');
   }
 
   // Generate invoice HTML
@@ -60,7 +62,7 @@ export async function sendInvoice(formData: FormData) {
       <div class="info">
         <div class="info-row">
           <strong>Date:</strong>
-          <span>${new Date(invoice.date).toLocaleDateString()}</span>
+          <span>${new Date(invoice.createdAt).toLocaleDateString()}</span>
         </div>
         <div class="info-row">
           <strong>Due Date:</strong>
@@ -76,11 +78,10 @@ export async function sendInvoice(formData: FormData) {
       
       <div class="details">
         <h3>Invoice Details</h3>
-        <p><strong>Client:</strong> ${invoice.clientName}</p>
-        <p><strong>Description:</strong> ${invoice.description}</p>
+        <p><strong>Client:</strong> ${clientName}</p>
         
         <div class="total">
-          Total Amount: $${invoice.amount.toFixed(2)}
+          Total Amount: $${invoice.totalAmount.toFixed(2)} ${invoice.currency}
         </div>
       </div>
       
@@ -96,7 +97,7 @@ export async function sendInvoice(formData: FormData) {
   try {
     await resend.emails.send({
       from: EMAIL_FROM,
-      to: invoice.clientEmail || invoice.user.email,
+      to: clientEmail,
       subject: `Invoice #${invoice.invoiceNumber} from ${tenant.name}`,
       html: invoiceHtml,
     });
@@ -108,14 +109,9 @@ export async function sendInvoice(formData: FormData) {
         action: 'INVOICE_SENT',
         entity: 'Invoice',
         entityId: invoiceId,
-        metadata: {
-          to: invoice.clientEmail || invoice.user.email,
-          invoiceNumber: invoice.invoiceNumber,
-        },
+        metadata: { to: clientEmail, invoiceNumber: invoice.invoiceNumber },
       },
     });
-
-    return { success: true };
   } catch (error) {
     console.error('Email sending failed:', error);
     throw new Error('Failed to send invoice email');
@@ -140,11 +136,16 @@ export async function sendInvoiceReminder(formData: FormData) {
       tenantId: tenant.id,
       status: 'PENDING',
     },
+    include: {
+      client: true,
+    },
   });
 
-  if (!invoice) {
-    throw new Error('Invoice not found or already paid');
+  if (!invoice || !invoice.client?.email) {
+    throw new Error('Invoice not found or client email missing');
   }
+
+  const clientName = `${invoice.client.firstName} ${invoice.client.lastName || ''}`.trim();
 
   const daysOverdue = Math.floor(
     (Date.now() - new Date(invoice.dueDate).getTime()) / (1000 * 60 * 60 * 24)
@@ -155,9 +156,9 @@ export async function sendInvoiceReminder(formData: FormData) {
     <html>
     <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <h2 style="color: #f59e0b;">Payment Reminder</h2>
-      <p>Dear ${invoice.clientName},</p>
+      <p>Dear ${clientName},</p>
       <p>This is a friendly reminder that invoice <strong>#${invoice.invoiceNumber}</strong> 
-      for <strong>$${invoice.amount.toFixed(2)}</strong> is ${daysOverdue > 0 ? `${daysOverdue} days overdue` : 'due soon'}.</p>
+      for <strong>$${invoice.totalAmount.toFixed(2)}</strong> is ${daysOverdue > 0 ? `${daysOverdue} days overdue` : 'due soon'}.</p>
       
       <p><strong>Original Due Date:</strong> ${new Date(invoice.dueDate).toLocaleDateString()}</p>
       
@@ -171,7 +172,7 @@ export async function sendInvoiceReminder(formData: FormData) {
   try {
     await resend.emails.send({
       from: EMAIL_FROM,
-      to: invoice.clientEmail!,
+      to: invoice.client.email,
       subject: `Payment Reminder: Invoice #${invoice.invoiceNumber}`,
       html: reminderHtml,
     });
@@ -185,8 +186,6 @@ export async function sendInvoiceReminder(formData: FormData) {
         metadata: { daysOverdue },
       },
     });
-
-    return { success: true };
   } catch (error) {
     console.error('Reminder email failed:', error);
     throw new Error('Failed to send reminder');

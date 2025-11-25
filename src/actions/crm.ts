@@ -8,7 +8,7 @@ import { requireTenantMembership } from '@/lib/tenant-auth';
  * Create or update a contact
  */
 export async function upsertContact(formData: FormData) {
-  const { tenant, session } = await requireTenantMembership();
+  const { tenant } = await requireTenantMembership();
 
   const contactId = formData.get('contactId') as string | null;
   const name = (formData.get('name') as string).trim();
@@ -22,16 +22,20 @@ export async function upsertContact(formData: FormData) {
     throw new Error('Name and email are required');
   }
 
-  const userId = (session.user as { id: string }).id;
+  // Split name into first and last
+  const nameParts = name.split(' ');
+  const firstName = nameParts[0];
+  const lastName = nameParts.slice(1).join(' ') || null;
 
   const data = {
-    name,
+    firstName,
+    lastName,
+    name,  // Store full name for convenience
     email,
     phone,
     company,
     tags,
     notes,
-    userId,
     tenantId: tenant.id,
   };
 
@@ -98,13 +102,15 @@ export async function deleteContact(formData: FormData) {
     where: { id: contactId },
   });
 
+  const fullName = contact.name || `${contact.firstName} ${contact.lastName || ''}`.trim();
+
   await prisma.auditLog.create({
     data: {
       tenantId: tenant.id,
       action: 'CONTACT_DELETED',
       entity: 'Contact',
       entityId: contactId,
-      metadata: { name: contact.name, email: contact.email },
+      metadata: { name: fullName, email: contact.email },
     },
   });
 
@@ -121,7 +127,8 @@ export async function addContactActivity(formData: FormData) {
   const activity = (formData.get('activity') as string).trim();
 
   if (!contactId || !activity) {
-    throw new Error('Contact ID and activity are required');  }
+    throw new Error('Contact ID and activity are required');
+  }
 
   const contact = await prisma.contact.findFirst({
     where: {

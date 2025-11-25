@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { requireTenantMembership } from '@/lib/tenant-auth';
 import { Button } from '@/components/ui/button';
 import { sendInvoice, sendInvoiceReminder } from '@/actions/invoices';
-import { FileText, Mail, Download, Send, Clock } from 'lucide-react';
+import { FileText, Send, Clock } from 'lucide-react';
 
 export default async function InvoicesPage() {
   const { tenant } = await requireTenantMembership();
@@ -11,14 +11,9 @@ export default async function InvoicesPage() {
   const invoices = await prisma.invoice.findMany({
     where: { tenantId: tenant.id },
     include: {
-      user: {
-        select: {
-          name: true,
-          email: true,
-        },
-      },
+      client: true,
     },
-    orderBy: { date: 'desc' },
+    orderBy: { createdAt: 'desc' },
     take: 50,
   });
 
@@ -26,10 +21,10 @@ export default async function InvoicesPage() {
     total: invoices.length,
     paid: invoices.filter((i) => i.status === 'PAID').length,
     pending: invoices.filter((i) => i.status === 'PENDING').length,
-    totalAmount: invoices.reduce((sum, i) => sum + Number(i.amount), 0),
+    totalAmount: invoices.reduce((sum, i) => sum + Number(i.totalAmount), 0),
     paidAmount: invoices
       .filter((i) => i.status === 'PAID')
-      .reduce((sum, i) => sum + Number(i.amount), 0),
+      .reduce((sum, i) => sum + Number(i.totalAmount), 0),
   };
 
   return (
@@ -83,7 +78,6 @@ export default async function InvoicesPage() {
                   <th className="px-6 py-3">Invoice #</th>
                   <th className="px-6 py-3">Client</th>
                   <th className="px-6 py-3">Amount</th>
-                  <th className="px-6 py-3">Date</th>
                   <th className="px-6 py-3">Due Date</th>
                   <th className="px-6 py-3">Status</th>
                   <th className="px-6 py-3">Actions</th>
@@ -94,6 +88,10 @@ export default async function InvoicesPage() {
                   const isOverdue =
                     invoice.status === 'PENDING' &&
                     new Date(invoice.dueDate) < new Date();
+                  
+                  const clientName = invoice.client 
+                    ? `${invoice.client.firstName} ${invoice.client.lastName || ''}`.trim()
+                    : 'Unknown Client';
 
                   return (
                     <tr key={invoice.id} className="hover:bg-white/5 transition-colors">
@@ -101,20 +99,15 @@ export default async function InvoicesPage() {
                         {invoice.invoiceNumber}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="font-medium text-white">
-                          {invoice.clientName}
-                        </div>
-                        {invoice.clientEmail && (
+                        <div className="font-medium text-white">{clientName}</div>
+                        {invoice.client?.email && (
                           <div className="text-xs text-slate-400">
-                            {invoice.clientEmail}
+                            {invoice.client.email}
                           </div>
                         )}
                       </td>
                       <td className="px-6 py-4 font-semibold text-white">
-                        ${Number(invoice.amount).toLocaleString()}
-                      </td>
-                      <td className="px-6 py-4 text-slate-400">
-                        {new Date(invoice.date).toLocaleDateString()}
+                        ${Number(invoice.totalAmount).toLocaleString()} {invoice.currency}
                       </td>
                       <td className="px-6 py-4">
                         <div className={isOverdue ? 'text-red-400' : 'text-slate-400'}>
@@ -137,32 +130,32 @@ export default async function InvoicesPage() {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
-                          <form action={sendInvoice}>
-                            <input type="hidden" name="invoiceId" value={invoice.id} />
-                            <button
-                              type="submit"
-                              className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
-                              title="Send Invoice"
-                            >
-                              <Send className="w-4 h-4" />
-                            </button>
-                          </form>
+                          {invoice.client?.email && (
+                            <>
+                              <form action={sendInvoice}>
+                                <input type="hidden" name="invoiceId" value={invoice.id} />
+                                <button
+                                  type="submit"
+                                  className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+                                  title="Send Invoice"
+                                >
+                                  <Send className="w-4 h-4" />
+                                </button>
+                              </form>
 
-                          {invoice.status === 'PENDING' && (
-                            <form action={sendInvoiceReminder}>
-                              <input
-                                type="hidden"
-                                name="invoiceId"
-                                value={invoice.id}
-                              />
-                              <button
-                                type="submit"
-                                className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-amber-400 transition-colors"
-                                title="Send Reminder"
-                              >
-                                <Clock className="w-4 h-4" />
-                              </button>
-                            </form>
+                              {invoice.status === 'PENDING' && (
+                                <form action={sendInvoiceReminder}>
+                                  <input type="hidden" name="invoiceId" value={invoice.id} />
+                                  <button
+                                    type="submit"
+                                    className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-amber-400 transition-colors"
+                                    title="Send Reminder"
+                                  >
+                                    <Clock className="w-4 h-4" />
+                                  </button>
+                                </form>
+                              )}
+                            </>
                           )}
                         </div>
                       </td>
@@ -172,10 +165,7 @@ export default async function InvoicesPage() {
 
                 {invoices.length === 0 && (
                   <tr>
-                    <td
-                      colSpan={7}
-                      className="px-6 py-12 text-center text-slate-400"
-                    >
+                    <td colSpan={6} className="px-6 py-12 text-center text-slate-400">
                       <FileText className="w-12 h-12 mx-auto mb-3 text-slate-600" />
                       <div className="text-sm">No invoices yet</div>
                       <div className="text-xs text-slate-500 mt-1">
