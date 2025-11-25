@@ -176,10 +176,14 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
 
 async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
   // Log successful payment
-  if (invoice.subscription) {
+  const subscriptionId = typeof invoice.subscription === 'string' 
+    ? invoice.subscription 
+    : invoice.subscription?.id;
+    
+  if (subscriptionId) {
     const subscription = await prisma.subscription.findFirst({
       where: {
-        stripeSubscriptionId: invoice.subscription as string,
+        stripeSubscriptionId: subscriptionId,
       },
     });
 
@@ -202,10 +206,14 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
 
 async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
   // Log failed payment
-  if (invoice.subscription) {
+  const subscriptionId = typeof invoice.subscription === 'string' 
+    ? invoice.subscription 
+    : invoice.subscription?.id;
+    
+  if (subscriptionId) {
     const subscription = await prisma.subscription.findFirst({
       where: {
-        stripeSubscriptionId: invoice.subscription as string,
+        stripeSubscriptionId: subscriptionId,
       },
     });
 

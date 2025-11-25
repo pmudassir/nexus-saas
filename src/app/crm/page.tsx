@@ -81,7 +81,7 @@ export default async function CRMPage() {
           <h2 className="text-sm font-semibold text-white">Quick Add Contact</h2>
           <form
             className="grid gap-3 md:grid-cols-[1.5fr,1.5fr,1.5fr,1.5fr,auto] items-end"
-            action={createContact}
+            action={upsertContact}
           >
             <div>
               <label className="block text-xs font-medium text-zinc-400 mb-1">
