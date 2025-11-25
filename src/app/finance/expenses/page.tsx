@@ -1,43 +1,27 @@
 import { Shell } from "@/components/layout/Shell";
 import { Button } from "@/components/ui/button";
 import { Plus, Receipt, MoreHorizontal, Filter } from "lucide-react";
+import { prisma } from "@/lib/prisma";
+import { requireTenantMembership } from "@/lib/tenant-auth";
+import { createExpense } from "@/actions/finance";
+import { format } from "date-fns";
 
-const expenses = [
-  {
-    id: "EXP-001",
-    description: "Office Supplies",
-    amount: 245.0,
-    category: "Operations",
-    status: "APPROVED",
-    date: "Oct 14, 2023",
-  },
-  {
-    id: "EXP-002",
-    description: "Client Lunch",
-    amount: 120.5,
-    category: "Sales",
-    status: "PENDING",
-    date: "Oct 12, 2023",
-  },
-  {
-    id: "EXP-003",
-    description: "Software License",
-    amount: 899.0,
-    category: "IT",
-    status: "APPROVED",
-    date: "Oct 05, 2023",
-  },
-  {
-    id: "EXP-004",
-    description: "Travel Expenses",
-    amount: 450.0,
-    category: "Travel",
-    status: "REJECTED",
-    date: "Sep 28, 2023",
-  },
-];
+function formatCurrency(amount: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2,
+  }).format(amount);
+}
 
-export default function ExpensesPage() {
+export default async function ExpensesPage() {
+  const { tenant } = await requireTenantMembership();
+
+  const expenses = await prisma.expense.findMany({
+    where: { tenantId: tenant.id },
+    orderBy: { date: "desc" },
+  });
+
   return (
     <Shell>
       <div className="flex flex-col gap-6">
@@ -53,68 +37,110 @@ export default function ExpensesPage() {
               <Filter className="h-4 w-4 mr-2" />
               Filter
             </Button>
-            <Button>
-              <Plus className="h-4 w-4 mr-2" />
-              New Expense
-            </Button>
           </div>
         </div>
 
-        <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-md overflow-hidden">
-          <table className="w-full text-sm text-left">
-            <thead className="bg-white/5 text-muted-foreground font-medium">
-              <tr>
-                <th className="px-6 py-4">Description</th>
-                <th className="px-6 py-4">Category</th>
-                <th className="px-6 py-4">Date</th>
-                <th className="px-6 py-4">Amount</th>
-                <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/10">
-              {expenses.map((expense) => (
-                <tr
-                  key={expense.id}
-                  className="hover:bg-white/5 transition-colors"
-                >
-                  <td className="px-6 py-4 font-medium flex items-center gap-2">
-                    <Receipt className="h-4 w-4 text-muted-foreground" />
-                    {expense.description}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="px-2 py-1 rounded-md bg-white/5 text-xs">
-                      {expense.category}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-muted-foreground">
-                    {expense.date}
-                  </td>
-                  <td className="px-6 py-4 font-medium">
-                    ${expense.amount.toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        expense.status === "APPROVED"
-                          ? "bg-green-500/10 text-green-500"
-                          : expense.status === "PENDING"
-                          ? "bg-yellow-500/10 text-yellow-500"
-                          : "bg-red-500/10 text-red-500"
-                      }`}
-                    >
-                      {expense.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <button className="text-muted-foreground hover:text-foreground">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </button>
-                  </td>
+        <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-md p-4 space-y-4">
+          <div>
+            <h2 className="text-sm font-semibold text-slate-200 mb-2">
+              Quick Add Expense
+            </h2>
+            <form className="grid gap-3 md:grid-cols-[2fr,1fr,1fr,auto] items-end" action={createExpense}>
+              <div>
+                <label className="block text-xs font-medium text-slate-400 mb-1">
+                  Description
+                </label>
+                <input
+                  name="description"
+                  required
+                  className="w-full rounded-lg bg-black/30 border border-white/10 px-3 py-2 text-xs text-white outline-none focus:ring-2 focus:ring-indigo-500/60"
+                  placeholder="Software subscription"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-400 mb-1">
+                  Category
+                </label>
+                <input
+                  name="category"
+                  className="w-full rounded-lg bg-black/30 border border-white/10 px-3 py-2 text-xs text-white outline-none focus:ring-2 focus:ring-indigo-500/60"
+                  placeholder="SaaS"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-xs font-medium text-slate-400 mb-1">
+                    Amount
+                  </label>
+                  <input
+                    name="amount"
+                    type="number"
+                    step="0.01"
+                    required
+                    className="w-full rounded-lg bg-black/30 border border-white/10 px-3 py-2 text-xs text-white outline-none focus:ring-2 focus:ring-indigo-500/60"
+                    placeholder="99.00"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-slate-400 mb-1">
+                    Date
+                  </label>
+                  <input
+                    name="date"
+                    type="date"
+                    className="w-full rounded-lg bg-black/30 border border-white/10 px-3 py-2 text-xs text-white outline-none focus:ring-2 focus:ring-indigo-500/60"
+                  />
+                </div>
+              </div>
+              <Button type="submit" size="sm" className="mt-1">
+                <Plus className="h-4 w-4 mr-1" />
+                Add
+              </Button>
+            </form>
+          </div>
+
+          <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-md overflow-hidden">
+            <table className="w-full text-sm text-left">
+              <thead className="bg-white/5 text-muted-foreground font-medium">
+                <tr>
+                  <th className="px-6 py-4">Description</th>
+                  <th className="px-6 py-4">Category</th>
+                  <th className="px-6 py-4">Date</th>
+                  <th className="px-6 py-4">Amount</th>
+                  <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                {expenses.map((expense) => (
+                  <tr
+                    key={expense.id}
+                    className="hover:bg-white/5 transition-colors"
+                  >
+                    <td className="px-6 py-4 font-medium flex items-center gap-2">
+                      <Receipt className="h-4 w-4 text-muted-foreground" />
+                      {expense.description}
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="px-2 py-1 rounded-md bg-white/5 text-xs">
+                        {expense.category}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-muted-foreground">
+                      {format(expense.date, "PP")}
+                    </td>
+                    <td className="px-6 py-4 font-medium">
+                      {formatCurrency(expense.amount)}
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button className="text-muted-foreground hover:text-foreground">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </Shell>

@@ -1,6 +1,7 @@
 import { Shell } from "@/components/layout/Shell";
 import { Button } from "@/components/ui/button";
 import { Plus, Zap, Play, Pause, MoreHorizontal } from "lucide-react";
+import { requireTenantMembership } from "@/lib/tenant-auth";
 
 const automations = [
   {
@@ -26,7 +27,8 @@ const automations = [
   },
 ];
 
-export default function AutomationPage() {
+export default async function AutomationPage() {
+  await requireTenantMembership();
   return (
     <Shell>
       <div className="flex flex-col gap-6">

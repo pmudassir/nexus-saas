@@ -1,0 +1,52 @@
+{
+  "name": "Salon & Spa",
+  "description": "Elegant template for beauty salons and spa businesses",
+  "pages": [
+    {
+      "title": "Home",
+      "path": "/",
+      "isHome": true,
+      "blocks": [
+        {
+          "type": "HERO",
+          "order": 0,
+          "data": {
+            "heading": "Beauty & Relaxation",
+            "subheading": "Transform your look, rejuvenate your spirit",
+            "ctaLabel": "Book Appointment"
+          }
+        },
+        {
+          "type": "TEXT",
+          "order": 1,
+          "data": {
+            "heading": "Welcome to Our Salon",
+            "body": "We offer a full range of hair, nail, and spa services in a luxurious, relaxing environment. Our experienced stylists use only premium products to ensure you look and feel your best."
+          }
+        },
+        {
+          "type": "FEATURES",
+          "order": 2,
+          "data": {
+            "heading": "Our Services",
+            "features": [
+              { "title": "Hair Styling", "description": "Cuts, colors, and treatments" },
+              { "title": "Nail Care", "description": "Manicures and pedicures" },
+              { "title": "Spa Treatments", "description": "Massages and facials" }
+            ]
+          }
+        },
+        {
+          "type": "CONTACT",
+          "order": 3,
+          "data": {
+            "heading": "Book Your Appointment",
+            "address": "456 Beauty Lane, Your City",
+            "phone": "(555) 234-5678",
+            "email": "hello@salon.com"
+          }
+        }
+      ]
+    }
+  ]
+}

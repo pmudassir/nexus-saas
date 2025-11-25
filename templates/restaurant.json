@@ -1,0 +1,83 @@
+{
+  "name": "Restaurant & Cafe",
+  "description": "Beautiful template for restaurants, cafes, and food businesses",
+  "pages": [
+    {
+      "title": "Home",
+      "path": "/",
+      "isHome": true,
+      "blocks": [
+        {
+          "type": "HERO",
+          "order": 0,
+          "data": {
+            "heading": "Welcome to Our Restaurant",
+            "subheading": "Experience authentic flavors in a cozy atmosphere",
+            "ctaLabel": "View Menu"
+          }
+        },
+        {
+          "type": "TEXT",
+          "order": 1,
+          "data": {
+            "heading": "Our Story",
+            "body": "For over 20 years, we've been serving the finest cuisine made from locally sourced ingredients. Our chefs combine traditional recipes with modern techniques to create unforgettable dining experiences."
+          }
+        },
+        {
+          "type": "FEATURES",
+          "order": 2,
+          "data": {
+            "heading": "Why Choose Us",
+            "features": [
+              { "title": "Fresh Ingredients", "description": "Locally sourced, organic produce" },
+              { "title": "Expert Chefs", "description": "20+ years of culinary excellence" },
+              { "title": "Cozy Atmosphere", "description": "Perfect for any occasion" }
+            ]
+          }
+        },
+        {
+          "type": "CONTACT",
+          "order": 3,
+          "data": {
+            "heading": "Visit Us",
+            "address": "123 Main Street, Your City",
+            "phone": "(555) 123-4567",
+            "email": "info@restaurant.com"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Menu",
+      "path": "/menu",
+      "isHome": false,
+      "blocks": [
+        {
+          "type": "HERO",
+          "order": 0,
+          "data": {
+            "heading": "Our Menu",
+            "subheading": "Discover our selection of delicious dishes"
+          }
+        },
+        {
+          "type": "TEXT",
+          "order": 1,
+          "data": {
+            "heading": "Appetizers",
+            "body": "• Bruschetta | $8\n• Caesar Salad | $10\n• Garlic Bread | $6"
+          }
+        },
+        {
+          "type": "TEXT",
+          "order": 2,
+          "data": {
+            "heading": "Main Courses",
+            "body": "• Grilled Salmon | $24\n• Ribeye Steak | $32\n• Pasta Carbonara | $18"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -5,8 +5,48 @@ import {
 } from "@/components/analytics/Charts";
 import { Widget } from "@/components/dashboard/Widget";
 import { TrendingUp, Users, Activity, BarChart3 } from "lucide-react";
+import { prisma } from "@/lib/prisma";
+import { requireTenantMembership } from "@/lib/tenant-auth";
 
-export default function AnalyticsPage() {
+function formatCurrency(amount: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2,
+  }).format(amount);
+}
+
+export default async function AnalyticsPage() {
+  const { tenant } = await requireTenantMembership();
+
+  const [invoices, expenses, projects, employees, contacts] =
+    await Promise.all([
+      prisma.invoice.findMany({
+        where: { tenantId: tenant.id },
+      }),
+      prisma.expense.findMany({
+        where: { tenantId: tenant.id },
+      }),
+      prisma.project.findMany({
+        where: { tenantId: tenant.id },
+      }),
+      prisma.employee.findMany({
+        where: { tenantId: tenant.id },
+      }),
+      prisma.contact.findMany({
+        where: { tenantId: tenant.id },
+      }),
+    ]);
+
+  const totalRevenue = invoices
+    .filter((inv) => inv.status.toUpperCase() === "PAID")
+    .reduce((sum, inv) => sum + inv.totalAmount, 0);
+  const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+  const netProfit = totalRevenue - totalExpenses;
+  const activeProjects = projects.length;
+  const totalEmployees = employees.length;
+  const totalContacts = contacts.length;
+
   return (
     <Shell>
       <div className="flex flex-col gap-6">
@@ -19,32 +59,40 @@ export default function AnalyticsPage() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <Widget
-            title="Conversion Rate"
-            description="+2.4% from last month"
+            title="Total Revenue"
+            description="Paid invoices"
             icon={<TrendingUp className="h-5 w-5" />}
           >
-            <div className="text-2xl font-bold">12.5%</div>
+            <div className="text-2xl font-bold">
+              {formatCurrency(totalRevenue)}
+            </div>
           </Widget>
           <Widget
-            title="Active Users"
-            description="+120 new users"
-            icon={<Users className="h-5 w-5" />}
-          >
-            <div className="text-2xl font-bold">1,234</div>
-          </Widget>
-          <Widget
-            title="Avg. Session"
-            description="-10s from last month"
+            title="Total Expenses"
+            description="Recorded expenses"
             icon={<Activity className="h-5 w-5" />}
           >
-            <div className="text-2xl font-bold">4m 32s</div>
+            <div className="text-2xl font-bold">
+              {formatCurrency(totalExpenses)}
+            </div>
           </Widget>
           <Widget
-            title="Bounce Rate"
-            description="-5% improvement"
+            title="Net Profit"
+            description="Revenue minus expenses"
             icon={<BarChart3 className="h-5 w-5" />}
           >
-            <div className="text-2xl font-bold">42%</div>
+            <div className="text-2xl font-bold">
+              {formatCurrency(netProfit)}
+            </div>
+          </Widget>
+          <Widget
+            title="Team & Clients"
+            description="Employees and contacts"
+            icon={<Users className="h-5 w-5" />}
+          >
+            <div className="text-2xl font-bold">
+              {totalEmployees + totalContacts}
+            </div>
           </Widget>
         </div>
 

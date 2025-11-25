@@ -27,6 +27,40 @@ enum Priority {
   URGENT
 }
 
+enum TenantStatus {
+  ACTIVE
+  SUSPENDED
+  PENDING
+  CANCELLED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  INCOMPLETE
+  TRIALING
+}
+
+enum DomainType {
+  APP
+  SITE
+}
+
+enum TenantRole {
+  TENANT_ADMIN
+  TENANT_USER
+  CUSTOM
+}
+
+enum SiteBlockType {
+  HERO
+  TEXT
+  FEATURES
+  GALLERY
+  CONTACT
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -35,6 +69,7 @@ model User {
   image         String?
   password      String?
   role          Role      @default(MEMBER)
+  isSuperAdmin  Boolean   @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -44,6 +79,8 @@ model User {
   expenses           Expense[]
   createdAutomations Automation[]
   employee           Employee?
+  tenantMemberships  TenantUser[]
+  auditLogs          AuditLog[]
 }
 
 model Project {
@@ -56,9 +93,11 @@ model Project {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  ownerId String
-  owner   User   @relation(fields: [ownerId], references: [id])
-  tasks   Task[]
+  ownerId  String
+  owner    User   @relation(fields: [ownerId], references: [id])
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  tasks    Task[]
 }
 
 model Task {
@@ -79,6 +118,9 @@ model Task {
 
   creatorId String
   creator   User   @relation("CreatedTasks", fields: [creatorId], references: [id])
+
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
 }
 
 model Contact {
@@ -92,6 +134,8 @@ model Contact {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  tenantId String
+  tenant   Tenant  @relation(fields: [tenantId], references: [id])
   invoices Invoice[]
 }
 
@@ -108,7 +152,9 @@ model Invoice {
   clientId String?
   client   Contact? @relation(fields: [clientId], references: [id])
 
-  items InvoiceItem[]
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  items    InvoiceItem[]
 }
 
 model InvoiceItem {
@@ -132,8 +178,25 @@ model Expense {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
+  userId   String
+  user     User   @relation(fields: [userId], references: [id])
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+}
+
+model Product {
+  id        String   @id @default(cuid())
+  name      String
+  category  String?
+  sku       String   @unique
+  stock     Int
+  price     Float
+  status    String   @default("IN_STOCK") // IN_STOCK, LOW_STOCK, OUT_OF_STOCK
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
 }
 
 model Automation {
@@ -147,6 +210,8 @@ model Automation {
 
   creatorId String
   creator   User   @relation(fields: [creatorId], references: [id])
+  tenantId  String
+  tenant    Tenant @relation(fields: [tenantId], references: [id])
 }
 
 model Employee {
@@ -166,6 +231,8 @@ model Employee {
   userId String? @unique
   user   User?   @relation(fields: [userId], references: [id])
 
+  tenantId String
+  tenant   Tenant   @relation(fields: [tenantId], references: [id])
   payrolls Payroll[]
 }
 
@@ -180,4 +247,186 @@ model Payroll {
 
   employeeId String
   employee   Employee @relation(fields: [employeeId], references: [id])
+
+  tenantId String
+  tenant   Tenant   @relation(fields: [tenantId], references: [id])
+}
+
+model Tenant {
+  id             String         @id @default(cuid())
+  name           String
+  slug           String         @unique
+  status         TenantStatus   @default(ACTIVE)
+  region         String?
+  logoUrl        String?
+  primaryColor   String?
+  secondaryColor String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  // Platform-level relations
+  domains       Domain[]
+  subscriptions Subscription[]
+  features      TenantFeature[]
+  memberships   TenantUser[]
+  auditLogs     AuditLog[]
+
+  // Tenant-scoped data
+  projects  Project[]
+  tasks     Task[]
+  contacts  Contact[]
+  invoices  Invoice[]
+  expenses  Expense[]
+  products  Product[]
+  automations Automation[]
+  employees Employee[]
+  payrolls  Payroll[]
+  sitePages SitePage[]
+}
+
+model Plan {
+  id                  String          @id @default(cuid())
+  name                String
+  description         String?
+  priceMonthly        Int
+  currency            String          @default("USD")
+  maxUsers            Int?
+  maxStorageMb        Int?
+  maxApiCallsPerMonth Int?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  tenantId             String
+  planId               String
+  status               SubscriptionStatus @default(ACTIVE)
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  cancelAt             DateTime?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+  plan   Plan   @relation(fields: [planId], references: [id])
+
+  @@unique([tenantId, planId])
+}
+
+model Domain {
+  id         String     @id @default(cuid())
+  tenantId   String
+  domain     String
+  type       DomainType @default(APP)
+  isPrimary  Boolean    @default(false)
+  verifiedAt DateTime?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+
+  @@unique([domain, type])
+}
+
+model TenantFeature {
+  id        String   @id @default(cuid())
+  tenantId  String
+  key       String
+  enabled   Boolean  @default(true)
+  config    Json?
+  metadata  Json?    // Storage limits, API quotas, custom settings
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+
+  @@unique([tenantId, key])
+  @@index([tenantId, enabled])
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  key         String   @unique // e.g., "finance.invoice.create"
+  module      String   // e.g., "finance", "hr", "inventory"
+  action      String   // e.g., "create", "read", "update", "delete"
+  description String?
+  createdAt   DateTime @default(now())
+
+  rolePermissions RolePermission[]
+}
+
+model RolePermission {
+  id           String   @id @default(cuid())
+  tenantUserId String
+  permissionId String
+  granted      Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  tenantUser TenantUser @relation(fields: [tenantUserId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id])
+
+  @@unique([tenantUserId, permissionId])
+  @@index([tenantUserId])
+}
+
+model TenantUser {
+  id        String     @id @default(cuid())
+  tenantId  String
+  userId    String
+  role      TenantRole @default(TENANT_USER)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  tenant      Tenant           @relation(fields: [tenantId], references: [id])
+  user        User             @relation(fields: [userId], references: [id])
+  permissions RolePermission[]
+
+  @@unique([tenantId, userId])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  tenantId  String?
+  userId    String?
+  action    String
+  entity    String
+  entityId  String?
+  ip        String?
+  userAgent String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  tenant Tenant? @relation(fields: [tenantId], references: [id])
+  user   User?   @relation(fields: [userId], references: [id])
+}
+
+model SitePage {
+  id        String   @id @default(cuid())
+  tenantId  String
+  tenant    Tenant  @relation(fields: [tenantId], references: [id])
+  title     String
+  path      String
+  isHome    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  blocks SiteBlock[]
+
+  @@unique([tenantId, path])
+}
+
+model SiteBlock {
+  id        String        @id @default(cuid())
+  pageId    String
+  page      SitePage      @relation(fields: [pageId], references: [id])
+  order     Int
+  type      SiteBlockType
+  data      Json
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 }

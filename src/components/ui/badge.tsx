@@ -70,7 +70,13 @@ interface StatusBadgeProps {
     | "pending"
     | "completed"
     | "cancelled"
-    | "lead";
+    | "lead"
+    | "in_stock"
+    | "low_stock"
+    | "out_of_stock"
+    | "paid"
+    | "overdue"
+    | "on_leave";
   size?: BadgeProps["size"];
   className?: string;
 }
@@ -86,6 +92,12 @@ export function StatusBadge({ status, size, className }: StatusBadgeProps) {
     completed: { variant: "info", label: "Completed" },
     cancelled: { variant: "error", label: "Cancelled" },
     lead: { variant: "info", label: "Lead" },
+    in_stock: { variant: "success", label: "In Stock" },
+    low_stock: { variant: "warning", label: "Low Stock" },
+    out_of_stock: { variant: "error", label: "Out of Stock" },
+    paid: { variant: "success", label: "Paid" },
+    overdue: { variant: "error", label: "Overdue" },
+    on_leave: { variant: "warning", label: "On Leave" },
   };
 
   const config = variants[status];

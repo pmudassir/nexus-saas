@@ -1,0 +1,51 @@
+{
+  "name": "Professional Portfolio",
+  "description": "Clean portfolio template for freelancers and creatives",
+  "pages": [
+    {
+      "title": "Home",
+      "path": "/",
+      "isHome": true,
+      "blocks": [
+        {
+          "type": "HERO",
+          "order": 0,
+          "data": {
+            "heading": "Creative Professional",
+            "subheading": "Bringing ideas to life through design and innovation",
+            "ctaLabel": "View Portfolio"
+          }
+        },
+        {
+          "type": "TEXT",
+          "order": 1,
+          "data": {
+            "heading": "About Me",
+            "body": "I'm a passionate designer with 10+ years of experience creating beautiful, functional solutions for clients worldwide. Specializing in branding, web design, and user experience."
+          }
+        },
+        {
+          "type": "GALLERY",
+          "order": 2,
+          "data": {
+            "heading": "Featured Work",
+            "items": [
+              { "title": "Project Alpha", "description": "Brand identity design" },
+              { "title": "Project Beta", "description": "E-commerce website" },
+              { "title": "Project Gamma", "description": "Mobile app UI/UX" }
+            ]
+          }
+        },
+        {
+          "type": "CONTACT",
+          "order": 3,
+          "data": {
+            "heading": "Let's Work Together",
+            "email": "hello@portfolio.com",
+            "phone": "(555) 345-6789"
+          }
+        }
+      ]
+    }
+  ]
+}

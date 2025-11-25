@@ -3,9 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { KanbanBoard } from "@/components/projects/KanbanBoard";
 import { prisma } from "@/lib/prisma";
+import { requireTenantMembership } from "@/lib/tenant-auth";
 
 export default async function ProjectsPage() {
+  const { tenant } = await requireTenantMembership();
+
   const tasks = await prisma.task.findMany({
+    where: { tenantId: tenant.id },
     include: {
       project: true,
       creator: true,

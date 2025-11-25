@@ -2,39 +2,27 @@ import { Shell } from "@/components/layout/Shell";
 import { Button } from "@/components/ui/button";
 import { Plus, FileText, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
+import { requireTenantMembership } from "@/lib/tenant-auth";
+import { format } from "date-fns";
 
-const invoices = [
-  {
-    id: "INV-001",
-    client: "Acme Corp",
-    amount: 1200.0,
-    status: "PAID",
-    date: "Oct 12, 2023",
-  },
-  {
-    id: "INV-002",
-    client: "Globex Inc",
-    amount: 3450.5,
-    status: "PENDING",
-    date: "Oct 15, 2023",
-  },
-  {
-    id: "INV-003",
-    client: "Soylent Corp",
-    amount: 890.0,
-    status: "OVERDUE",
-    date: "Oct 01, 2023",
-  },
-  {
-    id: "INV-004",
-    client: "Umbrella Corp",
-    amount: 5600.0,
-    status: "PAID",
-    date: "Sep 28, 2023",
-  },
-];
+function formatCurrency(amount: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2,
+  }).format(amount);
+}
 
-export default function InvoicesPage() {
+export default async function InvoicesPage() {
+  const { tenant } = await requireTenantMembership();
+
+  const invoices = await prisma.invoice.findMany({
+    where: { tenantId: tenant.id },
+    include: { client: true },
+    orderBy: { createdAt: "desc" },
+  });
+
   return (
     <Shell>
       <div className="flex flex-col gap-6">
@@ -66,42 +54,48 @@ export default function InvoicesPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-white/10">
-              {invoices.map((invoice) => (
-                <tr
-                  key={invoice.id}
-                  className="hover:bg-white/5 transition-colors"
-                >
-                  <td className="px-6 py-4 font-medium flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-muted-foreground" />
-                    {invoice.id}
-                  </td>
-                  <td className="px-6 py-4">{invoice.client}</td>
-                  <td className="px-6 py-4 text-muted-foreground">
-                    {invoice.date}
-                  </td>
-                  <td className="px-6 py-4 font-medium">
-                    ${invoice.amount.toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        invoice.status === "PAID"
-                          ? "bg-green-500/10 text-green-500"
-                          : invoice.status === "PENDING"
-                          ? "bg-yellow-500/10 text-yellow-500"
-                          : "bg-red-500/10 text-red-500"
-                      }`}
-                    >
-                      {invoice.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <button className="text-muted-foreground hover:text-foreground">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {invoices.map((invoice) => {
+                const status = invoice.status.toUpperCase();
+                const badgeClass =
+                  status === "PAID"
+                    ? "bg-green-500/10 text-green-500"
+                    : status === "PENDING"
+                    ? "bg-yellow-500/10 text-yellow-500"
+                    : "bg-red-500/10 text-red-500";
+
+                return (
+                  <tr
+                    key={invoice.id}
+                    className="hover:bg-white/5 transition-colors"
+                  >
+                    <td className="px-6 py-4 font-medium flex items-center gap-2">
+                      <FileText className="h-4 w-4 text-muted-foreground" />
+                      {invoice.invoiceNumber}
+                    </td>
+                    <td className="px-6 py-4">
+                      {invoice.client?.company ?? invoice.client?.firstName}
+                    </td>
+                    <td className="px-6 py-4 text-muted-foreground">
+                      {format(invoice.createdAt, "PP")}
+                    </td>
+                    <td className="px-6 py-4 font-medium">
+                      {formatCurrency(invoice.totalAmount)}
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${badgeClass}`}
+                      >
+                        {status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button className="text-muted-foreground hover:text-foreground">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
