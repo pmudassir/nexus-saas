@@ -43,7 +43,7 @@ export async function generateInvoicePDF(invoiceId: string): Promise<Buffer> {
     ITEMS:
     ----------------------------------------
     ${invoice.items?.map((item) => `
-    ${item.description || 'Item'}: $${item.amount}
+    ${item.description || 'Item'}: ${item.quantity} x $${item.unitPrice} = $${item.total}
     `).join('\n') || 'No items'}
     
     ----------------------------------------
