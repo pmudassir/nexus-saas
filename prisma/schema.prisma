@@ -406,18 +406,24 @@ model AuditLog {
 }
 
 model SitePage {
-  id        String   @id @default(cuid())
+  id        String      @id @default(cuid())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
   tenantId  String
-  tenant    Tenant  @relation(fields: [tenantId], references: [id])
+  tenant    Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   title     String
   path      String
-  isHome    Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  blocks SiteBlock[]
-
+  isHome    Boolean     @default(false)
+  blocks    SiteBlock[]
+  
+  // SEO fields
+  metaTitle       String?
+  metaDescription String?
+  metaKeywords    String?
+  ogImage         String?
+  
   @@unique([tenantId, path])
+  @@index([tenantId])
 }
 
 model SiteBlock {
