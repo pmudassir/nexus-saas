@@ -146,7 +146,7 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
     });
 
     if (subscription) {
-      await prisma.audit Log.create({
+      await prisma.auditLog.create({
         data: {
           tenantId: subscription.tenantId,
           action: 'PAYMENT_SUCCEEDED',
