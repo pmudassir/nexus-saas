@@ -51,7 +51,17 @@ export function Sidebar() {
         <div className="flex-1 overflow-y-auto py-8 px-4 space-y-1 custom-scrollbar">
           <nav className="grid gap-2">
             {navigation.map((item) => {
-              const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+              // Simplified active state logic
+              let isActive = false;
+              
+              if (item.href === '/') {
+                // Dashboard is active only on exact root path
+                isActive = pathname === '/';
+              } else {
+                // Other items are active if pathname matches exactly or starts with the path
+                isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+              }
+              
               return (
                 <Link
                   key={item.name}
