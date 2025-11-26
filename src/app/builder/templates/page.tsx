@@ -35,10 +35,10 @@ export default function TemplatesPage() {
     <Shell>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-white">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
             Website Templates
           </h1>
-          <p className="text-slate-400">
+          <p className="text-muted-foreground">
             Choose a template to quickly build your website. All templates are fully customizable.
           </p>
         </div>
@@ -49,29 +49,29 @@ export default function TemplatesPage() {
             return (
               <div
                 key={template.key}
-                className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl overflow-hidden group hover:border-white/20 transition-colors"
+                className="rounded-md border border-border bg-white shadow-sm overflow-hidden group hover:border-primary/20 transition-colors"
               >
-                <div className={`h-40 bg-gradient-to-br ${template.color} flex items-center justify-center`}>
+                <div className={`h-40 bg-linear-to-br ${template.color} flex items-center justify-center`}>
                   <Icon className="w-16 h-16 text-white/90" />
                 </div>
                 <div className="p-6 space-y-4">
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">
+                    <h3 className="text-lg font-semibold text-foreground mb-2">
                       {template.name}
                     </h3>
-                    <p className="text-sm text-slate-400">
+                    <p className="text-sm text-muted-foreground">
                       {template.description}
                     </p>
                   </div>
 
                   <div className="space-y-2">
-                    <div className="text-xs font-medium text-slate-300 uppercase tracking-wide">
+                    <div className="text-xs font-medium text-muted-foreground/70 uppercase tracking-wide">
                       Features
                     </div>
                     <ul className="space-y-1">
                       {template.features.map((feature, idx) => (
-                        <li key={idx} className="text-xs text-slate-400 flex items-start">
-                          <span className="text-emerald-400 mr-2">✓</span>
+                        <li key={idx} className="text-xs text-muted-foreground flex items-start">
+                          <span className="text-emerald-500 mr-2">✓</span>
                           {feature}
                         </li>
                       ))}
@@ -84,7 +84,7 @@ export default function TemplatesPage() {
                       name="templateKey"
                       value={template.key}
                     />
-                    <Button type="submit" className="w-full">
+                    <Button type="submit" className="w-full bg-primary text-white hover:bg-primary/90">
                       Use This Template
                     </Button>
                   </form>
@@ -94,14 +94,14 @@ export default function TemplatesPage() {
           })}
         </div>
 
-        <div className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-2">
+        <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-foreground mb-2">
             Need Something Custom?
           </h2>
-          <p className="text-sm text-slate-400 mb-4">
+          <p className="text-sm text-muted-foreground mb-4">
             Start with a blank page and build your website from scratch using our drag-and-drop builder.
           </p>
-          <Button variant="outline" asChild>
+          <Button variant="outline" asChild className="border-border text-foreground hover:bg-muted">
             <a href="/builder">Go to Builder</a>
           </Button>
         </div>

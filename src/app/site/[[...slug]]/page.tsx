@@ -19,7 +19,7 @@ function renderBlock(block: RenderBlock) {
     return (
       <section
         key={block.id}
-        className="py-16 px-6 md:px-10 bg-gradient-to-br from-indigo-600 to-purple-600 text-white"
+        className="py-16 px-6 md:px-10 bg-linear-to-br from-indigo-600 to-purple-600 text-white"
       >
         <div className="max-w-3xl mx-auto text-center space-y-4">
           <h1 className="text-4xl font-bold tracking-tight">
@@ -41,10 +41,10 @@ function renderBlock(block: RenderBlock) {
   return (
     <section key={block.id} className="py-12 px-6 md:px-10 bg-white">
       <div className="max-w-3xl mx-auto space-y-3">
-        <h2 className="text-2xl font-semibold text-slate-900">
+        <h2 className="text-2xl font-semibold text-foreground">
           {heading ?? "Text block"}
         </h2>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-muted-foreground">
           {body ?? "Body copy for this section."}
         </p>
       </div>
@@ -61,7 +61,7 @@ export default async function SitePage({
 
   if (!tenant) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white text-slate-500 text-sm">
+      <div className="min-h-screen flex items-center justify-center bg-background text-muted-foreground text-sm">
         No tenant context for this domain.
       </div>
     );
@@ -77,14 +77,14 @@ export default async function SitePage({
 
   if (!page) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white text-slate-500 text-sm">
+      <div className="min-h-screen flex items-center justify-center bg-background text-muted-foreground text-sm">
         Page not found.
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-background text-foreground">
       {page.blocks.map((block) => renderBlock(block as unknown as RenderBlock))}
     </div>
   );

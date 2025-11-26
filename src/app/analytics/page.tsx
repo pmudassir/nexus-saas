@@ -97,11 +97,11 @@ export default async function AnalyticsPage() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-6 shadow-sm backdrop-blur-md">
+          <div className="rounded-md border border-border bg-white p-6 shadow-sm">
             <h3 className="font-semibold mb-6">Revenue vs Expenses</h3>
             <RevenueChart />
           </div>
-          <div className="rounded-xl border border-white/10 bg-white/5 p-6 shadow-sm backdrop-blur-md">
+          <div className="rounded-md border border-border bg-white p-6 shadow-sm">
             <h3 className="font-semibold mb-6">Project Distribution</h3>
             <ProjectStatusChart />
           </div>

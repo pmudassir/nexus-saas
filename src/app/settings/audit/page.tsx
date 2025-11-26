@@ -52,25 +52,25 @@ export default async function AuditLogsPage({
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold tracking-tight text-foreground flex items-center gap-3">
               <FileText className="w-8 h-8" />
               Audit Logs
             </h1>
-            <p className="text-slate-400 mt-2">
+            <p className="text-muted-foreground mt-2">
               Track all activities and changes within your workspace for security
               and compliance.
             </p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm font-medium transition-colors">
+          <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-border text-foreground hover:bg-muted text-sm font-medium transition-colors shadow-sm">
             <Download className="w-4 h-4" />
             Export Logs
           </button>
         </div>
 
         {/* Filters */}
-        <div className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-4">
+        <div className="rounded-md border border-border bg-white p-4 shadow-sm">
           <div className="flex items-center gap-4">
-            <Filter className="w-5 h-5 text-slate-400" />
+            <Filter className="w-5 h-5 text-muted-foreground" />
             <select
               name="action"
               defaultValue={searchParams.action || ''}
@@ -83,16 +83,16 @@ export default async function AuditLogsPage({
                 }
                 window.location.href = url.toString();
               }}
-              className="rounded-lg bg-black/30 border border-white/10 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-indigo-500/60"
+              className="rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
             >
-              <option value="" className="bg-slate-900">
+              <option value="" className="bg-white text-foreground">
                 All Actions
               </option>
               {uniqueActions.map((item) => (
                 <option
                   key={item.action}
                   value={item.action}
-                  className="bg-slate-900"
+                  className="bg-white text-foreground"
                 >
                   {item.action}
                 </option>
@@ -102,10 +102,10 @@ export default async function AuditLogsPage({
         </div>
 
         {/* Logs Table */}
-        <div className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl overflow-hidden">
+        <div className="rounded-md border border-border bg-white shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-white/5 text-left text-xs font-medium uppercase tracking-wide text-slate-400">
+              <thead className="bg-muted text-left text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 <tr>
                   <th className="px-6 py-3">Timestamp</th>
                   <th className="px-6 py-3">User</th>
@@ -114,44 +114,44 @@ export default async function AuditLogsPage({
                   <th className="px-6 py-3">IP Address</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5 bg-black/20 text-slate-100">
+              <tbody className="divide-y divide-border bg-white text-foreground">
                 {logs.map((log) => (
                   <tr
                     key={log.id}
-                    className="hover:bg-white/5 transition-colors"
+                    className="hover:bg-muted/50 transition-colors"
                   >
-                    <td className="px-6 py-4 text-xs text-slate-400">
+                    <td className="px-6 py-4 text-xs text-muted-foreground">
                       <div>
                         {new Date(log.createdAt).toLocaleString()}
                       </div>
-                      <div className="text-slate-500">
+                      <div className="text-muted-foreground/70">
                         {formatDistanceToNow(new Date(log.createdAt), {
                           addSuffix: true,
                         })}
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="font-medium text-white">
+                      <div className="font-medium text-foreground">
                         {log.user?.name || 'Unknown User'}
                       </div>
-                      <div className="text-xs text-slate-400">
+                      <div className="text-xs text-muted-foreground">
                         {log.user?.email}
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-300">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-100">
                         {log.action}
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-white">{log.entity}</div>
+                      <div className="text-foreground">{log.entity}</div>
                       {log.entityId && (
-                        <div className="text-xs text-slate-500 font-mono">
+                        <div className="text-xs text-muted-foreground font-mono">
                           {log.entityId.substring(0, 8)}...
                         </div>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-slate-400 font-mono text-xs">
+                    <td className="px-6 py-4 text-muted-foreground font-mono text-xs">
                       {log.ip || '—'}
                     </td>
                   </tr>
@@ -161,11 +161,11 @@ export default async function AuditLogsPage({
                   <tr>
                     <td
                       colSpan={5}
-                      className="px-6 py-12 text-center text-slate-400"
+                      className="px-6 py-12 text-center text-muted-foreground"
                     >
-                      <FileText className="w-12 h-12 mx-auto mb-3 text-slate-600" />
+                      <FileText className="w-12 h-12 mx-auto mb-3 text-muted-foreground/50" />
                       <div className="text-sm">No audit logs found</div>
-                      <div className="text-xs text-slate-500 mt-1">
+                      <div className="text-xs text-muted-foreground/70 mt-1">
                         Activity will appear here as actions are performed
                       </div>
                     </td>
@@ -177,15 +177,15 @@ export default async function AuditLogsPage({
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="px-6 py-4 bg-white/5 border-t border-white/10 flex items-center justify-between">
-              <div className="text-sm text-slate-400">
+            <div className="px-6 py-4 bg-muted border-t border-border flex items-center justify-between">
+              <div className="text-sm text-muted-foreground">
                 Page {page} of {totalPages} · {totalCount} total logs
               </div>
               <div className="flex gap-2">
                 {page > 1 && (
                   <a
                     href={`?page=${page - 1}${searchParams.action ? `&action=${searchParams.action}` : ''}`}
-                    className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm transition-colors"
+                    className="px-3 py-1.5 rounded-md bg-white border border-border hover:bg-muted text-foreground text-sm transition-colors shadow-sm"
                   >
                     Previous
                   </a>
@@ -193,7 +193,7 @@ export default async function AuditLogsPage({
                 {page < totalPages && (
                   <a
                     href={`?page=${page + 1}${searchParams.action ? `&action=${searchParams.action}` : ''}`}
-                    className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm transition-colors"
+                    className="px-3 py-1.5 rounded-md bg-white border border-border hover:bg-muted text-foreground text-sm transition-colors shadow-sm"
                   >
                     Next
                   </a>

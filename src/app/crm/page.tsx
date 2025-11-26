@@ -1,6 +1,7 @@
 import { Shell } from "@/components/layout/Shell";
 import { Button } from "@/components/ui/button";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
   Plus,
   Users,
@@ -58,15 +59,14 @@ export default async function CRMPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-4xl font-bold tracking-tight text-[#37352f]">
               CRM
             </h1>
-            <p className="text-slate-500 mt-2">
+            <p className="text-[#9B9A97] mt-2">
               Manage your contacts and customer relationships with precision.
             </p>
           </div>
           <Button
-            className="bg-indigo-600 text-white hover:bg-indigo-500 shadow-sm"
             asChild
           >
             <a href="#quick-add-contact">
@@ -77,11 +77,11 @@ export default async function CRMPage() {
         </div>
 
         {/* Quick Add Contact */}
-        <div
+        <Card
           id="quick-add-contact"
-          className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm space-y-4"
+          className="p-6 space-y-4"
         >
-          <h2 className="text-sm font-semibold text-slate-900">
+          <h2 className="text-sm font-semibold text-[#37352f]">
             Quick Add Contact
           </h2>
           <form
@@ -89,56 +89,51 @@ export default async function CRMPage() {
             action={upsertContact}
           >
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
+              <label className="block text-xs font-medium text-[#9B9A97] mb-1">
                 First Name
               </label>
-              <input
+              <Input
                 name="firstName"
                 required
-                className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                 placeholder="John"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
+              <label className="block text-xs font-medium text-[#9B9A97] mb-1">
                 Last Name
               </label>
-              <input
+              <Input
                 name="lastName"
-                className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                 placeholder="Smith"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
+              <label className="block text-xs font-medium text-[#9B9A97] mb-1">
                 Email
               </label>
-              <input
+              <Input
                 name="email"
                 type="email"
                 required
-                className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                 placeholder="john@example.com"
               />
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-xs font-medium text-slate-500 mb-1">
+                <label className="block text-xs font-medium text-[#9B9A97] mb-1">
                   Company
                 </label>
-                <input
+                <Input
                   name="company"
-                  className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                   placeholder="Acme Inc"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-500 mb-1">
+                <label className="block text-xs font-medium text-[#9B9A97] mb-1">
                   Phone
                 </label>
-                <input
+                <Input
                   name="phone"
-                  className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                   placeholder="+1 234 567 8900"
                 />
               </div>
@@ -146,65 +141,65 @@ export default async function CRMPage() {
             <Button
               type="submit"
               size="sm"
-              className="mt-1 bg-slate-900 text-white hover:bg-slate-800"
+              className="mt-1"
             >
               <UserPlus className="h-4 w-4 mr-2" />
               Add
             </Button>
           </form>
-        </div>
+        </Card>
 
         {/* Stats */}
         <div className="grid gap-6 md:grid-cols-3">
-          <SpotlightCard className="p-6 border-slate-200 bg-white shadow-sm">
+          <Card className="p-6">
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-lg bg-indigo-50 text-indigo-600">
-                <Users className="h-6 w-6" />
+              <div className="p-2 rounded-sm bg-[rgba(235,236,252,1)] text-indigo-600">
+                <Users className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-sm text-slate-500">Total Contacts</p>
-                <h3 className="text-2xl font-bold text-slate-900">
+                <p className="text-sm text-[#9B9A97]">Total Contacts</p>
+                <h3 className="text-2xl font-bold text-[#37352f]">
                   {totalContacts}
                 </h3>
               </div>
             </div>
-          </SpotlightCard>
-          <SpotlightCard className="p-6 border-slate-200 bg-white shadow-sm">
+          </Card>
+          <Card className="p-6">
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-lg bg-emerald-50 text-emerald-600">
-                <UserCheck className="h-6 w-6" />
+              <div className="p-2 rounded-sm bg-[rgba(219,237,219,1)] text-[rgb(28,56,41)]">
+                <UserCheck className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-sm text-slate-500">Active Clients</p>
-                <h3 className="text-2xl font-bold text-slate-900">
+                <p className="text-sm text-[#9B9A97]">Active Clients</p>
+                <h3 className="text-2xl font-bold text-[#37352f]">
                   {activeContacts}
                 </h3>
               </div>
             </div>
-          </SpotlightCard>
-          <SpotlightCard className="p-6 border-slate-200 bg-white shadow-sm">
+          </Card>
+          <Card className="p-6">
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-lg bg-blue-50 text-blue-600">
-                <UserPlus className="h-6 w-6" />
+              <div className="p-2 rounded-sm bg-[rgba(235,236,252,1)] text-blue-600">
+                <UserPlus className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-sm text-slate-500">New Leads</p>
-                <h3 className="text-2xl font-bold text-slate-900">{leads}</h3>
+                <p className="text-sm text-[#9B9A97]">New Leads</p>
+                <h3 className="text-2xl font-bold text-[#37352f]">{leads}</h3>
               </div>
             </div>
-          </SpotlightCard>
+          </Card>
         </div>
 
         {/* Contact Grid */}
         <div>
-          <h2 className="text-xl font-semibold mb-6 text-slate-900">
+          <h2 className="text-xl font-semibold mb-6 text-[#37352f]">
             All Contacts
           </h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {contacts.map((contact) => (
-              <SpotlightCard
+              <Card
                 key={contact.id}
-                className="p-5 group border-slate-200 bg-white shadow-sm hover:shadow-md transition-all"
+                className="p-5 group hover:shadow-md transition-all"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
@@ -217,13 +212,13 @@ export default async function CRMPage() {
                         contact.lastName
                       )}
                       size="lg"
-                      className="ring-2 ring-slate-100 bg-slate-100 text-slate-600"
+                      className="ring-1 ring-[#E9E9E8] bg-[#F7F7F5] text-[#5F5E5B]"
                     />
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold text-base leading-tight mb-0.5 text-slate-900">
+                      <h3 className="font-semibold text-base leading-tight mb-0.5 text-[#37352f]">
                         {contact.firstName} {contact.lastName}
                       </h3>
-                      <p className="text-xs text-slate-500">
+                      <p className="text-xs text-[#9B9A97]">
                         {mapStatus(contact.status) === "lead"
                           ? "Lead"
                           : mapStatus(contact.status) === "inactive"
@@ -236,23 +231,23 @@ export default async function CRMPage() {
                   <div className="flex items-center gap-2">
                     <StatusBadge status={mapStatus(contact.status)} size="sm" />
                     <DropdownMenu>
-                      <DropdownMenuTrigger className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-slate-100 rounded text-slate-400 hover:text-slate-600">
+                      <DropdownMenuTrigger className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-[rgba(55,53,47,0.08)] rounded-sm text-[#9B9A97] hover:text-[#37352f]">
                         <MoreVertical className="h-4 w-4" />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
                         align="end"
-                        className="bg-white border-slate-200 text-slate-700"
+                        className="bg-white border-[#E9E9E8] text-[#37352f]"
                       >
-                        <DropdownMenuItem className="focus:bg-slate-100 focus:text-slate-900">
+                        <DropdownMenuItem className="focus:bg-[rgba(55,53,47,0.08)] focus:text-[#37352f]">
                           View Details
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="focus:bg-slate-100 focus:text-slate-900">
+                        <DropdownMenuItem className="focus:bg-[rgba(55,53,47,0.08)] focus:text-[#37352f]">
                           Send Email
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="focus:bg-slate-100 focus:text-slate-900">
+                        <DropdownMenuItem className="focus:bg-[rgba(55,53,47,0.08)] focus:text-[#37352f]">
                           Schedule Call
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator className="bg-slate-100" />
+                        <DropdownMenuSeparator className="bg-[#E9E9E8]" />
                         <DropdownMenuItem className="text-red-600 focus:text-red-700 focus:bg-red-50">
                           Delete Contact
                         </DropdownMenuItem>
@@ -262,7 +257,7 @@ export default async function CRMPage() {
                 </div>
 
                 {/* Company */}
-                <div className="flex items-center gap-2 text-sm text-slate-500 mb-3">
+                <div className="flex items-center gap-2 text-sm text-[#9B9A97] mb-3">
                   <Building2 className="h-4 w-4" />
                   <span>{contact.company}</span>
                 </div>
@@ -271,7 +266,7 @@ export default async function CRMPage() {
                 <div className="flex flex-col gap-2 mb-3">
                   <a
                     href={`mailto:${contact.email}`}
-                    className="flex items-center gap-2 text-sm text-slate-500 hover:text-indigo-600 transition-colors group/link"
+                    className="flex items-center gap-2 text-sm text-[#9B9A97] hover:text-indigo-600 transition-colors group/link"
                   >
                     <Mail className="h-4 w-4 flex-shrink-0" />
                     <span className="truncate group-hover/link:underline">
@@ -280,7 +275,7 @@ export default async function CRMPage() {
                   </a>
                   <a
                     href={`tel:${contact.phone}`}
-                    className="flex items-center gap-2 text-sm text-slate-500 hover:text-indigo-600 transition-colors group/link"
+                    className="flex items-center gap-2 text-sm text-[#9B9A97] hover:text-indigo-600 transition-colors group/link"
                   >
                     <Phone className="h-4 w-4 flex-shrink-0" />
                     <span className="group-hover/link:underline">
@@ -290,15 +285,15 @@ export default async function CRMPage() {
                 </div>
 
                 {/* Footer */}
-                <div className="pt-3 border-t border-slate-100">
-                  <p className="text-xs text-slate-400">
+                <div className="pt-3 border-t border-[#E9E9E8]">
+                  <p className="text-xs text-[#9B9A97]">
                     Last update:{" "}
                     {formatDistanceToNow(contact.updatedAt, {
                       addSuffix: true,
                     })}
                   </p>
                 </div>
-              </SpotlightCard>
+              </Card>
             ))}
           </div>
         </div>

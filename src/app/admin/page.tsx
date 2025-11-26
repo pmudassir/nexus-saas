@@ -31,56 +31,56 @@ export default async function AdminPage() {
     <Shell>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
             Platform Admin
           </h1>
-          <p className="text-slate-500">
+          <p className="text-muted-foreground">
             Manage tenants, plans, and platform-wide settings.
           </p>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
-          <h2 className="text-lg font-semibold text-slate-900">
+        <div className="rounded-md border border-border bg-white p-6 shadow-sm space-y-4">
+          <h2 className="text-lg font-semibold text-foreground">
             Create Tenant
           </h2>
           <form className="grid gap-4 md:grid-cols-4" action={createTenant}>
             <div className="md:col-span-1">
-              <label className="block text-xs font-medium text-slate-500 mb-1">
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
                 Name
               </label>
               <input
                 name="name"
                 required
-                className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 placeholder="Acme Corp"
               />
             </div>
             <div className="md:col-span-1">
-              <label className="block text-xs font-medium text-slate-500 mb-1">
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
                 Slug
               </label>
               <input
                 name="slug"
                 required
-                className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 placeholder="acme"
               />
             </div>
             <div className="md:col-span-1">
-              <label className="block text-xs font-medium text-slate-500 mb-1">
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
                 Plan
               </label>
               <select
                 name="planId"
                 required
-                className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 defaultValue={plans[0]?.id ?? ""}
               >
                 {plans.map((plan) => (
                   <option
                     key={plan.id}
                     value={plan.id}
-                    className="bg-white text-slate-900"
+                    className="bg-white text-foreground"
                   >
                     {plan.name} (${plan.priceMonthly / 100}/mo)
                   </option>
@@ -90,7 +90,7 @@ export default async function AdminPage() {
             <div className="md:col-span-1 flex items-end">
               <Button
                 type="submit"
-                className="w-full bg-slate-900 text-white hover:bg-slate-800"
+                className="w-full bg-primary text-white hover:bg-primary/90"
               >
                 Create Tenant
               </Button>
@@ -98,9 +98,9 @@ export default async function AdminPage() {
           </form>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+        <div className="rounded-md border border-border bg-white shadow-sm overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-left text-xs font-medium uppercase tracking-wide text-slate-500">
+            <thead className="bg-muted text-left text-xs font-medium uppercase tracking-wide text-muted-foreground">
               <tr>
                 <th className="px-6 py-3">Tenant</th>
                 <th className="px-6 py-3">Slug</th>
@@ -110,7 +110,7 @@ export default async function AdminPage() {
                 <th className="px-6 py-3">Created</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 bg-white text-slate-700">
+            <tbody className="divide-y divide-border bg-white text-foreground">
               {tenants.map((tenant: TenantWithRelations) => {
                 const activeSubscription = tenant.subscriptions.find(
                   (sub: TenantWithRelations["subscriptions"][number]) =>
@@ -122,20 +122,20 @@ export default async function AdminPage() {
                 return (
                   <tr
                     key={tenant.id}
-                    className="hover:bg-slate-50 transition-colors"
+                    className="hover:bg-muted/50 transition-colors"
                   >
-                    <td className="px-6 py-4 font-medium text-slate-900">
+                    <td className="px-6 py-4 text-foreground font-medium">
                       {tenant.name}
                     </td>
-                    <td className="px-6 py-4 text-slate-500 font-mono text-xs">
+                    <td className="px-6 py-4 text-muted-foreground font-mono text-xs">
                       {tenant.slug}
                     </td>
-                    <td className="px-6 py-4 text-slate-700">
+                    <td className="px-6 py-4 text-foreground">
                       {tenant.status}
                     </td>
-                    <td className="px-6 py-4 text-slate-700">{planName}</td>
-                    <td className="px-6 py-4 text-slate-700">{usersCount}</td>
-                    <td className="px-6 py-4 text-slate-500 text-xs">
+                    <td className="px-6 py-4 text-foreground">{planName}</td>
+                    <td className="px-6 py-4 text-foreground">{usersCount}</td>
+                    <td className="px-6 py-4 text-muted-foreground text-xs">
                       {tenant.createdAt.toLocaleDateString()}
                     </td>
                   </tr>
@@ -146,7 +146,7 @@ export default async function AdminPage() {
                 <tr>
                   <td
                     colSpan={6}
-                    className="px-6 py-10 text-center text-slate-500 text-sm"
+                    className="px-6 py-10 text-center text-muted-foreground text-sm"
                   >
                     No tenants found. Create your first tenant from this panel.
                   </td>

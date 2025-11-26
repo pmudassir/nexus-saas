@@ -32,48 +32,48 @@ export default async function InvoicesPage() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold tracking-tight text-foreground flex items-center gap-3">
               <FileText className="w-8 h-8" />
               Invoices
             </h1>
-            <p className="text-slate-400 mt-2">
+            <p className="text-muted-foreground mt-2">
               Manage and track your invoices.
             </p>
           </div>
-          <Button>Create Invoice</Button>
+          <Button className="bg-primary text-white hover:bg-primary/90">Create Invoice</Button>
         </div>
 
         {/* Stats */}
         <div className="grid gap-4 md:grid-cols-4">
-          <div className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6">
-            <div className="text-sm text-slate-400">Total Invoices</div>
-            <div className="text-3xl font-bold text-white mt-1">{stats.total}</div>
+          <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+            <div className="text-sm text-muted-foreground">Total Invoices</div>
+            <div className="text-3xl font-bold text-foreground mt-1">{stats.total}</div>
           </div>
-          <div className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6">
-            <div className="text-sm text-slate-400">Paid</div>
-            <div className="text-3xl font-bold text-emerald-400 mt-1">
+          <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+            <div className="text-sm text-muted-foreground">Paid</div>
+            <div className="text-3xl font-bold text-emerald-600 mt-1">
               {stats.paid}
             </div>
           </div>
-          <div className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6">
-            <div className="text-sm text-slate-400">Pending</div>
-            <div className="text-3xl font-bold text-amber-400 mt-1">
+          <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+            <div className="text-sm text-muted-foreground">Pending</div>
+            <div className="text-3xl font-bold text-amber-500 mt-1">
               {stats.pending}
             </div>
           </div>
-          <div className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6">
-            <div className="text-sm text-slate-400">Revenue</div>
-            <div className="text-3xl font-bold text-white mt-1">
+          <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+            <div className="text-sm text-muted-foreground">Revenue</div>
+            <div className="text-3xl font-bold text-foreground mt-1">
               ${stats.paidAmount.toLocaleString()}
             </div>
           </div>
         </div>
 
         {/* Invoices Table */}
-        <div className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl overflow-hidden">
+        <div className="rounded-md border border-border bg-white shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-white/5 text-left text-xs font-medium uppercase tracking-wide text-slate-400">
+              <thead className="bg-muted text-left text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 <tr>
                   <th className="px-6 py-3">Invoice #</th>
                   <th className="px-6 py-3">Client</th>
@@ -83,7 +83,7 @@ export default async function InvoicesPage() {
                   <th className="px-6 py-3">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5 bg-black/20 text-slate-100">
+              <tbody className="divide-y divide-border bg-white text-foreground">
                 {invoices.map((invoice) => {
                   const isOverdue =
                     invoice.status === 'PENDING' &&
@@ -94,35 +94,35 @@ export default async function InvoicesPage() {
                     : 'Unknown Client';
 
                   return (
-                    <tr key={invoice.id} className="hover:bg-white/5 transition-colors">
-                      <td className="px-6 py-4 font-mono text-xs">
+                    <tr key={invoice.id} className="hover:bg-muted/50 transition-colors">
+                      <td className="px-6 py-4 font-mono text-xs text-muted-foreground">
                         {invoice.invoiceNumber}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="font-medium text-white">{clientName}</div>
+                        <div className="font-medium text-foreground">{clientName}</div>
                         {invoice.client?.email && (
-                          <div className="text-xs text-slate-400">
+                          <div className="text-xs text-muted-foreground">
                             {invoice.client.email}
                           </div>
                         )}
                       </td>
-                      <td className="px-6 py-4 font-semibold text-white">
+                      <td className="px-6 py-4 font-semibold text-foreground">
                         ${Number(invoice.totalAmount).toLocaleString()} {invoice.currency}
                       </td>
                       <td className="px-6 py-4">
-                        <div className={isOverdue ? 'text-red-400' : 'text-slate-400'}>
+                        <div className={isOverdue ? 'text-red-500' : 'text-muted-foreground'}>
                           {new Date(invoice.dueDate).toLocaleDateString()}
                         </div>
                         {isOverdue && (
-                          <div className="text-xs text-red-400 mt-1">Overdue</div>
+                          <div className="text-xs text-red-500 mt-1">Overdue</div>
                         )}
                       </td>
                       <td className="px-6 py-4">
                         <span
                           className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                             invoice.status === 'PAID'
-                              ? 'bg-emerald-500/20 text-emerald-400'
-                              : 'bg-amber-500/20 text-amber-400'
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
+                              : 'bg-amber-50 text-amber-700 border border-amber-100'
                           }`}
                         >
                           {invoice.status}
@@ -136,7 +136,7 @@ export default async function InvoicesPage() {
                                 <input type="hidden" name="invoiceId" value={invoice.id} />
                                 <button
                                   type="submit"
-                                  className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+                                  className="p-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
                                   title="Send Invoice"
                                 >
                                   <Send className="w-4 h-4" />
@@ -148,7 +148,7 @@ export default async function InvoicesPage() {
                                   <input type="hidden" name="invoiceId" value={invoice.id} />
                                   <button
                                     type="submit"
-                                    className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-amber-400 transition-colors"
+                                    className="p-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-amber-500 transition-colors"
                                     title="Send Reminder"
                                   >
                                     <Clock className="w-4 h-4" />
@@ -165,10 +165,10 @@ export default async function InvoicesPage() {
 
                 {invoices.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="px-6 py-12 text-center text-slate-400">
-                      <FileText className="w-12 h-12 mx-auto mb-3 text-slate-600" />
+                    <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground">
+                      <FileText className="w-12 h-12 mx-auto mb-3 text-muted-foreground/50" />
                       <div className="text-sm">No invoices yet</div>
-                      <div className="text-xs text-slate-500 mt-1">
+                      <div className="text-xs text-muted-foreground/70 mt-1">
                         Create your first invoice to get started
                       </div>
                     </td>

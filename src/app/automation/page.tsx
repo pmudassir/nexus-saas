@@ -49,14 +49,14 @@ export default async function AutomationPage() {
           {automations.map((auto) => (
             <div
               key={auto.id}
-              className="flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-colors"
+              className="flex items-center justify-between p-4 rounded-md border border-border bg-white hover:bg-muted/50 transition-colors"
             >
               <div className="flex items-center gap-4">
                 <div
                   className={`h-10 w-10 rounded-lg flex items-center justify-center ${
                     auto.status === "ACTIVE"
                       ? "bg-primary/10 text-primary"
-                      : "bg-white/5 text-muted-foreground"
+                      : "bg-muted text-muted-foreground"
                   }`}
                 >
                   <Zap className="h-5 w-5" />
@@ -73,8 +73,8 @@ export default async function AutomationPage() {
                 <div
                   className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${
                     auto.status === "ACTIVE"
-                      ? "bg-green-500/10 text-green-500"
-                      : "bg-yellow-500/10 text-yellow-500"
+                      ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
+                      : "bg-amber-50 text-amber-700 border border-amber-100"
                   }`}
                 >
                   {auto.status === "ACTIVE" ? (

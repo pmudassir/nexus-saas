@@ -4,30 +4,26 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
-          "bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/50 hover:scale-[1.02] border border-indigo-500/20",
+          "bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm border border-transparent",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm hover:shadow-red-500/25",
+          "bg-red-600 text-white hover:bg-red-700 shadow-sm",
         outline:
-          "border border-white/10 bg-white/5 hover:bg-white/10 hover:text-white hover:border-white/20 backdrop-blur-sm",
+          "border border-[#E9E9E8] bg-white hover:bg-[rgba(55,53,47,0.08)] text-[#37352f]",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-white/10 hover:text-white",
-        link: "text-primary underline-offset-4 hover:underline",
-        glass:
-          "glass-card text-white hover:bg-white/10",
-        glow: 
-          "bg-white/5 border border-indigo-500/50 text-indigo-300 shadow-[0_0_15px_rgba(99,102,241,0.3)] hover:shadow-[0_0_25px_rgba(99,102,241,0.5)] hover:text-white hover:border-indigo-400",
+          "bg-[rgba(55,53,47,0.08)] text-[#37352f] hover:bg-[rgba(55,53,47,0.16)]",
+        ghost: "hover:bg-[rgba(55,53,47,0.08)] text-[#37352f]",
+        link: "text-indigo-600 underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-lg px-3",
-        lg: "h-11 rounded-xl px-8",
-        icon: "h-10 w-10 rounded-xl",
+        default: "h-8 px-3 py-1",
+        sm: "h-7 rounded-sm px-2 text-xs",
+        lg: "h-10 rounded-md px-8",
+        icon: "h-8 w-8",
       },
     },
     defaultVariants: {

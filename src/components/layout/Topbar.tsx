@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Search, Menu, HelpCircle } from "lucide-react";
+import { Bell, Search, Menu, HelpCircle, Share2, MoreHorizontal } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 export function Topbar() {
@@ -13,34 +13,40 @@ export function Topbar() {
     : ['Dashboard'];
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 px-6 bg-white border-b border-slate-200/60">
+    <header className="sticky top-0 z-30 flex h-11 items-center gap-4 px-4 bg-white border-b border-[#E9E9E8]">
       <div className="flex-1 flex items-center justify-between">
         <div className="flex items-center gap-2">
-            <button className="md:hidden text-slate-500 hover:text-slate-700 transition-colors">
+            <button className="md:hidden text-[#5F5E5B] hover:text-[#37352f] transition-colors">
                 <Menu className="h-5 w-5" />
             </button>
-            <div className="flex items-center text-sm text-slate-500">
-                <span className="hover:text-slate-900 cursor-pointer transition-colors">Nexus</span>
-                <span className="mx-2 text-slate-300">/</span>
-                <span className="font-medium text-slate-900">{breadcrumbs[breadcrumbs.length - 1]}</span>
+            <div className="flex items-center text-sm">
+                <span className="text-[#37352f] hover:underline cursor-pointer transition-colors flex items-center gap-1">
+                    <span className="text-lg leading-none">📄</span>
+                    Nexus
+                </span>
+                {breadcrumbs.map((crumb, index) => (
+                    <div key={index} className="flex items-center">
+                        <span className="mx-1.5 text-[#9B9A97] text-xs">/</span>
+                        <span className="text-[#37352f] font-medium">{crumb}</span>
+                    </div>
+                ))}
             </div>
         </div>
 
-        <div className="flex items-center gap-2">
-            <div className="hidden md:flex items-center text-sm text-slate-400 mr-4">
-                <span className="mr-2">Last updated now</span>
+        <div className="flex items-center gap-1">
+            <div className="hidden md:flex items-center text-xs text-[#9B9A97] mr-3">
+                <span>Edited just now</span>
             </div>
             
-            <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-all">
+            <button className="flex items-center gap-1.5 px-2 py-1 text-sm font-medium text-[#37352f] hover:bg-[rgba(55,53,47,0.08)] rounded-sm transition-colors">
                 <span>Share</span>
             </button>
             
-            <button className="relative p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-all">
+            <button className="p-1 text-[#5F5E5B] hover:bg-[rgba(55,53,47,0.08)] hover:text-[#37352f] rounded-sm transition-colors">
                 <Bell className="h-4 w-4" />
-                <span className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-red-500 ring-2 ring-white" />
             </button>
-             <button className="p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-all">
-                <HelpCircle className="h-4 w-4" />
+             <button className="p-1 text-[#5F5E5B] hover:bg-[rgba(55,53,47,0.08)] hover:text-[#37352f] rounded-sm transition-colors">
+                <MoreHorizontal className="h-4 w-4" />
             </button>
         </div>
       </div>

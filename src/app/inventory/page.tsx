@@ -15,10 +15,10 @@ export default async function InventoryDashboard() {
   ]);
 
   const stats = [
-    { name: 'Total Products', value: products, icon: Package, color: 'text-blue-400' },
-    { name: 'Active Suppliers', value: suppliers, icon: SuppliersIcon, color: 'text-purple-400' },
-    { name: 'Low Stock Items', value: lowStock, icon: TrendingUp, color: 'text-red-400' },
-    { name: 'Pending POs', value: pendingPOs, icon: FileText, color: 'text-amber-400' },
+    { name: 'Total Products', value: products, icon: Package, color: 'text-blue-500' },
+    { name: 'Active Suppliers', value: suppliers, icon: SuppliersIcon, color: 'text-purple-500' },
+    { name: 'Low Stock Items', value: lowStock, icon: TrendingUp, color: 'text-red-500' },
+    { name: 'Pending POs', value: pendingPOs, icon: FileText, color: 'text-amber-500' },
   ];
 
   const modules = [
@@ -31,22 +31,22 @@ export default async function InventoryDashboard() {
     <Shell>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground flex items-center gap-3">
             <Package className="w-8 h-8" />
             Inventory Management
           </h1>
-          <p className="text-slate-400 mt-2">
+          <p className="text-muted-foreground mt-2">
             Complete stock control with supplier management and purchase orders.
           </p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-4">
           {stats.map((stat) => (
-            <div key={stat.name} className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6">
+            <div key={stat.name} className="rounded-md border border-border bg-white p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-sm text-slate-400">{stat.name}</div>
-                  <div className="text-3xl font-bold text-white mt-1">{stat.value}</div>
+                  <div className="text-sm text-muted-foreground">{stat.name}</div>
+                  <div className="text-3xl font-bold text-foreground mt-1">{stat.value}</div>
                 </div>
                 <stat.icon className={`w-10 h-10 ${stat.color}`} />
               </div>
@@ -57,10 +57,10 @@ export default async function InventoryDashboard() {
         <div className="grid gap-4 md:grid-cols-3">
           {modules.map((module) => (
             <Link key={module.name} href={module.href}>
-              <div className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6 hover:bg-white/5 transition-colors cursor-pointer">
-                <module.icon className="w-8 h-8 text-purple-400 mb-3" />
-                <h3 className="text-lg font-semibold text-white mb-2">{module.name}</h3>
-                <p className="text-sm text-slate-400">{module.description}</p>
+              <div className="rounded-md border border-border bg-white p-6 hover:bg-muted transition-colors cursor-pointer shadow-sm">
+                <module.icon className="w-8 h-8 text-purple-500 mb-3" />
+                <h3 className="text-lg font-semibold text-foreground mb-2">{module.name}</h3>
+                <p className="text-sm text-muted-foreground">{module.description}</p>
               </div>
             </Link>
           ))}

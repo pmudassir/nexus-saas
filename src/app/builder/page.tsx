@@ -52,12 +52,12 @@ function renderBlock(block: BuilderBlock) {
   return (
     <section
       key={block.id}
-      className="rounded-xl bg-white border border-slate-200 p-6 mb-4 shadow-sm"
+      className="rounded-md bg-white border border-border p-6 mb-4 shadow-sm"
     >
-      <h3 className="text-lg font-semibold mb-2 text-slate-900">
+      <h3 className="text-lg font-semibold mb-2 text-foreground">
         {heading ?? "Text block"}
       </h3>
-      <p className="text-sm text-slate-500">
+      <p className="text-sm text-muted-foreground">
         {body ?? "Body copy for this block."}
       </p>
     </section>
@@ -91,9 +91,9 @@ export default async function BuilderPage({
   return (
     <Shell>
       <div className="grid gap-6 lg:grid-cols-[280px,1fr] min-h-[70vh]">
-        <aside className="rounded-xl border border-slate-200 bg-white p-4 space-y-4 shadow-sm">
+        <aside className="rounded-lg border border-border bg-muted/30 p-4 space-y-4">
           <div>
-            <h2 className="text-sm font-semibold text-slate-900 mb-2">Pages</h2>
+            <h2 className="text-sm font-semibold text-foreground mb-2">Pages</h2>
             <div className="space-y-1">
               {(pages as BuilderPage[]).map((page: BuilderPage) => {
                 const isActive = selectedPage && page.id === selectedPage.id;
@@ -101,10 +101,10 @@ export default async function BuilderPage({
                   <Link
                     key={page.id}
                     href={`/builder?pageId=${page.id}`}
-                    className={`flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+                    className={`flex items-center justify-between rounded-md px-3 py-2 text-xs font-medium transition-colors ${
                       isActive
                         ? "bg-indigo-50 text-indigo-700"
-                        : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
                     }`}
                   >
                     <span>{page.title}</span>
@@ -117,15 +117,15 @@ export default async function BuilderPage({
                 );
               })}
               {pages.length === 0 && (
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-muted-foreground">
                   No pages yet. Create your first page below.
                 </p>
               )}
             </div>
           </div>
 
-          <div className="border-t border-slate-100 pt-4">
-            <h3 className="text-xs font-semibold text-slate-900 mb-2">
+          <div className="border-t border-border pt-4">
+            <h3 className="text-xs font-semibold text-foreground mb-2">
               New Page
             </h3>
             <form className="space-y-2" action={createSitePage}>
@@ -133,17 +133,17 @@ export default async function BuilderPage({
                 name="title"
                 placeholder="Home"
                 required
-                className="w-full rounded-lg bg-white border border-slate-200 px-3 py-1.5 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                className="w-full rounded-md bg-white border border-border px-3 py-1.5 text-xs text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               />
               <input
                 name="path"
                 placeholder="/ or about"
-                className="w-full rounded-lg bg-white border border-slate-200 px-3 py-1.5 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                className="w-full rounded-md bg-white border border-border px-3 py-1.5 text-xs text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               />
               <Button
                 type="submit"
                 size="sm"
-                className="w-full text-xs bg-slate-900 text-white hover:bg-slate-800"
+                className="w-full text-xs bg-primary text-white hover:bg-primary/90"
               >
                 Create Page
               </Button>
@@ -151,14 +151,14 @@ export default async function BuilderPage({
           </div>
         </aside>
 
-        <main className="rounded-xl border border-slate-200 bg-slate-50/50 p-6 flex flex-col shadow-sm">
+        <main className="rounded-lg border border-border bg-muted/10 p-6 flex flex-col">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-xl font-semibold text-slate-900">
+              <h1 className="text-xl font-semibold text-foreground">
                 Website Builder
               </h1>
               {selectedPage && (
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   Editing page: {selectedPage.title} ({selectedPage.path})
                 </p>
               )}
@@ -177,14 +177,14 @@ export default async function BuilderPage({
             <div className="flex-1 flex flex-col">
               <div className="flex-1">
                 {blocks.length === 0 && (
-                  <div className="text-sm text-slate-400 mb-4">
+                  <div className="text-sm text-muted-foreground mb-4">
                     No blocks yet. Add a hero or text block below.
                   </div>
                 )}
                 {blocks.map((block) => renderBlock(block))}
               </div>
 
-              <div className="mt-4 border-t border-slate-200 pt-4 flex gap-3">
+              <div className="mt-4 border-t border-border pt-4 flex gap-3">
                 <form action={addSiteBlock}>
                   <input type="hidden" name="pageId" value={selectedPage.id} />
                   <input type="hidden" name="type" value="HERO" />
@@ -203,7 +203,7 @@ export default async function BuilderPage({
                     type="submit"
                     size="sm"
                     variant="outline"
-                    className="bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
+                    className="bg-white border-border text-foreground hover:bg-muted"
                   >
                     Add Text
                   </Button>
@@ -211,7 +211,7 @@ export default async function BuilderPage({
               </div>
             </div>
           ) : (
-            <div className="flex-1 flex items-center justify-center text-sm text-slate-400">
+            <div className="flex-1 flex items-center justify-center text-sm text-muted-foreground">
               Select or create a page to start building your site.
             </div>
           )}

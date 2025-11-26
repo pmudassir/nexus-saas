@@ -28,11 +28,11 @@ export default async function PageSEOEditor({
     <Shell>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground flex items-center gap-3">
             <Search className="w-8 h-8" />
             SEO Settings
           </h1>
-          <p className="text-slate-500 mt-2">
+          <p className="text-muted-foreground mt-2">
             Optimize "{page.title}" for search engines and social media.
           </p>
         </div>
@@ -41,14 +41,14 @@ export default async function PageSEOEditor({
           <input type="hidden" name="pageId" value={page.id} />
 
           {/* Basic Meta Tags */}
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+          <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5" />
               Meta Tags
             </h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Meta Title
                 </label>
                 <input
@@ -57,15 +57,15 @@ export default async function PageSEOEditor({
                   defaultValue={page.metaTitle || page.title}
                   placeholder={page.title}
                   maxLength={60}
-                  className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                  className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 />
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   Recommended: 50-60 characters
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Meta Description
                 </label>
                 <textarea
@@ -74,15 +74,15 @@ export default async function PageSEOEditor({
                   placeholder="A brief description of this page for search results"
                   maxLength={160}
                   rows={3}
-                  className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                  className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 />
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   Recommended: 150-160 characters
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Meta Keywords (optional)
                 </label>
                 <input
@@ -90,9 +90,9 @@ export default async function PageSEOEditor({
                   name="metaKeywords"
                   defaultValue={page.metaKeywords || ""}
                   placeholder="keyword1, keyword2, keyword3"
-                  className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                  className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 />
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   Comma-separated keywords (mostly ignored by modern search
                   engines)
                 </p>
@@ -101,14 +101,14 @@ export default async function PageSEOEditor({
           </div>
 
           {/* Open Graph / Social Media */}
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+          <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <Image className="w-5 h-5" />
               Social Media Preview
             </h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Open Graph Image URL
                 </label>
                 <input
@@ -116,9 +116,9 @@ export default async function PageSEOEditor({
                   name="ogImage"
                   defaultValue={page.ogImage || ""}
                   placeholder="https://example.com/image.jpg"
-                  className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                  className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 />
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   Image displayed when shared on social media (recommended:
                   1200x630px)
                 </p>
@@ -126,11 +126,11 @@ export default async function PageSEOEditor({
 
               {/* Preview */}
               {(page.metaTitle || page.metaDescription || page.ogImage) && (
-                <div className="mt-4 p-4 rounded-lg bg-slate-50 border border-slate-200">
-                  <div className="text-xs font-medium text-slate-500 mb-2">
+                <div className="mt-4 p-4 rounded-md bg-muted border border-border">
+                  <div className="text-xs font-medium text-muted-foreground mb-2">
                     Social Media Preview
                   </div>
-                  <div className="rounded-lg border border-slate-200 overflow-hidden bg-white">
+                  <div className="rounded-md border border-border overflow-hidden bg-white">
                     {page.ogImage && (
                       <img
                         src={page.ogImage}
@@ -139,11 +139,11 @@ export default async function PageSEOEditor({
                       />
                     )}
                     <div className="p-4">
-                      <div className="text-sm font-semibold text-slate-900">
+                      <div className="text-sm font-semibold text-foreground">
                         {page.metaTitle || page.title}
                       </div>
                       {page.metaDescription && (
-                        <div className="text-xs text-slate-500 mt-1 line-clamp-2">
+                        <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
                           {page.metaDescription}
                         </div>
                       )}
@@ -158,14 +158,14 @@ export default async function PageSEOEditor({
             <Button
               type="button"
               variant="outline"
-              className="bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
+              className="bg-white border-border text-foreground hover:bg-muted"
               asChild
             >
               <a href="/builder">Cancel</a>
             </Button>
             <Button
               type="submit"
-              className="bg-indigo-600 text-white hover:bg-indigo-500"
+              className="bg-primary text-white hover:bg-primary/90"
             >
               Save SEO Settings
             </Button>

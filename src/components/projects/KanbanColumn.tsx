@@ -32,7 +32,7 @@ export function KanbanColumn({ id, title, tasks }: KanbanColumnProps) {
   return (
     <div
       ref={setNodeRef}
-      className="flex flex-col min-w-[320px] h-full rounded-xl border border-white/10 bg-white/5 p-4"
+      className="flex flex-col min-w-[320px] h-full rounded-md border border-border bg-muted/30 p-4"
     >
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">

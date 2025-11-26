@@ -54,7 +54,7 @@ export default function EmployeesPage() {
           </Button>
         </div>
 
-        <div className="flex items-center gap-4 bg-white/5 p-2 rounded-lg border border-white/10 w-full md:w-96">
+        <div className="flex items-center gap-4 bg-white p-2 rounded-md border border-border w-full md:w-96">
           <Search className="h-4 w-4 text-muted-foreground ml-2" />
           <input
             type="text"
@@ -63,9 +63,9 @@ export default function EmployeesPage() {
           />
         </div>
 
-        <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-md overflow-hidden">
+        <div className="rounded-md border border-border bg-white overflow-hidden">
           <table className="w-full text-sm text-left">
-            <thead className="bg-white/5 text-muted-foreground font-medium">
+            <thead className="bg-muted text-muted-foreground font-medium">
               <tr>
                 <th className="px-6 py-4">Name</th>
                 <th className="px-6 py-4">Role</th>
@@ -75,12 +75,12 @@ export default function EmployeesPage() {
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/10">
+            <tbody className="divide-y divide-border">
               {employees.map((emp) => (
-                <tr key={emp.id} className="hover:bg-white/5 transition-colors">
+                <tr key={emp.id} className="hover:bg-muted/50 transition-colors">
                   <td className="px-6 py-4 font-medium">
                     <div className="flex items-center gap-3">
-                      <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
+                      <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
                         {emp.name.charAt(0)}
                       </div>
                       {emp.name}
@@ -88,7 +88,7 @@ export default function EmployeesPage() {
                   </td>
                   <td className="px-6 py-4">{emp.role}</td>
                   <td className="px-6 py-4">
-                    <span className="px-2 py-1 rounded-md bg-white/5 text-xs">
+                    <span className="px-2 py-1 rounded-md bg-muted text-xs">
                       {emp.department}
                     </span>
                   </td>
@@ -102,8 +102,8 @@ export default function EmployeesPage() {
                     <span
                       className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         emp.status === "ACTIVE"
-                          ? "bg-green-500/10 text-green-500"
-                          : "bg-yellow-500/10 text-yellow-500"
+                          ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
+                          : "bg-amber-50 text-amber-700 border border-amber-100"
                       }`}
                     >
                       {emp.status}

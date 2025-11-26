@@ -35,11 +35,11 @@ export default async function ExpensesPage() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
+            <h1 className="text-3xl font-bold tracking-tight text-foreground flex items-center gap-3">
               <Receipt className="w-8 h-8" />
               Expenses
             </h1>
-            <p className="text-slate-500 mt-2">
+            <p className="text-muted-foreground mt-2">
               Track and manage company expenses with approval workflow.
             </p>
           </div>
@@ -47,52 +47,52 @@ export default async function ExpensesPage() {
 
         {/* Stats */}
         <div className="grid gap-4 md:grid-cols-4">
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="text-sm text-slate-500">Total Expenses</div>
-            <div className="text-3xl font-bold text-slate-900 mt-1">
+          <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+            <div className="text-sm text-muted-foreground">Total Expenses</div>
+            <div className="text-3xl font-bold text-foreground mt-1">
               {stats.total}
             </div>
           </div>
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="text-sm text-slate-500">Pending</div>
+          <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+            <div className="text-sm text-muted-foreground">Pending</div>
             <div className="text-3xl font-bold text-amber-500 mt-1">
               {stats.pending}
             </div>
           </div>
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="text-sm text-slate-500">Approved</div>
+          <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+            <div className="text-sm text-muted-foreground">Approved</div>
             <div className="text-3xl font-bold text-emerald-600 mt-1">
               {stats.approved}
             </div>
           </div>
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="text-sm text-slate-500">Total Approved</div>
-            <div className="text-3xl font-bold text-slate-900 mt-1">
+          <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+            <div className="text-sm text-muted-foreground">Total Approved</div>
+            <div className="text-3xl font-bold text-foreground mt-1">
               ${stats.totalAmount.toLocaleString()}
             </div>
           </div>
         </div>
 
         {/* Create Expense Form */}
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-slate-900 mb-4">
+        <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-foreground mb-4">
             Add New Expense
           </h2>
           <form action={createExpense} className="grid gap-4 md:grid-cols-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Description
               </label>
               <input
                 type="text"
                 name="description"
                 required
-                className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                className="w-full rounded-md border border-border bg-white px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 placeholder="Office supplies"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Amount
               </label>
               <input
@@ -100,18 +100,18 @@ export default async function ExpensesPage() {
                 name="amount"
                 required
                 step="0.01"
-                className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                className="w-full rounded-md border border-border bg-white px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 placeholder="0.00"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Category
               </label>
               <select
                 name="category"
                 required
-                className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                className="w-full rounded-md border border-border bg-white px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               >
                 {EXPENSE_CATEGORIES.map((cat) => (
                   <option key={cat} value={cat}>
@@ -123,7 +123,7 @@ export default async function ExpensesPage() {
             <div className="flex items-end">
               <Button
                 type="submit"
-                className="w-full bg-slate-900 text-white hover:bg-slate-800"
+                className="w-full bg-primary text-white hover:bg-primary/90"
               >
                 Add Expense
               </Button>
@@ -132,10 +132,10 @@ export default async function ExpensesPage() {
         </div>
 
         {/* Expenses Table */}
-        <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+        <div className="rounded-md border border-border bg-white shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-slate-50 text-left text-xs font-medium uppercase tracking-wide text-slate-500">
+              <thead className="bg-muted text-left text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 <tr>
                   <th className="px-6 py-3">Date</th>
                   <th className="px-6 py-3">Description</th>
@@ -146,22 +146,22 @@ export default async function ExpensesPage() {
                   <th className="px-6 py-3">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200 bg-white text-slate-700">
+              <tbody className="divide-y divide-border bg-white text-foreground">
                 {expenses.map((expense) => (
                   <tr
                     key={expense.id}
-                    className="hover:bg-slate-50 transition-colors"
+                    className="hover:bg-muted/50 transition-colors"
                   >
-                    <td className="px-6 py-4 text-slate-500">
+                    <td className="px-6 py-4 text-muted-foreground">
                       {new Date(expense.date).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 font-medium text-slate-900">
+                    <td className="px-6 py-4 font-medium text-foreground">
                       {expense.description}
                     </td>
-                    <td className="px-6 py-4 text-slate-500">
+                    <td className="px-6 py-4 text-muted-foreground">
                       {expense.category}
                     </td>
-                    <td className="px-6 py-4 font-semibold text-slate-900">
+                    <td className="px-6 py-4 font-semibold text-foreground">
                       {formatCurrency(Number(expense.amount), expense.currency)}
                     </td>
                     <td className="px-6 py-4">
@@ -176,7 +176,7 @@ export default async function ExpensesPage() {
                           View
                         </a>
                       ) : (
-                        <span className="text-slate-400">No receipt</span>
+                        <span className="text-muted-foreground">No receipt</span>
                       )}
                     </td>
                     <td className="px-6 py-4">
@@ -239,11 +239,11 @@ export default async function ExpensesPage() {
                   <tr>
                     <td
                       colSpan={7}
-                      className="px-6 py-12 text-center text-slate-500"
+                      className="px-6 py-12 text-center text-muted-foreground"
                     >
-                      <Receipt className="w-12 h-12 mx-auto mb-3 text-slate-400" />
+                      <Receipt className="w-12 h-12 mx-auto mb-3 text-muted-foreground/50" />
                       <div className="text-sm">No expenses yet</div>
-                      <div className="text-xs text-slate-400 mt-1">
+                      <div className="text-xs text-muted-foreground/70 mt-1">
                         Add your first expense to get started
                       </div>
                     </td>

@@ -64,24 +64,24 @@ export default async function BillingPage() {
     <Shell>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground flex items-center gap-3">
             <CreditCard className="w-8 h-8" />
             Billing & Subscription
           </h1>
-          <p className="text-slate-400 mt-2">
+          <p className="text-muted-foreground mt-2">
             Manage your subscription and billing information.
           </p>
         </div>
 
         {/* Current Subscription */}
         {activeSubscription && (
-          <div className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6">
+          <div className="rounded-md border border-border bg-white p-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-foreground">
                   Current Plan: {activeSubscription.plan.name}
                 </h2>
-                <p className="text-sm text-slate-400 mt-1">
+                <p className="text-sm text-muted-foreground mt-1">
                   {activeSubscription.currentPeriodEnd 
                     ? `Renews on ${new Date(activeSubscription.currentPeriodEnd).toLocaleDateString()}`
                     : 'Active subscription'
@@ -100,41 +100,41 @@ export default async function BillingPage() {
 
         {/* Plans */}
         <div>
-          <h2 className="text-xl font-semibold text-white mb-4">
+          <h2 className="text-xl font-semibold text-foreground mb-4">
             {activeSubscription ? 'Upgrade Your Plan' : 'Choose Your Plan'}
           </h2>
           <div className="grid gap-6 md:grid-cols-3">
             {PLANS.map((plan) => (
               <div
                 key={plan.id}
-                className={`rounded-xl border backdrop-blur-xl p-6 relative ${
+                className={`rounded-md border p-6 relative ${
                   plan.popular
-                    ? 'border-indigo-500/50 bg-indigo-500/10'
-                    : 'border-white/10 bg-slate-900/60'
+                    ? 'border-primary/50 bg-primary/5'
+                    : 'border-border bg-white'
                 }`}
               >
                 {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-indigo-500 text-white text-xs font-medium">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-primary text-white text-xs font-medium">
                     Most Popular
                   </div>
                 )}
 
                 <div className="mb-6">
-                  <h3 className="text-xl font-semibold text-white mb-2">
+                  <h3 className="text-xl font-semibold text-foreground mb-2">
                     {plan.name}
                   </h3>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-bold text-white">
+                    <span className="text-4xl font-bold text-foreground">
                       ${plan.price}
                     </span>
-                    <span className="text-slate-400 text-sm">/month</span>
+                    <span className="text-muted-foreground text-sm">/month</span>
                   </div>
                 </div>
 
                 <ul className="space-y-3 mb-6">
                   {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-slate-300">
-                      <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Check className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
                       {feature}
                     </li>
                   ))}
@@ -156,11 +156,11 @@ export default async function BillingPage() {
         </div>
 
         {/* Billing Info */}
-        <div className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">
+        <div className="rounded-md border border-border bg-white p-6">
+          <h2 className="text-lg font-semibold text-foreground mb-4">
             Billing Information
           </h2>
-          <div className="text-sm text-slate-400">
+          <div className="text-sm text-muted-foreground">
             <p>
               All payments are processed securely through Stripe. Your payment
               information is never stored on our servers.

@@ -44,7 +44,7 @@ export default function PayrollPage() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
+          <div className="rounded-md border border-border bg-white p-6">
             <h3 className="text-sm font-medium text-muted-foreground mb-2">
               Next Payout
             </h3>
@@ -54,17 +54,17 @@ export default function PayrollPage() {
               Due Oct 31, 2023
             </div>
           </div>
-          <div className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
+          <div className="rounded-md border border-border bg-white p-6">
             <h3 className="text-sm font-medium text-muted-foreground mb-2">
               Total Employees
             </h3>
             <div className="text-3xl font-bold">124</div>
-            <div className="flex items-center gap-2 mt-4 text-sm text-green-500">
+            <div className="flex items-center gap-2 mt-4 text-sm text-emerald-600">
               <CheckCircle className="h-4 w-4" />
               All active
             </div>
           </div>
-          <div className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
+          <div className="rounded-md border border-border bg-white p-6">
             <h3 className="text-sm font-medium text-muted-foreground mb-2">
               YTD Payroll
             </h3>
@@ -75,9 +75,9 @@ export default function PayrollPage() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-md overflow-hidden">
+        <div className="rounded-md border border-border bg-white overflow-hidden">
           <table className="w-full text-sm text-left">
-            <thead className="bg-white/5 text-muted-foreground font-medium">
+            <thead className="bg-muted text-muted-foreground font-medium">
               <tr>
                 <th className="px-6 py-4">Pay Period</th>
                 <th className="px-6 py-4">Payment Date</th>
@@ -86,9 +86,9 @@ export default function PayrollPage() {
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/10">
+            <tbody className="divide-y divide-border">
               {payrolls.map((pay) => (
-                <tr key={pay.id} className="hover:bg-white/5 transition-colors">
+                <tr key={pay.id} className="hover:bg-muted/50 transition-colors">
                   <td className="px-6 py-4 font-medium">{pay.period}</td>
                   <td className="px-6 py-4 text-muted-foreground">
                     {pay.date}
@@ -100,8 +100,8 @@ export default function PayrollPage() {
                     <span
                       className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         pay.status === "PAID"
-                          ? "bg-green-500/10 text-green-500"
-                          : "bg-yellow-500/10 text-yellow-500"
+                          ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
+                          : "bg-amber-50 text-amber-700 border border-amber-100"
                       }`}
                     >
                       {pay.status}

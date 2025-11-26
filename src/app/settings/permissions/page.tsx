@@ -8,9 +8,7 @@ import {
   getAvailablePermissions,
   getUserPermissions,
 } from '@/actions/permissions';
-import { Shield, Users, Check } from 'lucide-react'
-
-;
+import { Shield, Users, Check } from 'lucide-react';
 
 type TenantUserWithRelations = {
   id: string;
@@ -61,11 +59,11 @@ export default async function PermissionsPage() {
     <Shell>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground flex items-center gap-3">
             <Shield className="w-8 h-8" />
             Permissions & Roles
           </h1>
-          <p className="text-slate-400 mt-2">
+          <p className="text-muted-foreground mt-2">
             Manage team member access and permissions. Admins have full access,
             while custom roles can be configured with granular permissions.
           </p>
@@ -82,18 +80,18 @@ export default async function PermissionsPage() {
             return (
               <div
                 key={tenantUser.id}
-                className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6"
+                className="rounded-md border border-border bg-white p-6 shadow-sm"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-lg">
+                    <div className="w-12 h-12 rounded-full bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-lg shadow-sm">
                       {(tenantUser.user.name || tenantUser.user.email)[0].toUpperCase()}
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-white">
+                      <h3 className="text-lg font-semibold text-foreground">
                         {tenantUser.user.name || 'Unnamed User'}
                       </h3>
-                      <p className="text-sm text-slate-400">
+                      <p className="text-sm text-muted-foreground">
                         {tenantUser.user.email}
                       </p>
                       <div className="mt-2">
@@ -107,15 +105,15 @@ export default async function PermissionsPage() {
                             name="role"
                             defaultValue={tenantUser.role}
                             onChange={(e) => e.currentTarget.form?.requestSubmit()}
-                            className="rounded-lg bg-black/30 border border-white/10 px-3 py-1.5 text-sm text-white outline-none focus:ring-2 focus:ring-indigo-500/60"
+                            className="rounded-md bg-white border border-border px-3 py-1.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                           >
-                            <option value="TENANT_ADMIN" className="bg-slate-900">
+                            <option value="TENANT_ADMIN" className="bg-white text-foreground">
                               Admin (Full Access)
                             </option>
-                            <option value="TENANT_USER" className="bg-slate-900">
+                            <option value="TENANT_USER" className="bg-white text-foreground">
                               User (Read Only)
                             </option>
-                            <option value="CUSTOM" className="bg-slate-900">
+                            <option value="CUSTOM" className="bg-white text-foreground">
                               Custom Permissions
                             </option>
                           </select>
@@ -124,7 +122,7 @@ export default async function PermissionsPage() {
                     </div>
                   </div>
                   {isAdmin && (
-                    <div className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-medium">
+                    <div className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-medium border border-emerald-100">
                       Full Access
                     </div>
                   )}
@@ -140,7 +138,7 @@ export default async function PermissionsPage() {
                     />
 
                     <div className="space-y-4">
-                      <h4 className="text-sm font-medium text-slate-300 flex items-center gap-2">
+                      <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
                         <Users className="w-4 h-4" />
                         Custom Permissions
                       </h4>
@@ -150,9 +148,9 @@ export default async function PermissionsPage() {
                           ([module, permissions]) => (
                             <div
                               key={module}
-                              className="rounded-lg bg-black/20 border border-white/5 p-4"
+                              className="rounded-md bg-muted border border-border p-4"
                             >
-                              <h5 className="text-xs font-semibold text-white uppercase tracking-wide mb-3">
+                              <h5 className="text-xs font-semibold text-foreground uppercase tracking-wide mb-3">
                                 {module}
                               </h5>
                               <div className="space-y-2">
@@ -169,18 +167,18 @@ export default async function PermissionsPage() {
                                         name="permissions"
                                         value={permission.key}
                                         defaultChecked={isChecked}
-                                        className="w-4 h-4 rounded border-white/20 bg-black/30 text-indigo-500 focus:ring-2 focus:ring-indigo-500/60 focus:ring-offset-0"
+                                        className="w-4 h-4 rounded border-input bg-white text-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-0"
                                       />
                                       <div className="flex-1">
-                                        <div className="text-sm text-slate-300 group-hover:text-white transition-colors">
+                                        <div className="text-sm text-foreground group-hover:text-foreground/80 transition-colors">
                                           {permission.description || permission.action}
                                         </div>
-                                        <div className="text-xs text-slate-500 font-mono">
+                                        <div className="text-xs text-muted-foreground font-mono">
                                           {permission.key}
                                         </div>
                                       </div>
                                       {isChecked && (
-                                        <Check className="w-4 h-4 text-emerald-400" />
+                                        <Check className="w-4 h-4 text-emerald-600" />
                                       )}
                                     </label>
                                   );
@@ -193,13 +191,13 @@ export default async function PermissionsPage() {
                     </div>
 
                     <div className="mt-6 flex justify-end">
-                      <Button type="submit">Save Permissions</Button>
+                      <Button type="submit" className="bg-primary text-white hover:bg-primary/90">Save Permissions</Button>
                     </div>
                   </form>
                 )}
 
                 {isAdmin && (
-                  <div className="mt-4 text-sm text-slate-400">
+                  <div className="mt-4 text-sm text-muted-foreground">
                     <p className="flex items-center gap-2">
                       <Shield className="w-4 h-4" />
                       Admins have access to all features and permissions
@@ -212,12 +210,12 @@ export default async function PermissionsPage() {
           })}
 
           {tenantUsers.length === 0 && (
-            <div className="rounded-xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-12 text-center">
-              <Users className="w-12 h-12 text-slate-500 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-white mb-2">
+            <div className="rounded-md border border-border bg-white p-12 text-center shadow-sm">
+              <Users className="w-12 h-12 text-muted-foreground/50 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-foreground mb-2">
                 No Team Members Yet
               </h3>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-muted-foreground">
                 Invite team members to collaborate on your workspace.
               </p>
             </div>

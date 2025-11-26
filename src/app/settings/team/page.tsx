@@ -26,24 +26,24 @@ export default async function TeamPage() {
     <Shell>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground flex items-center gap-3">
             <UserPlus className="w-8 h-8" />
             Team Management
           </h1>
-          <p className="text-slate-500 mt-2">
+          <p className="text-muted-foreground mt-2">
             Invite team members and manage access to your workspace.
           </p>
         </div>
 
         {/* Invite User Form */}
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+        <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
             <Mail className="w-5 h-5" />
             Invite New Member
           </h2>
           <form action={inviteUser} className="grid gap-4 md:grid-cols-4">
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
                 Email Address
               </label>
               <input
@@ -51,35 +51,35 @@ export default async function TeamPage() {
                 name="email"
                 required
                 placeholder="user@example.com"
-                className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
                 Full Name
               </label>
               <input
                 type="text"
                 name="name"
                 placeholder="John Doe"
-                className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
                 Role
               </label>
               <select
                 name="role"
                 defaultValue="TENANT_USER"
-                className="w-full rounded-lg bg-white border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               >
-                <option value="TENANT_USER" className="bg-white text-slate-900">
+                <option value="TENANT_USER" className="bg-white text-foreground">
                   User
                 </option>
                 <option
                   value="TENANT_ADMIN"
-                  className="bg-white text-slate-900"
+                  className="bg-white text-foreground"
                 >
                   Admin
                 </option>
@@ -88,7 +88,7 @@ export default async function TeamPage() {
             <div className="flex items-end">
               <Button
                 type="submit"
-                className="w-full bg-slate-900 text-white hover:bg-slate-800"
+                className="w-full bg-primary text-white hover:bg-primary/90"
               >
                 Send Invitation
               </Button>
@@ -97,29 +97,29 @@ export default async function TeamPage() {
         </div>
 
         {/* Team Members List */}
-        <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-          <div className="px-6 py-4 bg-slate-50 border-b border-slate-200">
-            <h2 className="text-lg font-semibold text-slate-900">
+        <div className="rounded-md border border-border bg-white shadow-sm overflow-hidden">
+          <div className="px-6 py-4 bg-muted border-b border-border">
+            <h2 className="text-lg font-semibold text-foreground">
               Team Members ({tenantUsers.length})
             </h2>
           </div>
 
-          <div className="divide-y divide-slate-200">
+          <div className="divide-y divide-border">
             {tenantUsers.map((tenantUser) => (
               <div
                 key={tenantUser.id}
-                className="px-6 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors"
+                className="px-6 py-4 flex items-center justify-between hover:bg-muted/50 transition-colors"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold shadow-sm">
+                  <div className="w-10 h-10 rounded-full bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold shadow-sm">
                     {(tenantUser.user.name ||
                       tenantUser.user.email)[0].toUpperCase()}
                   </div>
                   <div>
-                    <div className="font-medium text-slate-900">
+                    <div className="font-medium text-foreground">
                       {tenantUser.user.name || "Unnamed User"}
                     </div>
-                    <div className="text-sm text-slate-500">
+                    <div className="text-sm text-muted-foreground">
                       {tenantUser.user.email}
                     </div>
                   </div>
@@ -147,7 +147,7 @@ export default async function TeamPage() {
                     />
                     <button
                       type="submit"
-                      className="p-2 rounded-lg hover:bg-red-50 text-slate-400 hover:text-red-600 transition-colors"
+                      className="p-2 rounded-md hover:bg-red-50 text-muted-foreground hover:text-red-600 transition-colors"
                       onClick={(e) => {
                         if (
                           !confirm(
@@ -169,11 +169,11 @@ export default async function TeamPage() {
 
             {tenantUsers.length === 0 && (
               <div className="px-6 py-12 text-center">
-                <UserPlus className="w-12 h-12 text-slate-400 mx-auto mb-3" />
-                <div className="text-sm text-slate-500">
+                <UserPlus className="w-12 h-12 text-muted-foreground/50 mx-auto mb-3" />
+                <div className="text-sm text-muted-foreground">
                   No team members yet
                 </div>
-                <div className="text-xs text-slate-400 mt-1">
+                <div className="text-xs text-muted-foreground/70 mt-1">
                   Invite your first team member above
                 </div>
               </div>
