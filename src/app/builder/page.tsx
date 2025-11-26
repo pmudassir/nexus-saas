@@ -28,11 +28,20 @@ function renderBlock(block: BuilderBlock) {
 
   if (block.type === "HERO") {
     return (
-      <section key={block.id} className="rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 p-10 text-white mb-4">
+      <section
+        key={block.id}
+        className="rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 p-10 text-white mb-4 shadow-sm"
+      >
         <h2 className="text-3xl font-bold mb-2">{heading ?? "Hero heading"}</h2>
-        <p className="text-sm text-indigo-100 mb-4">{subheading ?? "Hero subheading"}</p>
+        <p className="text-sm text-indigo-100 mb-4">
+          {subheading ?? "Hero subheading"}
+        </p>
         {ctaLabel && (
-          <Button variant="glass" size="sm">
+          <Button
+            variant="secondary"
+            size="sm"
+            className="bg-white text-indigo-600 hover:bg-indigo-50"
+          >
             {ctaLabel}
           </Button>
         )}
@@ -41,9 +50,16 @@ function renderBlock(block: BuilderBlock) {
   }
 
   return (
-    <section key={block.id} className="rounded-xl bg-slate-900/80 border border-white/10 p-6 mb-4">
-      <h3 className="text-lg font-semibold mb-2 text-white">{heading ?? "Text block"}</h3>
-      <p className="text-sm text-slate-300">{body ?? "Body copy for this block."}</p>
+    <section
+      key={block.id}
+      className="rounded-xl bg-white border border-slate-200 p-6 mb-4 shadow-sm"
+    >
+      <h3 className="text-lg font-semibold mb-2 text-slate-900">
+        {heading ?? "Text block"}
+      </h3>
+      <p className="text-sm text-slate-500">
+        {body ?? "Body copy for this block."}
+      </p>
     </section>
   );
 }
@@ -61,8 +77,9 @@ export default async function BuilderPage({
   });
 
   const selectedPage: BuilderPage | undefined =
-    (pages as BuilderPage[]).find((p: BuilderPage) => p.id === searchParams.pageId) ??
-    (pages[0] as BuilderPage | undefined);
+    (pages as BuilderPage[]).find(
+      (p: BuilderPage) => p.id === searchParams.pageId
+    ) ?? (pages[0] as BuilderPage | undefined);
 
   const blocks: BuilderBlock[] = selectedPage
     ? ((await prisma.siteBlock.findMany({
@@ -74,11 +91,9 @@ export default async function BuilderPage({
   return (
     <Shell>
       <div className="grid gap-6 lg:grid-cols-[280px,1fr] min-h-[70vh]">
-        <aside className="rounded-xl border border-white/10 bg-slate-900/70 backdrop-blur-xl p-4 space-y-4">
+        <aside className="rounded-xl border border-slate-200 bg-white p-4 space-y-4 shadow-sm">
           <div>
-            <h2 className="text-sm font-semibold text-slate-200 mb-2">
-              Pages
-            </h2>
+            <h2 className="text-sm font-semibold text-slate-900 mb-2">Pages</h2>
             <div className="space-y-1">
               {(pages as BuilderPage[]).map((page: BuilderPage) => {
                 const isActive = selectedPage && page.id === selectedPage.id;
@@ -88,8 +103,8 @@ export default async function BuilderPage({
                     href={`/builder?pageId=${page.id}`}
                     className={`flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
                       isActive
-                        ? "bg-white text-black"
-                        : "text-slate-300 hover:bg-white/5"
+                        ? "bg-indigo-50 text-indigo-700"
+                        : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
                     }`}
                   >
                     <span>{page.title}</span>
@@ -102,15 +117,15 @@ export default async function BuilderPage({
                 );
               })}
               {pages.length === 0 && (
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-400">
                   No pages yet. Create your first page below.
                 </p>
               )}
             </div>
           </div>
 
-          <div className="border-t border-white/10 pt-4">
-            <h3 className="text-xs font-semibold text-slate-200 mb-2">
+          <div className="border-t border-slate-100 pt-4">
+            <h3 className="text-xs font-semibold text-slate-900 mb-2">
               New Page
             </h3>
             <form className="space-y-2" action={createSitePage}>
@@ -118,34 +133,41 @@ export default async function BuilderPage({
                 name="title"
                 placeholder="Home"
                 required
-                className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-1.5 text-xs text-white outline-none focus:ring-2 focus:ring-indigo-500/60"
+                className="w-full rounded-lg bg-white border border-slate-200 px-3 py-1.5 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
               />
               <input
                 name="path"
                 placeholder="/ or about"
-                className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-1.5 text-xs text-white outline-none focus:ring-2 focus:ring-indigo-500/60"
+                className="w-full rounded-lg bg-white border border-slate-200 px-3 py-1.5 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
               />
-              <Button type="submit" size="sm" className="w-full text-xs">
+              <Button
+                type="submit"
+                size="sm"
+                className="w-full text-xs bg-slate-900 text-white hover:bg-slate-800"
+              >
                 Create Page
               </Button>
             </form>
           </div>
         </aside>
 
-        <main className="rounded-xl border border-white/10 bg-slate-950/80 backdrop-blur-xl p-6 flex flex-col">
+        <main className="rounded-xl border border-slate-200 bg-slate-50/50 p-6 flex flex-col shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-xl font-semibold text-white">
+              <h1 className="text-xl font-semibold text-slate-900">
                 Website Builder
               </h1>
               {selectedPage && (
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-xs text-slate-500 mt-1">
                   Editing page: {selectedPage.title} ({selectedPage.path})
                 </p>
               )}
             </div>
             <div className="flex gap-2">
-              <Link href="/site" className="text-xs text-slate-300 hover:text-white">
+              <Link
+                href="/site"
+                className="text-xs text-indigo-600 hover:text-indigo-700 hover:underline"
+              >
                 View site
               </Link>
             </div>
@@ -162,18 +184,27 @@ export default async function BuilderPage({
                 {blocks.map((block) => renderBlock(block))}
               </div>
 
-              <div className="mt-4 border-t border-white/10 pt-4 flex gap-3">
+              <div className="mt-4 border-t border-slate-200 pt-4 flex gap-3">
                 <form action={addSiteBlock}>
                   <input type="hidden" name="pageId" value={selectedPage.id} />
                   <input type="hidden" name="type" value="HERO" />
-                  <Button type="submit" size="sm" variant="glass">
+                  <Button
+                    type="submit"
+                    size="sm"
+                    className="bg-indigo-600 text-white hover:bg-indigo-500"
+                  >
                     Add Hero
                   </Button>
                 </form>
                 <form action={addSiteBlock}>
                   <input type="hidden" name="pageId" value={selectedPage.id} />
                   <input type="hidden" name="type" value="TEXT" />
-                  <Button type="submit" size="sm" variant="outline">
+                  <Button
+                    type="submit"
+                    size="sm"
+                    variant="outline"
+                    className="bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
+                  >
                     Add Text
                   </Button>
                 </form>

@@ -74,30 +74,30 @@ export function TaskCard({
       style={style}
       {...attributes}
       {...listeners}
-      className="group relative rounded-xl border border-white/10 bg-white/80 dark:bg-black/80 backdrop-blur-md p-4 shadow-premium hover:shadow-premium-md transition-all duration-300 cursor-grab active:cursor-grabbing hover:scale-[1.02]"
+      className="group relative rounded-xl border border-slate-200 bg-white p-4 shadow-sm hover:shadow-md transition-all duration-300 cursor-grab active:cursor-grabbing hover:scale-[1.02]"
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-2 mb-3">
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-sm leading-snug mb-1 line-clamp-2">
+          <h3 className="font-semibold text-sm leading-snug mb-1 line-clamp-2 text-slate-900">
             {title}
           </h3>
           {description && (
-            <p className="text-xs text-muted-foreground line-clamp-2 mb-2">
+            <p className="text-xs text-slate-500 line-clamp-2 mb-2">
               {description}
             </p>
           )}
         </div>
 
         <DropdownMenu>
-          <DropdownMenuTrigger className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-white/50 dark:hover:bg-black/50 rounded">
+          <DropdownMenuTrigger className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-slate-100 rounded text-slate-400 hover:text-slate-600">
             <MoreVertical className="h-4 w-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem>Edit Task</DropdownMenuItem>
             <DropdownMenuItem>Duplicate</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-error">Delete</DropdownMenuItem>
+            <DropdownMenuItem className="text-red-600">Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -108,13 +108,13 @@ export function TaskCard({
           {tags.slice(0, 3).map((tag, index) => (
             <span
               key={index}
-              className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-primary/10 text-primary"
+              className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100"
             >
               {tag}
             </span>
           ))}
           {tags.length > 3 && (
-            <span className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-muted text-muted-foreground">
+            <span className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-slate-100 text-slate-500 border border-slate-200">
               +{tags.length - 3}
             </span>
           )}
@@ -129,12 +129,12 @@ export function TaskCard({
       )}
 
       {/* Footer */}
-      <div className="flex items-center justify-between gap-2 mt-3 pt-3 border-t border-white/10">
-        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+      <div className="flex items-center justify-between gap-2 mt-3 pt-3 border-t border-slate-100">
+        <div className="flex items-center gap-3 text-xs text-slate-500">
           {dueDate && (
             <div
               className={`flex items-center gap-1 ${
-                isOverdue ? "text-error" : ""
+                isOverdue ? "text-red-600" : ""
               }`}
             >
               <Calendar className="h-3.5 w-3.5" />

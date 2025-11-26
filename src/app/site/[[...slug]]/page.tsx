@@ -17,7 +17,10 @@ function renderBlock(block: RenderBlock) {
 
   if (block.type === "HERO") {
     return (
-      <section key={block.id} className="py-16 px-6 md:px-10 bg-gradient-to-br from-indigo-600 to-purple-600 text-white">
+      <section
+        key={block.id}
+        className="py-16 px-6 md:px-10 bg-gradient-to-br from-indigo-600 to-purple-600 text-white"
+      >
         <div className="max-w-3xl mx-auto text-center space-y-4">
           <h1 className="text-4xl font-bold tracking-tight">
             {heading ?? "Hero heading"}
@@ -26,7 +29,7 @@ function renderBlock(block: RenderBlock) {
             {subheading ?? "Hero subheading"}
           </p>
           {ctaLabel && (
-            <button className="mt-4 inline-flex items-center rounded-full bg-white text-black text-sm font-medium px-6 py-2">
+            <button className="mt-4 inline-flex items-center rounded-full bg-white text-indigo-600 text-sm font-medium px-6 py-2 shadow-sm hover:bg-indigo-50 transition-colors">
               {ctaLabel}
             </button>
           )}
@@ -36,12 +39,12 @@ function renderBlock(block: RenderBlock) {
   }
 
   return (
-    <section key={block.id} className="py-12 px-6 md:px-10 bg-slate-950">
+    <section key={block.id} className="py-12 px-6 md:px-10 bg-white">
       <div className="max-w-3xl mx-auto space-y-3">
-        <h2 className="text-2xl font-semibold text-white">
+        <h2 className="text-2xl font-semibold text-slate-900">
           {heading ?? "Text block"}
         </h2>
-        <p className="text-sm text-slate-300">
+        <p className="text-sm text-slate-500">
           {body ?? "Body copy for this section."}
         </p>
       </div>
@@ -58,7 +61,7 @@ export default async function SitePage({
 
   if (!tenant) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-slate-300 text-sm">
+      <div className="min-h-screen flex items-center justify-center bg-white text-slate-500 text-sm">
         No tenant context for this domain.
       </div>
     );
@@ -74,17 +77,15 @@ export default async function SitePage({
 
   if (!page) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-slate-300 text-sm">
+      <div className="min-h-screen flex items-center justify-center bg-white text-slate-500 text-sm">
         Page not found.
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      {page.blocks.map((block) =>
-        renderBlock(block as unknown as RenderBlock),
-      )}
+    <div className="min-h-screen bg-white text-slate-900">
+      {page.blocks.map((block) => renderBlock(block as unknown as RenderBlock))}
     </div>
   );
 }

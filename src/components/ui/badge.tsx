@@ -8,20 +8,20 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary/10 text-primary hover:bg-primary/20",
+        default: "bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-100",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        success: "bg-success/10 text-success hover:bg-success/20",
-        warning: "bg-warning/10 text-warning hover:bg-warning/20",
-        error: "bg-error/10 text-error hover:bg-error/20",
-        info: "bg-info/10 text-info hover:bg-info/20",
-        outline: "border border-current bg-transparent hover:bg-muted",
-        ghost: "hover:bg-muted",
+          "bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200",
+        success: "bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-100",
+        warning: "bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-100",
+        error: "bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-100",
+        info: "bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-100",
+        outline: "border border-slate-200 bg-transparent hover:bg-slate-50 text-slate-700",
+        ghost: "hover:bg-slate-100 text-slate-700",
       },
       size: {
-        sm: "text-xs px-2 py-0.5",
-        md: "text-sm px-2.5 py-0.5",
-        lg: "text-base px-3 py-1",
+        sm: "text-[10px] px-2 py-0.5",
+        md: "text-xs px-2.5 py-0.5",
+        lg: "text-sm px-3 py-1",
       },
     },
     defaultVariants: {
@@ -54,7 +54,7 @@ export function Badge({
       {onRemove && (
         <button
           onClick={onRemove}
-          className="ml-1 -mr-1 inline-flex h-3.5 w-3.5 items-center justify-center rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+          className="ml-1 -mr-1 inline-flex h-3.5 w-3.5 items-center justify-center rounded-full hover:bg-black/5 transition-colors"
         >
           <X className="h-3 w-3" />
         </button>
@@ -104,7 +104,7 @@ export function StatusBadge({ status, size, className }: StatusBadgeProps) {
 
   return (
     <Badge variant={config.variant} size={size} className={className}>
-      <span className="h-1.5 w-1.5 rounded-full bg-current" />
+      <span className="h-1.5 w-1.5 rounded-full bg-current mr-1.5" />
       {config.label}
     </Badge>
   );

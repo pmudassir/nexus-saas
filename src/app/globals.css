@@ -91,64 +91,65 @@
 }
 
 /* Background Patterns */
-@utility bg-grid-small-white {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='8' height='8' fill='none' stroke='rgb(255 255 255 / 0.04)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+@utility bg-grid-small-black {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='8' height='8' fill='none' stroke='rgb(0 0 0 / 0.04)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
 }
-@utility bg-grid-white {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.04)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+@utility bg-grid-black {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(0 0 0 / 0.04)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
 }
-@utility bg-dot-white {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='16' height='16' fill='none'%3e%3ccircle fill='rgb(255 255 255 / 0.05)' cx='10' cy='10' r='1.6'/%3e%3c/svg%3e");
+@utility bg-dot-black {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='16' height='16' fill='none'%3e%3ccircle fill='rgb(0 0 0 / 0.05)' cx='10' cy='10' r='1.6'/%3e%3c/svg%3e");
 }
 
-/* Glassmorphism Utilities */
+/* Glassmorphism Utilities - Light Mode Optimized */
 @utility glass-panel {
-  @apply bg-slate-950/60 backdrop-blur-xl border border-white/10;
+  @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-xl shadow-black/5;
 }
 @utility glass-card {
-  @apply bg-white/5 backdrop-blur-lg border border-white/10 hover:border-white/20 transition-all duration-300;
+  @apply bg-white/60 backdrop-blur-lg border border-white/40 hover:border-white/60 transition-all duration-300 shadow-sm hover:shadow-md;
 }
 @utility text-gradient {
-  @apply bg-clip-text text-transparent bg-linear-to-r from-indigo-400 via-purple-400 to-cyan-400;
+  @apply bg-clip-text text-transparent bg-linear-to-r from-indigo-600 via-purple-600 to-violet-600;
 }
 
-/* Theme Colors - Deep Space (Indigo/Violet/Cyan) */
+/* Theme Colors - Premium Light (Notion-like + Vibrant Accents) */
 :root {
-  --background: 222.2 84% 4.9%; /* Deep Space Blue */
-  --foreground: 210 40% 98%;
+  --background: 0 0% 100%; /* White */
+  --foreground: 222.2 84% 4.9%; /* Deep Slate */
   
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
 
-  /* Electric Violet Primary */
-  --primary: 263.4 70% 50.4%;
+  /* Vibrant Indigo Primary */
+  --primary: 249 95% 63%; /* #6366f1 - Indigo 500 */
   --primary-foreground: 210 40% 98%;
 
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%; /* Slate 50 */
+  --secondary-foreground: 222.2 47.4% 11.2%;
   
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
   
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
   
-  --destructive: 0 62.8% 30.6%;
+  --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 40% 98%;
   
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 263.4 70% 50.4%;
+  --border: 214.3 31.8% 91.4%; /* Slate 200 */
+  --input: 214.3 31.8% 91.4%;
+  --ring: 262.1 83.3% 57.8%;
   
   --radius: 0.75rem;
 
   /* Semantic Colors */
-  --success: 142 70% 50%;
+  --success: 142 70% 45%;
   --success-foreground: 144 100% 97%;
-  --warning: 48 96% 89%;
-  --warning-foreground: 38 92% 50%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 48 96% 89%;
   --error: 0 84.2% 60.2%;
   --error-foreground: 210 40% 98%;
   --info: 217 91% 60%;
@@ -156,7 +157,7 @@
 }
 
 .dark {
-  /* Same as root for now, enforcing dark mode aesthetic */
+  /* Keeping dark mode variables just in case, but user requested light premium */
   --background: 222.2 84% 4.9%;
   --foreground: 210 40% 98%;
   --card: 222.2 84% 4.9%;
@@ -183,7 +184,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased selection:bg-primary/30 selection:text-primary-foreground;
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
@@ -195,13 +196,13 @@
   
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
     @apply bg-transparent;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
+    @apply bg-slate-200 rounded-full hover:bg-slate-300 transition-colors;
   }
 }

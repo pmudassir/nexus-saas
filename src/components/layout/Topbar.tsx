@@ -1,31 +1,47 @@
 "use client";
 
-import { Bell, Search, Menu } from "lucide-react";
+import { Bell, Search, Menu, HelpCircle } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export function Topbar() {
+  const pathname = usePathname();
+  
+  // Simple breadcrumb logic
+  const pathSegments = pathname.split('/').filter(Boolean);
+  const breadcrumbs = pathSegments.length > 0 
+    ? pathSegments.map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)) 
+    : ['Dashboard'];
+
   return (
-    <header className="sticky top-0 z-30 flex h-20 items-center gap-4 px-8 bg-transparent">
-      <div className="flex-1 flex items-center gap-4 rounded-2xl glass-panel px-4 py-2 shadow-lg shadow-black/20">
-        <button className="md:hidden text-slate-400 hover:text-white transition-colors">
-          <Menu className="h-6 w-6" />
-        </button>
-        <div className="w-full flex-1">
-          <form>
-            <div className="relative w-full md:w-96 group">
-              <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-500 group-focus-within:text-indigo-400 transition-colors" />
-              <input
-                type="search"
-                placeholder="Search..."
-                className="w-full rounded-xl bg-white/5 border border-transparent focus:border-indigo-500/50 pl-10 pr-4 py-2 text-sm text-white outline-none focus:bg-white/10 transition-all placeholder:text-slate-500"
-              />
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 px-6 bg-white border-b border-slate-200/60">
+      <div className="flex-1 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+            <button className="md:hidden text-slate-500 hover:text-slate-700 transition-colors">
+                <Menu className="h-5 w-5" />
+            </button>
+            <div className="flex items-center text-sm text-slate-500">
+                <span className="hover:text-slate-900 cursor-pointer transition-colors">Nexus</span>
+                <span className="mx-2 text-slate-300">/</span>
+                <span className="font-medium text-slate-900">{breadcrumbs[breadcrumbs.length - 1]}</span>
             </div>
-          </form>
         </div>
-        <div className="flex items-center gap-3 border-l border-white/10 pl-3">
-          <button className="relative rounded-xl p-2 text-slate-400 hover:bg-white/10 hover:text-white transition-all hover:scale-105 active:scale-95">
-            <Bell className="h-5 w-5" />
-            <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-indigo-500 ring-2 ring-slate-950 animate-pulse" />
-          </button>
+
+        <div className="flex items-center gap-2">
+            <div className="hidden md:flex items-center text-sm text-slate-400 mr-4">
+                <span className="mr-2">Last updated now</span>
+            </div>
+            
+            <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-all">
+                <span>Share</span>
+            </button>
+            
+            <button className="relative p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-all">
+                <Bell className="h-4 w-4" />
+                <span className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-red-500 ring-2 ring-white" />
+            </button>
+             <button className="p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-all">
+                <HelpCircle className="h-4 w-4" />
+            </button>
         </div>
       </div>
     </header>

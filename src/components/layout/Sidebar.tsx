@@ -12,6 +12,9 @@ import {
   BarChart3,
   Layers,
   Box,
+  ChevronsLeft,
+  Search,
+  Plus
 } from "lucide-react";
 
 const navigation = [
@@ -22,94 +25,95 @@ const navigation = [
   { name: "Inventory", href: "/inventory", icon: Box },
   { name: "HR", href: "/hr", icon: Layers },
   { name: "Analytics", href: "/analytics", icon: BarChart3 },
-  { name: "Settings", href: "/settings", icon: Settings },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="hidden md:flex flex-col w-72 h-screen sticky top-0 p-4 z-50">
-      <div className="flex-1 flex flex-col rounded-3xl glass-panel shadow-2xl shadow-black/50 overflow-hidden">
-        {/* Header */}
-        <div className="flex h-24 items-center px-8 border-b border-white/5 bg-white/[0.02]">
-          <div className="flex items-center gap-4 group cursor-pointer">
-            <div className="relative h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-all duration-500 group-hover:scale-105">
-              <div className="absolute inset-0 rounded-2xl bg-white/20 blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
-              <span className="text-white font-bold text-2xl relative z-10">N</span>
+    <div className="hidden md:flex flex-col w-64 h-screen sticky top-0 bg-[#F7F7F5] border-r border-slate-200/60 z-50">
+      {/* Header / Workspace Switcher */}
+      <div className="flex flex-col px-3 py-4 gap-2">
+        <div className="flex items-center justify-between px-2 py-1.5 rounded-md hover:bg-slate-200/50 transition-colors cursor-pointer group">
+          <div className="flex items-center gap-2.5">
+            <div className="h-6 w-6 rounded-md bg-indigo-600 flex items-center justify-center shadow-sm shadow-indigo-500/20">
+              <span className="text-white font-bold text-xs">N</span>
             </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-xl text-white tracking-tight group-hover:text-indigo-300 transition-colors">
-                Nexus
-              </span>
-              <span className="text-xs text-slate-400 font-medium tracking-wide">ENTERPRISE</span>
-            </div>
+            <span className="font-semibold text-sm text-slate-700 group-hover:text-slate-900">Nexus SaaS</span>
           </div>
+          <ChevronsLeft className="w-4 h-4 text-slate-400 opacity-0 group-hover:opacity-100 transition-all" />
         </div>
+        
+        {/* Quick Actions */}
+        <div className="flex items-center gap-1 px-1">
+            <button className="flex-1 flex items-center gap-2 px-2 py-1.5 text-xs font-medium text-slate-500 bg-white border border-slate-200/60 rounded-md shadow-sm hover:text-slate-700 hover:border-slate-300 transition-all text-left">
+                <Search className="w-3.5 h-3.5" />
+                <span>Search</span>
+                <kbd className="ml-auto text-[10px] text-slate-400 font-sans">⌘K</kbd>
+            </button>
+            <button className="flex items-center justify-center p-1.5 text-slate-500 bg-white border border-slate-200/60 rounded-md shadow-sm hover:text-indigo-600 hover:border-indigo-200 transition-all">
+                <Plus className="w-3.5 h-3.5" />
+            </button>
+        </div>
+      </div>
 
-        {/* Navigation */}
-        <div className="flex-1 overflow-y-auto py-8 px-4 space-y-1 custom-scrollbar">
-          <nav className="grid gap-2">
-            {navigation.map((item) => {
-              // Simplified active state logic
-              let isActive = false;
-              
-              if (item.href === '/') {
-                // Dashboard is active only on exact root path
-                isActive = pathname === '/';
-              } else {
-                // Other items are active if pathname matches exactly or starts with the path
-                isActive = pathname === item.href || pathname.startsWith(item.href + '/');
-              }
-              
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
+      {/* Navigation */}
+      <div className="flex-1 overflow-y-auto px-3 py-2 space-y-0.5 custom-scrollbar">
+        <div className="px-2 py-1.5">
+            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Overview</span>
+        </div>
+        <nav className="grid gap-0.5">
+          {navigation.map((item) => {
+            let isActive = false;
+            if (item.href === '/') {
+              isActive = pathname === '/';
+            } else {
+              isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+            }
+            
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  "group flex items-center gap-2.5 rounded-md px-2 py-1.5 text-sm font-medium transition-all duration-200",
+                  isActive
+                    ? "bg-white text-indigo-600 shadow-sm ring-1 ring-slate-200/50"
+                    : "text-slate-600 hover:bg-slate-200/50 hover:text-slate-900"
+                )}
+              >
+                <item.icon
                   className={cn(
-                    "group relative flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-medium transition-all duration-300 overflow-hidden",
-                    isActive
-                      ? "text-white shadow-lg shadow-indigo-500/10"
-                      : "text-slate-400 hover:text-white hover:bg-white/5"
+                    "h-4 w-4 transition-colors",
+                    isActive ? "text-indigo-600" : "text-slate-400 group-hover:text-slate-600"
                   )}
-                >
-                  {isActive && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/20 to-violet-600/20 border border-indigo-500/30 rounded-xl" />
-                  )}
-                  {isActive && (
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-indigo-500 rounded-r-full shadow-[0_0_12px_rgba(99,102,241,0.8)]" />
-                  )}
-                  
-                  <item.icon
-                    className={cn(
-                      "relative z-10 h-5 w-5 transition-all duration-300",
-                      isActive
-                        ? "text-indigo-400 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]"
-                        : "text-slate-500 group-hover:text-indigo-300 group-hover:scale-110"
-                    )}
-                  />
-                  <span className="relative z-10">{item.name}</span>
-                </Link>
-              );
-            })}
-          </nav>
+                />
+                <span>{item.name}</span>
+              </Link>
+            );
+          })}
+        </nav>
+        
+        <div className="mt-6 px-2 py-1.5">
+            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Tools</span>
         </div>
+         <nav className="grid gap-0.5">
+            <Link href="/settings" className="group flex items-center gap-2.5 rounded-md px-2 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 transition-all duration-200">
+                <Settings className="h-4 w-4 text-slate-400 group-hover:text-slate-600" />
+                <span>Settings</span>
+            </Link>
+         </nav>
+      </div>
 
-        {/* User Profile */}
-        <div className="p-4 border-t border-white/5 bg-black/20 backdrop-blur-md">
-          <div className="flex items-center gap-3 rounded-2xl p-3 hover:bg-white/5 transition-all cursor-pointer group border border-transparent hover:border-white/5">
-            <div className="relative h-10 w-10">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-indigo-500 to-violet-500 animate-pulse opacity-50" />
-              <div className="relative h-10 w-10 rounded-full bg-slate-800 border-2 border-slate-950 flex items-center justify-center overflow-hidden">
-                <span className="text-xs font-bold text-white">AD</span>
-              </div>
-              <div className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-emerald-500 border-2 border-slate-950" />
-            </div>
-            <div className="flex flex-col min-w-0">
-              <span className="text-sm font-semibold text-white truncate group-hover:text-indigo-300 transition-colors">Admin User</span>
-              <span className="text-xs text-slate-500 truncate">admin@nexus.com</span>
-            </div>
-            <Settings className="w-4 h-4 text-slate-500 ml-auto opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0" />
+      {/* User Profile */}
+      <div className="p-3 border-t border-slate-200/60 bg-[#F7F7F5]">
+        <div className="flex items-center gap-2.5 rounded-md p-2 hover:bg-slate-200/50 transition-all cursor-pointer group">
+          <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-indigo-100 to-violet-100 border border-slate-200 flex items-center justify-center text-indigo-700 font-medium text-xs">
+            AD
+          </div>
+          <div className="flex flex-col min-w-0 flex-1">
+            <span className="text-sm font-medium text-slate-700 truncate group-hover:text-slate-900">Admin User</span>
+            <span className="text-[11px] text-slate-500 truncate">admin@nexus.com</span>
           </div>
         </div>
       </div>
