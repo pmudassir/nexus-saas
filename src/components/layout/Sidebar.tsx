@@ -32,28 +32,28 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="hidden md:flex flex-col w-60 h-screen sticky top-0 bg-[#F7F7F5] border-r border-[#E9E9E8] z-50 text-[#37352f]">
+    <div className="hidden md:flex flex-col w-60 h-screen sticky top-0 bg-muted border-r border-border z-50 text-foreground">
       {/* Header / Workspace Switcher */}
       <div className="flex flex-col px-3 py-3 gap-2">
-        <div className="flex items-center justify-between px-2 py-1 rounded-sm hover:bg-[rgba(55,53,47,0.08)] transition-colors cursor-pointer group h-8">
+        <div className="flex items-center justify-between px-2 py-1 rounded-sm hover:bg-black/5 transition-colors cursor-pointer group h-8">
           <div className="flex items-center gap-2">
-            <div className="h-5 w-5 rounded-sm bg-indigo-600 flex items-center justify-center shadow-sm">
-              <span className="text-white font-bold text-[10px]">N</span>
+            <div className="h-5 w-5 rounded-sm bg-primary flex items-center justify-center shadow-sm">
+              <span className="text-primary-foreground font-bold text-[10px]">N</span>
             </div>
             <span className="font-medium text-sm truncate">Nexus SaaS</span>
           </div>
-          <ChevronsLeft className="w-4 h-4 text-[#9B9A97] opacity-0 group-hover:opacity-100 transition-all" />
+          <ChevronsLeft className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-all" />
         </div>
         
         {/* Quick Actions */}
         <div className="space-y-0.5">
-            <button className="w-full flex items-center gap-2 px-2 py-1 text-sm text-[#5F5E5B] hover:bg-[rgba(55,53,47,0.08)] rounded-sm transition-colors text-left h-7">
-                <Search className="w-4 h-4 text-[#9B9A97]" />
+            <button className="w-full flex items-center gap-2 px-2 py-1 text-sm text-muted-foreground hover:bg-black/5 rounded-sm transition-colors text-left h-7">
+                <Search className="w-4 h-4 text-muted-foreground" />
                 <span className="font-medium">Search</span>
-                <kbd className="ml-auto text-[10px] text-[#9B9A97] font-sans border border-[#E9E9E8] rounded px-1 bg-white">⌘K</kbd>
+                <kbd className="ml-auto text-[10px] text-muted-foreground font-sans border border-border rounded px-1 bg-background">⌘K</kbd>
             </button>
-            <button className="w-full flex items-center gap-2 px-2 py-1 text-sm text-[#5F5E5B] hover:bg-[rgba(55,53,47,0.08)] rounded-sm transition-colors text-left h-7">
-                <Plus className="w-4 h-4 text-[#9B9A97]" />
+            <button className="w-full flex items-center gap-2 px-2 py-1 text-sm text-muted-foreground hover:bg-black/5 rounded-sm transition-colors text-left h-7">
+                <Plus className="w-4 h-4 text-muted-foreground" />
                 <span className="font-medium">New Page</span>
             </button>
         </div>
@@ -63,7 +63,7 @@ export function Sidebar() {
       <div className="flex-1 overflow-y-auto px-2 py-2 space-y-4 custom-scrollbar">
         <div>
             <div className="px-2 py-1 mb-1">
-                <span className="text-[11px] font-semibold text-[#9B9A97] uppercase tracking-wider">Workspace</span>
+                <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Workspace</span>
             </div>
             <nav className="space-y-0.5">
             {navigation.map((item) => {
@@ -81,14 +81,14 @@ export function Sidebar() {
                     className={cn(
                     "group flex items-center gap-2 rounded-sm px-2 py-1 text-sm font-medium transition-colors duration-100 h-7",
                     isActive
-                        ? "bg-[rgba(55,53,47,0.08)] text-[#37352f]"
-                        : "text-[#5F5E5B] hover:bg-[rgba(55,53,47,0.08)] hover:text-[#37352f]"
+                        ? "bg-black/5 text-foreground"
+                        : "text-muted-foreground hover:bg-black/5 hover:text-foreground"
                     )}
                 >
                     <item.icon
                     className={cn(
                         "h-4 w-4 transition-colors",
-                        isActive ? "text-indigo-600" : "text-[#9B9A97] group-hover:text-[#5F5E5B]"
+                        isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
                     )}
                     />
                     <span>{item.name}</span>
@@ -100,11 +100,11 @@ export function Sidebar() {
         
         <div>
             <div className="px-2 py-1 mb-1">
-                <span className="text-[11px] font-semibold text-[#9B9A97] uppercase tracking-wider">Tools</span>
+                <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Tools</span>
             </div>
             <nav className="space-y-0.5">
-                <Link href="/settings" className="group flex items-center gap-2 rounded-sm px-2 py-1 text-sm font-medium text-[#5F5E5B] hover:bg-[rgba(55,53,47,0.08)] hover:text-[#37352f] transition-colors duration-100 h-7">
-                    <Settings className="h-4 w-4 text-[#9B9A97] group-hover:text-[#5F5E5B]" />
+                <Link href="/settings" className="group flex items-center gap-2 rounded-sm px-2 py-1 text-sm font-medium text-muted-foreground hover:bg-black/5 hover:text-foreground transition-colors duration-100 h-7">
+                    <Settings className="h-4 w-4 text-muted-foreground group-hover:text-foreground" />
                     <span>Settings</span>
                 </Link>
             </nav>
@@ -112,15 +112,15 @@ export function Sidebar() {
       </div>
 
       {/* User Profile */}
-      <div className="p-2 border-t border-[#E9E9E8]">
-        <div className="flex items-center gap-2 rounded-sm p-1 hover:bg-[rgba(55,53,47,0.08)] transition-colors cursor-pointer group">
-          <div className="h-6 w-6 rounded-sm bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-[10px]">
+      <div className="p-2 border-t border-border">
+        <div className="flex items-center gap-2 rounded-sm p-1 hover:bg-black/5 transition-colors cursor-pointer group">
+          <div className="h-6 w-6 rounded-sm bg-primary/10 flex items-center justify-center text-primary font-bold text-[10px]">
             AD
           </div>
           <div className="flex-1 min-w-0">
-            <div className="text-sm font-medium truncate text-[#37352f]">Admin User</div>
+            <div className="text-sm font-medium truncate text-foreground">Admin User</div>
           </div>
-          <MoreHorizontal className="w-4 h-4 text-[#9B9A97]" />
+          <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
         </div>
       </div>
     </div>

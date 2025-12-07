@@ -24,24 +24,24 @@ export function StatCard({
   return (
     <div
       className={cn(
-        "group relative rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden",
+        "group relative rounded-xl border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden",
         className
       )}
       {...props}
     >
       {/* Background gradient effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
       <div className="relative">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             {icon && (
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 {icon}
               </div>
             )}
-            <h3 className="text-sm font-medium text-slate-500 uppercase tracking-wider">
+            <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
               {title}
             </h3>
           </div>
@@ -65,12 +65,12 @@ export function StatCard({
 
         {/* Value */}
         <div className="mb-2">
-          <div className="text-3xl font-bold tracking-tight text-slate-900">{value}</div>
+          <div className="text-3xl font-bold tracking-tight text-foreground">{value}</div>
         </div>
 
         {/* Description */}
         {description && (
-          <p className="text-sm text-slate-500">{description}</p>
+          <p className="text-sm text-muted-foreground">{description}</p>
         )}
       </div>
     </div>
