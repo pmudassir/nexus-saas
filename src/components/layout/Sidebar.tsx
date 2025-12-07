@@ -17,6 +17,7 @@ import {
   Plus,
   MoreHorizontal
 } from "lucide-react";
+import { useUIStore } from "@/lib/ui-store";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
@@ -30,6 +31,7 @@ const navigation = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { toggleSearch } = useUIStore();
 
   return (
     <div className="hidden md:flex flex-col w-64 h-[calc(100vh-2rem)] m-4 sticky top-4 rounded-2xl glass-panel border border-white/20 dark:border-white/10 z-50 text-foreground transition-all duration-300">
@@ -50,7 +52,10 @@ export function Sidebar() {
         
         {/* Quick Actions */}
         <div className="space-y-1">
-            <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors text-left group">
+            <button 
+              onClick={toggleSearch}
+              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors text-left group"
+            >
                 <Search className="w-4 h-4 group-hover:text-indigo-500 transition-colors" />
                 <span className="font-medium">Search</span>
                 <kbd className="ml-auto text-[10px] text-muted-foreground font-sans border border-border rounded px-1.5 bg-background/50">⌘K</kbd>

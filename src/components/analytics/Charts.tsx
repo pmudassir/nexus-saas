@@ -3,13 +3,9 @@
 import {
   Area,
   AreaChart,
-  Bar,
-  BarChart,
   CartesianGrid,
   Cell,
   Legend,
-  Line,
-  LineChart,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -40,7 +36,7 @@ const COLORS = ["#6366f1", "#8b5cf6", "#ec4899", "#06b6d4"];
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="glass-panel p-3 rounded-lg border border-white/10 !bg-zinc-900/90 shadow-xl">
+      <div className="glass-panel p-3 rounded-lg border border-white/10 bg-zinc-900/90! shadow-xl">
         <p className="font-display font-medium text-white mb-2">{label}</p>
         {payload.map((entry: any, index: number) => (
           <div key={index} className="flex items-center gap-2 text-xs mb-1">
