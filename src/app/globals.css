@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
@@ -53,8 +56,9 @@
   /* Animation Presets */
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
-  --animate-enter: enter 0.3s ease-out forwards;
-  --animate-fade-in: fade-in 0.2s ease-out forwards;
+  --animate-enter: enter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fade-in 0.3s ease-out forwards;
+  --animate-float: float 6s ease-in-out infinite;
 
   /* Keyframe Animations */
   @keyframes accordion-down {
@@ -66,91 +70,106 @@
     to { height: 0; }
   }
   @keyframes enter {
-    from { opacity: 0; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(10px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
   }
   @keyframes fade-in {
     from { opacity: 0; }
     to { opacity: 1; }
   }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
 }
 
-/* Glassmorphism Utilities - Flat & Subtle */
+/* Glassmorphism Utilities - Refined & Cosmic */
 @utility glass-panel {
-  @apply bg-white/80 backdrop-blur-md border border-black/[0.06] shadow-sm;
+  @apply bg-white/70 dark:bg-zinc-900/60 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-xl dark:shadow-black/20;
 }
 @utility glass-card {
-  @apply bg-white border border-black/[0.06] shadow-[0_2px_4px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_8px_rgba(0,0,0,0.04)] transition-shadow duration-200;
+  @apply bg-white/80 dark:bg-zinc-900/40 backdrop-blur-md border border-zinc-200/50 dark:border-white/10 shadow-sm hover:shadow-md transition-all duration-300 hover:border-indigo-500/30 dark:hover:border-indigo-400/30;
 }
 @utility text-gradient {
-  @apply bg-clip-text text-transparent bg-linear-to-r from-indigo-600 to-purple-600;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-cyan-400;
+}
+@utility glow {
+  @apply shadow-[0_0_20px_rgba(99,102,241,0.15)] dark:shadow-[0_0_30px_rgba(99,102,241,0.1)];
 }
 
-/* Theme Colors - Strict Notion-like + Vibrant Accents */
+/* Theme Colors - Cosmic & Vibrant */
 :root {
-  --background: 0 0% 100%; /* White */
-  --foreground: 40 5% 20%; /* #37352f - Notion Text (Warm) */
+  --background: 210 40% 98%; /* Soft Ice White */
+  --foreground: 222 47% 11%; /* Deep Navy */
   
   --card: 0 0% 100%;
-  --card-foreground: 40 5% 20%;
+  --card-foreground: 222 47% 11%;
   
   --popover: 0 0% 100%;
-  --popover-foreground: 40 5% 20%;
+  --popover-foreground: 222 47% 11%;
 
-  /* Vibrant Indigo Primary */
-  --primary: 249 95% 63%; /* #6366f1 - Indigo 500 */
+  /* Electric Indigo Primary */
+  --primary: 249 95% 63%; 
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 60 5% 96%; /* #F7F7F5 - Notion Sidebar/Bg (Warm) */
-  --secondary-foreground: 40 5% 20%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222 47% 11.2%;
   
-  --muted: 60 5% 96%; /* #F7F7F5 */
-  --muted-foreground: 40 2% 60%; /* #9B9A97 - Notion Muted (Warm) */
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
   
-  --accent: 60 5% 96%;
-  --accent-foreground: 40 5% 20%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222 47% 11.2%;
   
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 40% 98%;
   
-  --border: 60 2% 91%; /* #E9E9E8 - Notion Border (Warm) */
-  --input: 60 2% 91%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
   --ring: 249 95% 63%;
   
-  --radius: 0.375rem; /* 6px - Tighter Notion radius */
+  --radius: 0.75rem; /* Larger, friendlier radius */
 
   /* Semantic Colors */
   --success: 142 70% 45%;
-  --success-foreground: 144 100% 97%;
+  --success-foreground: 0 0% 100%;
   --warning: 38 92% 50%;
-  --warning-foreground: 48 96% 89%;
+  --warning-foreground: 0 0% 100%;
   --error: 0 84.2% 60.2%;
-  --error-foreground: 210 40% 98%;
+  --error-foreground: 0 0% 100%;
   --info: 217 91% 60%;
-  --info-foreground: 210 40% 98%;
+  --info-foreground: 0 0% 100%;
 }
 
 .dark {
-  /* Dark mode variables (Notion Dark) */
-  --background: 220 13% 18%; /* #191919 */
-  --foreground: 0 0% 100%;
-  --card: 220 13% 22%; /* #202020 */
-  --card-foreground: 0 0% 100%;
-  --popover: 220 13% 22%;
-  --popover-foreground: 0 0% 100%;
-  --primary: 249 95% 63%;
+  /* Deep Space Dark Mode */
+  --background: 225 15% 8%; /* Deep rich slate/black */
+  --foreground: 210 40% 98%;
+  
+  --card: 225 15% 12%; 
+  --card-foreground: 210 40% 98%;
+  
+  --popover: 225 15% 12%;
+  --popover-foreground: 210 40% 98%;
+  
+  --primary: 250 95% 65%; /* Vibrant Indigo */
   --primary-foreground: 0 0% 100%;
-  --secondary: 220 13% 25%;
-  --secondary-foreground: 0 0% 100%;
-  --muted: 220 13% 25%;
-  --muted-foreground: 220 8% 60%;
-  --accent: 220 13% 25%;
-  --accent-foreground: 0 0% 100%;
+  
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  
   --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 100%;
-  --border: 220 13% 25%;
-  --input: 220 13% 25%;
-  --ring: 249 95% 63%;
+  --destructive-foreground: 210 40% 98%;
+  
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 250 95% 65%;
 }
 
 @layer base {
@@ -158,9 +177,10 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
-    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-background text-foreground antialiased font-sans selection:bg-indigo-500/30 selection:text-indigo-200;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight text-foreground/95;
   }
 }
 
@@ -169,7 +189,7 @@
     text-wrap: balance;
   }
   
-  /* Custom Scrollbar - Minimal */
+  /* Custom Scrollbar - Sleek */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -178,6 +198,6 @@
     @apply bg-transparent;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-black/10 rounded-full hover:bg-black/20 transition-colors;
+    @apply bg-zinc-300 dark:bg-zinc-700 rounded-full hover:bg-zinc-400 dark:hover:bg-zinc-600 transition-colors;
   }
 }
