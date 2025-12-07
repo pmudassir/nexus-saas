@@ -19,7 +19,7 @@ function formatCurrency(amount: number) {
 export default async function AnalyticsPage() {
   const { tenant } = await requireTenantMembership();
 
-  const [invoices, expenses, projects, employees, contacts] =
+  const [invoices, expenses, , employees, contacts] =
     await Promise.all([
       prisma.invoice.findMany({
         where: { tenantId: tenant.id },
@@ -43,7 +43,6 @@ export default async function AnalyticsPage() {
     .reduce((sum, inv) => sum + inv.totalAmount, 0);
   const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
   const netProfit = totalRevenue - totalExpenses;
-  const activeProjects = projects.length;
   const totalEmployees = employees.length;
   const totalContacts = contacts.length;
 

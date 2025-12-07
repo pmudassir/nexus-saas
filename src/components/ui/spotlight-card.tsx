@@ -12,7 +12,6 @@ interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement> {
 export function SpotlightCard({
   children,
   className,
-  spotlightColor,
   ...props
 }: SpotlightCardProps) {
   return (

@@ -1,8 +1,9 @@
-"use client";
 import React, { useId } from "react";
 import { useEffect, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
+import type { Container } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
+import { useAnimation, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type ParticlesProps = {
@@ -38,7 +39,7 @@ export const SparklesCore = (props: ParticlesProps) => {
   }, []);
   const controls = useAnimation();
 
-  const particlesLoaded = async (container?: any) => {
+  const particlesLoaded = async (container?: Container) => {
     if (container) {
       console.log(container);
       controls.start({
@@ -80,7 +81,7 @@ export const SparklesCore = (props: ParticlesProps) => {
                   enable: false,
                   mode: "repulse",
                 },
-                resize: true as any,
+                resize: { enable: true },
               },
               modes: {
                 push: {
@@ -137,4 +138,4 @@ export const SparklesCore = (props: ParticlesProps) => {
   );
 };
 
-import { useAnimation, motion } from "framer-motion";
+

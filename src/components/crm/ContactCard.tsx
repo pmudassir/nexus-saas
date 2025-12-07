@@ -26,7 +26,6 @@ interface ContactCardProps {
 }
 
 export function ContactCard({
-  id,
   name,
   email,
   phone,
@@ -87,14 +86,14 @@ export function ContactCard({
           href={`mailto:${email}`}
           className="flex items-center gap-2 text-sm text-slate-500 hover:text-indigo-600 transition-colors group/link"
         >
-          <Mail className="h-4 w-4 flex-shrink-0" />
+          <Mail className="h-4 w-4 shrink-0" />
           <span className="truncate group-hover/link:underline">{email}</span>
         </a>
         <a
           href={`tel:${phone}`}
           className="flex items-center gap-2 text-sm text-slate-500 hover:text-indigo-600 transition-colors group/link"
         >
-          <Phone className="h-4 w-4 flex-shrink-0" />
+          <Phone className="h-4 w-4 shrink-0" />
           <span className="group-hover/link:underline">{phone}</span>
         </a>
       </div>

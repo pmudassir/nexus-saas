@@ -55,6 +55,13 @@ interface Task {
   status?: string;
 }
 
+type TasksByStatus = {
+  TODO: Task[];
+  IN_PROGRESS: Task[];
+  REVIEW: Task[];
+  DONE: Task[];
+}
+
 interface KanbanBoardProps {
   initialTasks?: Task[];
 }
@@ -62,7 +69,7 @@ interface KanbanBoardProps {
 export function KanbanBoard({ initialTasks = [] }: KanbanBoardProps) {
   // Transform initialTasks array into grouped object by status
   const groupedTasks = initialTasks.reduce(
-    (acc: any, task) => {
+    (acc: TasksByStatus, task) => {
       const status = task.status || "TODO";
       if (!acc[status]) acc[status] = [];
       acc[status].push(task);
@@ -76,7 +83,7 @@ export function KanbanBoard({ initialTasks = [] }: KanbanBoardProps) {
     }
   );
 
-  const [tasks, setTasks] = useState<any>(
+  const [tasks, setTasks] = useState<TasksByStatus>(
     initialTasks.length > 0 ? groupedTasks : initialData
   );
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -109,7 +116,7 @@ export function KanbanBoard({ initialTasks = [] }: KanbanBoardProps) {
     }
 
     // Move task
-    setTasks((prev: any) => {
+    setTasks((prev: TasksByStatus) => {
       const sourceTasks = [...prev[sourceContainer]];
       const destTasks = [...prev[destContainer]];
       const taskIndex = sourceTasks.findIndex((t) => t.id === activeId);
@@ -130,7 +137,7 @@ export function KanbanBoard({ initialTasks = [] }: KanbanBoardProps) {
   function findContainer(id: string) {
     if (Object.keys(tasks).includes(id)) return id;
     return Object.keys(tasks).find((key) =>
-      tasks[key].find((t: any) => t.id === id)
+      tasks[key].find((t: Task) => t.id === id)
     );
   }
 
