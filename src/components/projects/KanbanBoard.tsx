@@ -11,48 +11,12 @@ import {
 import { KanbanColumn } from "./KanbanColumn";
 import { TaskCard } from "./TaskCard";
 
-const initialData = {
-  TODO: [
-    {
-      id: "1",
-      title: "Research market trends",
-      priority: "HIGH",
-      dueDate: "Oct 12",
-    },
-    {
-      id: "2",
-      title: "Draft project proposal",
-      priority: "MEDIUM",
-      dueDate: "Oct 14",
-    },
-  ],
-  IN_PROGRESS: [
-    {
-      id: "3",
-      title: "Design system architecture",
-      priority: "HIGH",
-      dueDate: "Oct 20",
-    },
-  ],
-  REVIEW: [
-    {
-      id: "4",
-      title: "Client meeting preparation",
-      priority: "LOW",
-      dueDate: "Oct 10",
-    },
-  ],
-  DONE: [
-    { id: "5", title: "Initial setup", priority: "MEDIUM", dueDate: "Oct 1" },
-  ],
-};
-
 interface Task {
   id: string;
   title: string;
-  priority: string;
+  priority: "LOW" | "MEDIUM" | "HIGH" | "URGENT";
   dueDate?: string;
-  status?: string;
+  status: string;
 }
 
 type TasksByStatus = {
@@ -62,6 +26,46 @@ type TasksByStatus = {
   DONE: Task[];
 }
 
+const initialData: TasksByStatus = {
+  TODO: [
+    {
+      id: "1",
+      title: "Research market trends",
+      priority: "HIGH",
+      dueDate: "Oct 12",
+      status: "TODO",
+    },
+    {
+      id: "2",
+      title: "Draft project proposal",
+      priority: "MEDIUM",
+      dueDate: "Oct 14",
+      status: "TODO",
+    },
+  ],
+  IN_PROGRESS: [
+    {
+      id: "3",
+      title: "Design system architecture",
+      priority: "HIGH",
+      dueDate: "Oct 20",
+      status: "IN_PROGRESS",
+    },
+  ],
+  REVIEW: [
+    {
+      id: "4",
+      title: "Client meeting preparation",
+      priority: "LOW",
+      dueDate: "Oct 10",
+      status: "REVIEW",
+    },
+  ],
+  DONE: [
+    { id: "5", title: "Initial setup", priority: "MEDIUM", dueDate: "Oct 1", status: "DONE" },
+  ],
+};
+
 interface KanbanBoardProps {
   initialTasks?: Task[];
 }
@@ -70,7 +74,7 @@ export function KanbanBoard({ initialTasks = [] }: KanbanBoardProps) {
   // Transform initialTasks array into grouped object by status
   const groupedTasks = initialTasks.reduce(
     (acc: TasksByStatus, task) => {
-      const status = task.status || "TODO";
+      const status = (task.status || "TODO") as keyof TasksByStatus;
       if (!acc[status]) acc[status] = [];
       acc[status].push(task);
       return acc;
@@ -117,8 +121,8 @@ export function KanbanBoard({ initialTasks = [] }: KanbanBoardProps) {
 
     // Move task
     setTasks((prev: TasksByStatus) => {
-      const sourceTasks = [...prev[sourceContainer]];
-      const destTasks = [...prev[destContainer]];
+      const sourceTasks = [...prev[sourceContainer as keyof TasksByStatus]];
+      const destTasks = [...prev[destContainer as keyof TasksByStatus]];
       const taskIndex = sourceTasks.findIndex((t) => t.id === activeId);
       const [movedTask] = sourceTasks.splice(taskIndex, 1);
 
@@ -137,7 +141,7 @@ export function KanbanBoard({ initialTasks = [] }: KanbanBoardProps) {
   function findContainer(id: string) {
     if (Object.keys(tasks).includes(id)) return id;
     return Object.keys(tasks).find((key) =>
-      tasks[key].find((t: Task) => t.id === id)
+      tasks[key as keyof TasksByStatus].find((t: Task) => t.id === id)
     );
   }
 
@@ -153,7 +157,7 @@ export function KanbanBoard({ initialTasks = [] }: KanbanBoardProps) {
             key={key}
             id={key}
             title={key.replace("_", " ")}
-            tasks={tasks[key]}
+            tasks={tasks[key as keyof TasksByStatus]}
           />
         ))}
       </div>
