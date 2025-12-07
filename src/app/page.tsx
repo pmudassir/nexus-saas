@@ -1,5 +1,3 @@
-"use client";
-
 import { Shell } from "@/components/layout/Shell";
 import { DashboardGrid } from "@/components/dashboard/DashboardGrid";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
@@ -9,8 +7,11 @@ import {
   DollarSign,
   Users,
 } from "lucide-react";
+import { getDashboardStats } from "@/actions/dashboard";
 
-export default function Home() {
+export default async function Home() {
+  const stats = await getDashboardStats();
+
   const recentActivity = [
     { id: 1, action: "New project created", time: "2h ago", type: "project" },
     { id: 2, action: "Invoice #1234 paid", time: "4h ago", type: "finance" },
@@ -27,7 +28,7 @@ export default function Home() {
         </div>
 
         {/* Stats Grid */}
-        <DashboardGrid />
+        <DashboardGrid stats={stats} />
 
         {/* Bento Grid Section */}
         <BentoGrid className="max-w-full mx-0">

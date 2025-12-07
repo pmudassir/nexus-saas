@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/prisma';
 import { requireTenantMembership } from '@/lib/tenant-auth';
+import { resend, EMAIL_FROM } from '@/lib/email';
 import bcrypt from 'bcryptjs';
 
 /**
@@ -39,7 +40,34 @@ export async function inviteUser(formData: FormData) {
       },
     });
 
-    // TODO: Send invitation email with tempPassword
+    // Send invitation email with tempPassword
+    try {
+      if (process.env.RESEND_API_KEY) {
+        await resend.emails.send({
+          from: EMAIL_FROM,
+          to: email,
+          subject: `Invitation to join ${tenant.name} on Nexus SaaS`,
+          html: `
+            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+              <h2>You've been invited!</h2>
+              <p>Hello ${name || 'there'},</p>
+              <p>You have been invited to join the workspace <strong>${tenant.name}</strong> on Nexus SaaS.</p>
+              <p>Your temporary password is:</p>
+              <div style="background: #f4f4f5; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 16px; font-weight: bold; display: inline-block;">
+                ${tempPassword}
+              </div>
+              <p>Please log in and change your password immediately.</p>
+              <a href="${process.env.NEXTAUTH_URL}/auth/signin" style="background: #6366f1; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; display: inline-block; margin-top: 10px;">
+                Log In to Nexus
+              </a>
+            </div>
+          `,
+        });
+      }
+    } catch (error) {
+      console.error('Failed to send invitation email:', error);
+    }
+
     console.log(`Temporary password for ${email}: ${tempPassword}`);
   }
 
