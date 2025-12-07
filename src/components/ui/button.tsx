@@ -9,15 +9,17 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm border border-transparent",
+          "bg-linear-to-r from-indigo-600 to-violet-600 text-white hover:opacity-90 shadow-lg shadow-indigo-500/25 border border-transparent font-medium",
         destructive:
-          "bg-red-600 text-white hover:bg-red-700 shadow-sm",
+          "bg-red-500/10 text-red-600 hover:bg-red-500/20 border border-red-500/20 shadow-sm",
         outline:
-          "border border-[#E9E9E8] bg-white hover:bg-[rgba(55,53,47,0.08)] text-[#37352f]",
+          "border border-zinc-200 dark:border-white/10 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 text-foreground backdrop-blur-sm",
         secondary:
-          "bg-[rgba(55,53,47,0.08)] text-[#37352f] hover:bg-[rgba(55,53,47,0.16)]",
-        ghost: "hover:bg-[rgba(55,53,47,0.08)] text-[#37352f]",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-zinc-100 dark:hover:bg-white/10 text-foreground",
         link: "text-indigo-600 underline-offset-4 hover:underline",
+        glass: "bg-white/10 backdrop-blur-md border border-white/20 text-foreground hover:bg-white/20 shadow-sm",
+        glow: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 hover:bg-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.3)] transition-all duration-300",
       },
       size: {
         default: "h-8 px-3 py-1",
