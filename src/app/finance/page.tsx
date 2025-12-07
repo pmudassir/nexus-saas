@@ -59,15 +59,15 @@ export default async function FinancePage() {
 
   return (
     <Shell>
-      <div className="relative min-h-screen w-full bg-white antialiased">
+      <div className="relative min-h-screen w-full bg-background antialiased">
         <div className="relative z-10 space-y-8">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-[#37352f] tracking-tight">
+              <h1 className="text-3xl font-bold text-foreground tracking-tight">
                 Financial Overview
               </h1>
-              <p className="text-[#9B9A97] mt-1">
+              <p className="text-muted-foreground mt-1">
                 Monitor revenue, expenses, and manage invoices.
               </p>
             </div>
@@ -89,14 +89,14 @@ export default async function FinancePage() {
           <div className="grid gap-6 md:grid-cols-4">
             <Card className="p-6">
               <div className="flex items-center gap-4">
-                <div className="p-2 rounded-sm bg-[rgba(219,237,219,1)] text-[rgb(28,56,41)]">
+                <div className="p-2 rounded-sm bg-emerald-50 text-emerald-700">
                   <DollarSign className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-[#9B9A97]">
+                  <p className="text-sm font-medium text-muted-foreground">
                     Total Revenue
                   </p>
-                  <h3 className="text-2xl font-bold text-[#37352f]">
+                  <h3 className="text-2xl font-bold text-foreground">
                     {formatCurrency(totalRevenue)}
                   </h3>
                 </div>
@@ -109,14 +109,14 @@ export default async function FinancePage() {
 
             <Card className="p-6">
               <div className="flex items-center gap-4">
-                <div className="p-2 rounded-sm bg-[rgba(255,226,221,1)] text-[rgb(93,23,21)]">
+                <div className="p-2 rounded-sm bg-rose-50 text-rose-700">
                   <TrendingDown className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-[#9B9A97]">
+                  <p className="text-sm font-medium text-muted-foreground">
                     Total Expenses
                   </p>
-                  <h3 className="text-2xl font-bold text-[#37352f]">
+                  <h3 className="text-2xl font-bold text-foreground">
                     {formatCurrency(totalExpenses)}
                   </h3>
                 </div>
@@ -129,19 +129,19 @@ export default async function FinancePage() {
 
             <Card className="p-6">
               <div className="flex items-center gap-4">
-                <div className="p-2 rounded-sm bg-[rgba(250,222,201,1)] text-[rgb(73,41,14)]">
+                <div className="p-2 rounded-sm bg-amber-50 text-amber-700">
                   <FileText className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-[#9B9A97]">
+                  <p className="text-sm font-medium text-muted-foreground">
                     Pending Invoices
                   </p>
-                  <h3 className="text-2xl font-bold text-[#37352f]">
+                  <h3 className="text-2xl font-bold text-foreground">
                     {formatCurrency(pendingInvoicesTotal)}
                   </h3>
                 </div>
               </div>
-              <div className="mt-4 flex items-center text-sm text-[#9B9A97]">
+              <div className="mt-4 flex items-center text-sm text-muted-foreground">
                 <span>
                   {
                     invoices.filter(
@@ -155,14 +155,14 @@ export default async function FinancePage() {
 
             <Card className="p-6">
               <div className="flex items-center gap-4">
-                <div className="p-2 rounded-sm bg-[rgba(235,236,252,1)] text-indigo-600">
+                <div className="p-2 rounded-sm bg-primary/10 text-primary">
                   <PieChart className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-[#9B9A97]">
+                  <p className="text-sm font-medium text-muted-foreground">
                     Net Profit
                   </p>
-                  <h3 className="text-2xl font-bold text-[#37352f]">
+                  <h3 className="text-2xl font-bold text-foreground">
                     {formatCurrency(netProfit)}
                   </h3>
                 </div>
@@ -176,20 +176,20 @@ export default async function FinancePage() {
 
           {/* Recent Invoices */}
           <Card className="overflow-hidden">
-            <div className="p-6 border-b border-[#E9E9E8] flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-[#37352f]">
+            <div className="p-6 border-b border-border flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-foreground">
                 Recent Invoices
               </h2>
               <Button
                 variant="ghost"
-                className="text-indigo-600 hover:text-indigo-700 hover:bg-[rgba(235,236,252,0.5)]"
+                className="text-primary hover:text-primary/80 hover:bg-primary/5"
               >
                 View All
               </Button>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left">
-                <thead className="text-xs text-[#9B9A97] uppercase bg-[#F7F7F5] border-b border-[#E9E9E8]">
+                <thead className="text-xs text-muted-foreground uppercase bg-muted/50 border-b border-border">
                   <tr>
                     <th className="px-6 py-3 font-medium">Invoice ID</th>
                     <th className="px-6 py-3 font-medium">Client</th>
@@ -202,7 +202,7 @@ export default async function FinancePage() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#E9E9E8]">
+                <tbody className="divide-y divide-border">
                   {invoices.map((invoice) => {
                     const statusLower = invoice.status
                       .toLowerCase()
@@ -216,23 +216,23 @@ export default async function FinancePage() {
                     return (
                       <tr
                         key={invoice.id}
-                        className="group hover:bg-[rgba(55,53,47,0.04)] transition-colors"
+                        className="group hover:bg-black/5 transition-colors"
                       >
-                        <td className="px-6 py-4 font-medium text-[#37352f] font-mono text-xs">
+                        <td className="px-6 py-4 font-medium text-foreground font-mono text-xs">
                           {invoice.invoiceNumber}
                         </td>
-                        <td className="px-6 py-4 text-[#37352f] font-medium">
+                        <td className="px-6 py-4 text-foreground font-medium">
                           {invoice.client?.company ??
                             invoice.client?.firstName ??
                             "Client"}
                         </td>
-                        <td className="px-6 py-4 text-[#37352f]">
+                        <td className="px-6 py-4 text-foreground">
                           {formatCurrency(invoice.totalAmount)}
                         </td>
-                        <td className="px-6 py-4 text-[#9B9A97]">
+                        <td className="px-6 py-4 text-muted-foreground">
                           {format(invoice.createdAt, "PP")}
                         </td>
-                        <td className="px-6 py-4 text-[#9B9A97]">
+                        <td className="px-6 py-4 text-muted-foreground">
                           {format(invoice.dueDate, "PP")}
                         </td>
                         <td className="px-6 py-4">
@@ -240,20 +240,20 @@ export default async function FinancePage() {
                         </td>
                         <td className="px-6 py-4 text-right">
                           <DropdownMenu>
-                            <DropdownMenuTrigger className="p-1.5 hover:bg-[rgba(55,53,47,0.08)] rounded-sm text-[#9B9A97] hover:text-[#37352f] transition-colors">
+                            <DropdownMenuTrigger className="p-1.5 hover:bg-black/5 rounded-sm text-muted-foreground hover:text-foreground transition-colors">
                               <MoreVertical className="h-4 w-4" />
                             </DropdownMenuTrigger>
                             <DropdownMenuContent
                               align="end"
-                              className="bg-white border-[#E9E9E8] text-[#37352f]"
+                              className="bg-card border-border text-foreground"
                             >
-                              <DropdownMenuItem className="focus:bg-[rgba(55,53,47,0.08)] focus:text-[#37352f]">
+                              <DropdownMenuItem className="focus:bg-black/5 focus:text-foreground">
                                 View Details
                               </DropdownMenuItem>
-                              <DropdownMenuItem className="focus:bg-[rgba(55,53,47,0.08)] focus:text-[#37352f]">
+                              <DropdownMenuItem className="focus:bg-black/5 focus:text-foreground">
                                 Download PDF
                               </DropdownMenuItem>
-                              <DropdownMenuItem className="focus:bg-[rgba(55,53,47,0.08)] focus:text-[#37352f]">
+                              <DropdownMenuItem className="focus:bg-black/5 focus:text-foreground">
                                 Send Reminder
                               </DropdownMenuItem>
                             </DropdownMenuContent>

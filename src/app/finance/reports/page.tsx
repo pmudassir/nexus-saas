@@ -2,10 +2,10 @@ import { Shell } from '@/components/layout/Shell';
 import { requireTenantMembership } from '@/lib/tenant-auth';
 import { generateProfitLossReport, generateCashFlowReport, getFinancialOverview } from '@/actions/reports';
 import { TrendingUp, DollarSign, TrendingDown, Calendar } from 'lucide-react';
-import { formatCurrency } from '@/actions/finance-advanced';
+
 
 export default async function ReportsPage() {
-  const { tenant } = await requireTenantMembership();
+  await requireTenantMembership();
 
   // Get reports for current month
   const now = new Date();

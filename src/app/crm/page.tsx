@@ -59,10 +59,10 @@ export default async function CRMPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold tracking-tight text-[#37352f]">
+            <h1 className="text-4xl font-bold tracking-tight text-foreground">
               CRM
             </h1>
-            <p className="text-[#9B9A97] mt-2">
+            <p className="text-muted-foreground mt-2">
               Manage your contacts and customer relationships with precision.
             </p>
           </div>
@@ -81,7 +81,7 @@ export default async function CRMPage() {
           id="quick-add-contact"
           className="p-6 space-y-4"
         >
-          <h2 className="text-sm font-semibold text-[#37352f]">
+          <h2 className="text-sm font-semibold text-foreground">
             Quick Add Contact
           </h2>
           <form
@@ -89,7 +89,7 @@ export default async function CRMPage() {
             action={upsertContact}
           >
             <div>
-              <label className="block text-xs font-medium text-[#9B9A97] mb-1">
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
                 First Name
               </label>
               <Input
@@ -99,7 +99,7 @@ export default async function CRMPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-[#9B9A97] mb-1">
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
                 Last Name
               </label>
               <Input
@@ -108,7 +108,7 @@ export default async function CRMPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-[#9B9A97] mb-1">
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
                 Email
               </label>
               <Input
@@ -120,7 +120,7 @@ export default async function CRMPage() {
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-xs font-medium text-[#9B9A97] mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Company
                 </label>
                 <Input
@@ -129,7 +129,7 @@ export default async function CRMPage() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-[#9B9A97] mb-1">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Phone
                 </label>
                 <Input
@@ -153,12 +153,12 @@ export default async function CRMPage() {
         <div className="grid gap-6 md:grid-cols-3">
           <Card className="p-6">
             <div className="flex items-center gap-4">
-              <div className="p-2 rounded-sm bg-[rgba(235,236,252,1)] text-indigo-600">
+              <div className="p-2 rounded-sm bg-primary/10 text-primary">
                 <Users className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-sm text-[#9B9A97]">Total Contacts</p>
-                <h3 className="text-2xl font-bold text-[#37352f]">
+                <p className="text-sm text-muted-foreground">Total Contacts</p>
+                <h3 className="text-2xl font-bold text-foreground">
                   {totalContacts}
                 </h3>
               </div>
@@ -166,12 +166,12 @@ export default async function CRMPage() {
           </Card>
           <Card className="p-6">
             <div className="flex items-center gap-4">
-              <div className="p-2 rounded-sm bg-[rgba(219,237,219,1)] text-[rgb(28,56,41)]">
+              <div className="p-2 rounded-sm bg-emerald-50 text-emerald-700">
                 <UserCheck className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-sm text-[#9B9A97]">Active Clients</p>
-                <h3 className="text-2xl font-bold text-[#37352f]">
+                <p className="text-sm text-muted-foreground">Active Clients</p>
+                <h3 className="text-2xl font-bold text-foreground">
                   {activeContacts}
                 </h3>
               </div>
@@ -179,12 +179,12 @@ export default async function CRMPage() {
           </Card>
           <Card className="p-6">
             <div className="flex items-center gap-4">
-              <div className="p-2 rounded-sm bg-[rgba(235,236,252,1)] text-blue-600">
+              <div className="p-2 rounded-sm bg-blue-50 text-blue-600">
                 <UserPlus className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-sm text-[#9B9A97]">New Leads</p>
-                <h3 className="text-2xl font-bold text-[#37352f]">{leads}</h3>
+                <p className="text-sm text-muted-foreground">New Leads</p>
+                <h3 className="text-2xl font-bold text-foreground">{leads}</h3>
               </div>
             </div>
           </Card>
@@ -192,7 +192,7 @@ export default async function CRMPage() {
 
         {/* Contact Grid */}
         <div>
-          <h2 className="text-xl font-semibold mb-6 text-[#37352f]">
+          <h2 className="text-xl font-semibold mb-6 text-foreground">
             All Contacts
           </h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -212,13 +212,13 @@ export default async function CRMPage() {
                         contact.lastName
                       )}
                       size="lg"
-                      className="ring-1 ring-[#E9E9E8] bg-[#F7F7F5] text-[#5F5E5B]"
+                      className="ring-1 ring-border bg-muted text-muted-foreground"
                     />
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold text-base leading-tight mb-0.5 text-[#37352f]">
+                      <h3 className="font-semibold text-base leading-tight mb-0.5 text-foreground">
                         {contact.firstName} {contact.lastName}
                       </h3>
-                      <p className="text-xs text-[#9B9A97]">
+                      <p className="text-xs text-muted-foreground">
                         {mapStatus(contact.status) === "lead"
                           ? "Lead"
                           : mapStatus(contact.status) === "inactive"
@@ -231,24 +231,24 @@ export default async function CRMPage() {
                   <div className="flex items-center gap-2">
                     <StatusBadge status={mapStatus(contact.status)} size="sm" />
                     <DropdownMenu>
-                      <DropdownMenuTrigger className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-[rgba(55,53,47,0.08)] rounded-sm text-[#9B9A97] hover:text-[#37352f]">
+                      <DropdownMenuTrigger className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-black/5 rounded-sm text-muted-foreground hover:text-foreground">
                         <MoreVertical className="h-4 w-4" />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
                         align="end"
-                        className="bg-white border-[#E9E9E8] text-[#37352f]"
+                        className="bg-card border-border text-foreground"
                       >
-                        <DropdownMenuItem className="focus:bg-[rgba(55,53,47,0.08)] focus:text-[#37352f]">
+                        <DropdownMenuItem className="focus:bg-black/5 focus:text-foreground">
                           View Details
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="focus:bg-[rgba(55,53,47,0.08)] focus:text-[#37352f]">
+                        <DropdownMenuItem className="focus:bg-black/5 focus:text-foreground">
                           Send Email
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="focus:bg-[rgba(55,53,47,0.08)] focus:text-[#37352f]">
+                        <DropdownMenuItem className="focus:bg-black/5 focus:text-foreground">
                           Schedule Call
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator className="bg-[#E9E9E8]" />
-                        <DropdownMenuItem className="text-red-600 focus:text-red-700 focus:bg-red-50">
+                        <DropdownMenuSeparator className="bg-border" />
+                        <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
                           Delete Contact
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -257,7 +257,7 @@ export default async function CRMPage() {
                 </div>
 
                 {/* Company */}
-                <div className="flex items-center gap-2 text-sm text-[#9B9A97] mb-3">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
                   <Building2 className="h-4 w-4" />
                   <span>{contact.company}</span>
                 </div>
@@ -266,18 +266,18 @@ export default async function CRMPage() {
                 <div className="flex flex-col gap-2 mb-3">
                   <a
                     href={`mailto:${contact.email}`}
-                    className="flex items-center gap-2 text-sm text-[#9B9A97] hover:text-indigo-600 transition-colors group/link"
+                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group/link"
                   >
-                    <Mail className="h-4 w-4 flex-shrink-0" />
+                    <Mail className="h-4 w-4 shrink-0" />
                     <span className="truncate group-hover/link:underline">
                       {contact.email}
                     </span>
                   </a>
                   <a
                     href={`tel:${contact.phone}`}
-                    className="flex items-center gap-2 text-sm text-[#9B9A97] hover:text-indigo-600 transition-colors group/link"
+                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group/link"
                   >
-                    <Phone className="h-4 w-4 flex-shrink-0" />
+                    <Phone className="h-4 w-4 shrink-0" />
                     <span className="group-hover/link:underline">
                       {contact.phone}
                     </span>
@@ -285,8 +285,8 @@ export default async function CRMPage() {
                 </div>
 
                 {/* Footer */}
-                <div className="pt-3 border-t border-[#E9E9E8]">
-                  <p className="text-xs text-[#9B9A97]">
+                <div className="pt-3 border-t border-border">
+                  <p className="text-xs text-muted-foreground">
                     Last update:{" "}
                     {formatDistanceToNow(contact.updatedAt, {
                       addSuffix: true,

@@ -2,7 +2,8 @@ import { Shell } from '@/components/layout/Shell';
 import { requireTenantMembership } from '@/lib/tenant-auth';
 import { Button } from '@/components/ui/button';
 import { updateBranding } from '@/actions/branding';
-import { Palette, Image, Pipette } from 'lucide-react';
+import { Palette, Image as ImageIcon, Pipette } from 'lucide-react';
+import NextImage from 'next/image';
 
 export default async function BrandingPage() {
   const { tenant } = await requireTenantMembership();
@@ -24,17 +25,18 @@ export default async function BrandingPage() {
           {/* Logo Upload */}
           <div className="rounded-md border border-border bg-white p-6 shadow-sm">
             <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-              <Image className="w-5 h-5" />
+              <ImageIcon className="w-5 h-5" />
               Logo
             </h2>
             <div className="space-y-4">
               {tenant.logoUrl && (
                 <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 rounded-md bg-muted border border-border p-2 flex items-center justify-center">
-                    <img
+                  <div className="w-20 h-20 rounded-md bg-muted border border-border p-2 flex items-center justify-center relative overflow-hidden">
+                    <NextImage
                       src={tenant.logoUrl}
                       alt="Current logo"
-                      className="max-w-full max-h-full object-contain"
+                      fill
+                      className="object-contain"
                     />
                   </div>
                   <div className="text-sm text-muted-foreground">Current logo</div>

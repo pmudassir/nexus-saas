@@ -7,6 +7,7 @@ import { requireTenantMembership } from "@/lib/tenant-auth";
 
 export default async function ProjectsPage() {
   const { tenant } = await requireTenantMembership();
+  // const tenant = { id: "default-tenant-id" }; // Hardcoded for debugging
 
   const tasks = await prisma.task.findMany({
     where: { tenantId: tenant.id },

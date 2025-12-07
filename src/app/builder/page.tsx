@@ -30,7 +30,7 @@ function renderBlock(block: BuilderBlock) {
     return (
       <section
         key={block.id}
-        className="rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 p-10 text-white mb-4 shadow-sm"
+        className="rounded-xl bg-linear-to-br from-indigo-600 to-purple-600 p-10 text-white mb-4 shadow-sm"
       >
         <h2 className="text-3xl font-bold mb-2">{heading ?? "Hero heading"}</h2>
         <p className="text-sm text-indigo-100 mb-4">
@@ -52,7 +52,7 @@ function renderBlock(block: BuilderBlock) {
   return (
     <section
       key={block.id}
-      className="rounded-md bg-white border border-border p-6 mb-4 shadow-sm"
+      className="rounded-md bg-card border border-border p-6 mb-4 shadow-sm"
     >
       <h3 className="text-lg font-semibold mb-2 text-foreground">
         {heading ?? "Text block"}
@@ -103,7 +103,7 @@ export default async function BuilderPage({
                     href={`/builder?pageId=${page.id}`}
                     className={`flex items-center justify-between rounded-md px-3 py-2 text-xs font-medium transition-colors ${
                       isActive
-                        ? "bg-indigo-50 text-indigo-700"
+                        ? "bg-primary/10 text-primary"
                         : "text-muted-foreground hover:bg-muted hover:text-foreground"
                     }`}
                   >
@@ -133,17 +133,17 @@ export default async function BuilderPage({
                 name="title"
                 placeholder="Home"
                 required
-                className="w-full rounded-md bg-white border border-border px-3 py-1.5 text-xs text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                className="w-full rounded-md bg-background border border-border px-3 py-1.5 text-xs text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               />
               <input
                 name="path"
-                placeholder="/ or about"
-                className="w-full rounded-md bg-white border border-border px-3 py-1.5 text-xs text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                // Placeholder - will update after readbout
+                className="w-full rounded-md bg-background border border-border px-3 py-1.5 text-xs text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               />
               <Button
                 type="submit"
                 size="sm"
-                className="w-full text-xs bg-primary text-white hover:bg-primary/90"
+                className="w-full text-xs bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 Create Page
               </Button>
@@ -166,7 +166,7 @@ export default async function BuilderPage({
             <div className="flex gap-2">
               <Link
                 href="/site"
-                className="text-xs text-indigo-600 hover:text-indigo-700 hover:underline"
+                className="text-xs text-primary hover:text-primary/80 hover:underline"
               >
                 View site
               </Link>
@@ -191,7 +191,7 @@ export default async function BuilderPage({
                   <Button
                     type="submit"
                     size="sm"
-                    className="bg-indigo-600 text-white hover:bg-indigo-500"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90"
                   >
                     Add Hero
                   </Button>
@@ -203,7 +203,7 @@ export default async function BuilderPage({
                     type="submit"
                     size="sm"
                     variant="outline"
-                    className="bg-white border-border text-foreground hover:bg-muted"
+                    className="bg-background border-border text-foreground hover:bg-muted"
                   >
                     Add Text
                   </Button>
