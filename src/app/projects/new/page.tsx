@@ -1,20 +1,30 @@
 import { Shell } from "@/components/layout/Shell";
-import { CheckSquare } from "lucide-react";
+import { CreateTaskForm } from "@/components/projects/create-task-form";
+import { prisma } from "@/lib/prisma";
+import { requireTenantMembership } from "@/lib/tenant-auth";
 
-export default function NewTaskPage() {
+export default async function NewTaskPage() {
+  const { tenant } = await requireTenantMembership();
+
+  const projects = await prisma.project.findMany({
+    where: { tenantId: tenant.id },
+    select: { id: true, name: true }
+  });
+
+  const tenantUsers = await prisma.tenantUser.findMany({
+    where: { tenantId: tenant.id },
+    include: { user: true }
+  });
+
+  const users = tenantUsers.map(tu => ({
+    id: tu.user.id,
+    name: tu.user.name,
+    email: tu.user.email
+  }));
+
   return (
     <Shell>
-      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-6">
-        <div className="rounded-full bg-muted p-6 mb-6">
-          <CheckSquare className="h-12 w-12 text-muted-foreground" />
-        </div>
-        <h1 className="text-3xl font-bold tracking-tight text-foreground mb-3">
-          Create New Task
-        </h1>
-        <p className="text-muted-foreground max-w-md mb-8">
-          The task creation wizard is under construction. Soon you will be able to assign tasks, set priorities, and attach files here.
-        </p>
-      </div>
+      <CreateTaskForm projects={projects} users={users} />
     </Shell>
   );
 }
