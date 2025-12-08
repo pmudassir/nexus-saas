@@ -40,7 +40,7 @@ export default async function HRDashboard() {
 
         <div className="grid gap-4 md:grid-cols-3">
           {stats.map((stat) => (
-            <div key={stat.name} className="rounded-md border border-border bg-white p-6 shadow-sm">
+            <div key={stat.name} className="rounded-md border border-border bg-card p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-sm text-muted-foreground">{stat.name}</div>
@@ -55,7 +55,7 @@ export default async function HRDashboard() {
         <div className="grid gap-4 md:grid-cols-3">
           {modules.map((module) => (
             <Link key={module.name} href={module.href}>
-              <div className="rounded-md border border-border bg-white p-6 hover:bg-muted transition-colors cursor-pointer shadow-sm">
+              <div className="rounded-md border border-border bg-card p-6 hover:bg-muted transition-colors cursor-pointer shadow-sm">
                 <module.icon className="w-8 h-8 text-indigo-500 mb-3" />
                 <h3 className="text-lg font-semibold text-foreground mb-2">{module.name}</h3>
                 <p className="text-sm text-muted-foreground">{module.description}</p>

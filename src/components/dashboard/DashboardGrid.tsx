@@ -37,7 +37,7 @@ export function DashboardGrid({ stats }: { stats: DashboardStats }) {
         value={`${stats.taskCompletionRate}%`}
         description="All time completion"
         icon={<TrendingUp className="h-5 w-5" />}
-        trend={{ value: 0, isPositive: true }}
+
       />
     </div>
   );

@@ -15,7 +15,8 @@ import {
   ChevronsLeft,
   Search,
   Plus,
-  MoreHorizontal
+  MoreHorizontal,
+  Globe
 } from "lucide-react";
 import { useUIStore } from "@/lib/ui-store";
 
@@ -34,16 +35,16 @@ export function Sidebar() {
   const { toggleSearch } = useUIStore();
 
   return (
-    <div className="hidden md:flex flex-col w-64 h-[calc(100vh-2rem)] m-4 sticky top-4 rounded-2xl glass-panel border border-white/20 dark:border-white/10 z-50 text-foreground transition-all duration-300">
+    <div className="hidden md:flex flex-col w-64 h-screen border-r border-border bg-card z-50 text-foreground transition-all duration-300">
       {/* Header / Workspace Switcher */}
       <div className="flex flex-col px-4 py-4 gap-4">
-        <div className="flex items-center justify-between px-2 py-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer group h-12 border border-transparent hover:border-white/10">
+        <div className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-accent transition-colors cursor-pointer group h-12 border border-transparent hover:border-border">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-linear-to-br from-indigo-500 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-              <span className="text-white font-display font-bold text-lg">N</span>
+            <div className="h-8 w-8 rounded-md bg-foreground flex items-center justify-center shadow-lg">
+              <span className="text-background font-display font-bold text-lg">N</span>
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-semibold text-sm tracking-tight">Nexus SaaS</span>
+              <span className="font-display font-semibold text-sm tracking-tight text-foreground">Nexus SaaS</span>
               <span className="text-[10px] text-muted-foreground">Premium Plan</span>
             </div>
           </div>
@@ -54,26 +55,26 @@ export function Sidebar() {
         <div className="space-y-1">
             <button 
               onClick={toggleSearch}
-              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors text-left group"
+              className="w-full flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors text-left group"
             >
-                <Search className="w-4 h-4 group-hover:text-indigo-500 transition-colors" />
+                <Search className="w-4 h-4 group-hover:text-foreground transition-colors" />
                 <span className="font-medium">Search</span>
-                <kbd className="ml-auto text-[10px] text-muted-foreground font-sans border border-border rounded px-1.5 bg-background/50">⌘K</kbd>
+                <kbd className="ml-auto text-[10px] text-muted-foreground font-sans border border-border rounded px-1.5 bg-muted">⌘K</kbd>
             </button>
-            <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors text-left group">
-                <Plus className="w-4 h-4 group-hover:text-indigo-500 transition-colors" />
-                <span className="font-medium">New Page</span>
-            </button>
+            <Link href="/builder" className="w-full flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors text-left group">
+                <Globe className="w-4 h-4 group-hover:text-foreground transition-colors" />
+                <span className="font-medium">Site Builder</span>
+            </Link>
         </div>
       </div>
 
       {/* Navigation */}
-      <div className="flex-1 overflow-y-auto px-4 py-2 space-y-6 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto px-4 py-2 space-y-6">
         <div>
             <div className="px-3 mb-2">
                 <span className="text-[11px] font-bold text-muted-foreground/70 uppercase tracking-widest font-display">Workspace</span>
             </div>
-            <nav className="space-y-1">
+            <nav className="space-y-0.5">
             {navigation.map((item) => {
                 let isActive = false;
                 if (item.href === '/') {
@@ -87,22 +88,19 @@ export function Sidebar() {
                     key={item.name}
                     href={item.href}
                     className={cn(
-                    "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                    "group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all duration-200",
                     isActive
-                        ? "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 shadow-sm border border-indigo-500/20"
-                        : "text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 hover:text-foreground hover:translate-x-0.5"
+                        ? "bg-accent text-foreground font-semibold"
+                        : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
                     )}
                 >
                     <item.icon
                     className={cn(
                         "h-4 w-4 transition-colors",
-                        isActive ? "text-indigo-600 dark:text-indigo-400" : "text-muted-foreground group-hover:text-foreground"
+                        isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
                     )}
                     />
                     <span>{item.name}</span>
-                    {isActive && (
-                      <div className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
-                    )}
                 </Link>
                 );
             })}
@@ -113,8 +111,8 @@ export function Sidebar() {
             <div className="px-3 mb-2">
                 <span className="text-[11px] font-bold text-muted-foreground/70 uppercase tracking-widest font-display">Tools</span>
             </div>
-            <nav className="space-y-1">
-                <Link href="/settings" className="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 hover:text-foreground transition-all duration-200 hover:translate-x-0.5">
+            <nav className="space-y-0.5">
+                <Link href="/settings" className="group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-all duration-200">
                     <Settings className="h-4 w-4 text-muted-foreground group-hover:text-foreground" />
                     <span>Settings</span>
                 </Link>
@@ -123,9 +121,9 @@ export function Sidebar() {
       </div>
 
       {/* User Profile */}
-      <div className="p-4 border-t border-white/10">
-        <div className="flex items-center gap-3 rounded-xl p-2 hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer group">
-          <div className="h-8 w-8 rounded-full bg-linear-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white/20">
+      <div className="p-4 border-t border-border">
+        <div className="flex items-center gap-3 rounded-md p-2 hover:bg-accent transition-colors cursor-pointer group">
+          <div className="h-8 w-8 rounded-full bg-accent flex items-center justify-center text-foreground font-bold text-xs ring-1 ring-border">
             AD
           </div>
           <div className="flex-1 min-w-0">

@@ -33,7 +33,7 @@ export default async function PageSEOEditor({
             SEO Settings
           </h1>
           <p className="text-muted-foreground mt-2">
-            Optimize "{page.title}" for search engines and social media.
+            Optimize &ldquo;{page.title}&rdquo; for search engines and social media.
           </p>
         </div>
 

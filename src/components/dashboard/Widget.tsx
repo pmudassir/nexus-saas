@@ -17,7 +17,7 @@ export function Widget({
   return (
     <div
       className={cn(
-        "glass-card p-6 flex flex-col rounded-2xl",
+        "bg-card text-card-foreground border border-border p-6 flex flex-col rounded-xl shadow-sm",
         className
       )}
       {...props}

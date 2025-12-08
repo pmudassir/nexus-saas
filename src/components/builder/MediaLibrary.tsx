@@ -24,6 +24,7 @@ export function MediaLibrary({ onSelect, existingFiles = [] }: MediaLibraryProps
   const [uploading, setUploading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
   const [selectedUrl, setSelectedUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +32,7 @@ export function MediaLibrary({ onSelect, existingFiles = [] }: MediaLibraryProps
     if (!file) return;
 
     setUploading(true);
+    setError(null);
     try {
       const formData = new FormData();
       formData.append('file', file);
@@ -45,7 +47,8 @@ export function MediaLibrary({ onSelect, existingFiles = [] }: MediaLibraryProps
       // Refresh the page to show new file
       window.location.reload();
     } catch (error) {
-      alert(error instanceof Error ? error.message : 'Upload failed');
+      console.error(error);
+      setError(error instanceof Error ? error.message : 'Upload failed');
     } finally {
       setUploading(false);
     }
@@ -88,6 +91,13 @@ export function MediaLibrary({ onSelect, existingFiles = [] }: MediaLibraryProps
             </>
           )}
         </Button>
+
+        {error && (
+            <div className="mt-2 text-xs text-red-500 bg-red-500/10 p-2 rounded flex items-center gap-2">
+                <X className="w-4 h-4" />
+                {error}
+            </div>
+        )}
       </div>
 
       {/* File Grid */}

@@ -191,3 +191,48 @@ export async function sendInvoiceReminder(formData: FormData) {
     throw new Error('Failed to send reminder');
   }
 }
+
+export async function createInvoice(data: {
+  clientId: string;
+  dueDate: string;
+  items: Array<{ description: string; quantity: number; unitPrice: number }>;
+}) {
+  const { tenant } = await requireTenantMembership();
+
+  if (!data.clientId) throw new Error('Client is required');
+  if (!data.items?.length) throw new Error('At least one item is required');
+
+  let totalAmount = 0;
+  const invoiceItems = data.items.map((item) => {
+    const lineTotal = item.quantity * item.unitPrice;
+    totalAmount += lineTotal;
+    return {
+      description: item.description,
+      quantity: item.quantity,
+      unitPrice: item.unitPrice,
+      total: lineTotal,
+    };
+  });
+
+  // Generate Invoice Number: INV-{TIMESTAMP-LAST4} (Simple unique gen)
+  const suffix = Date.now().toString().slice(-6);
+  const invoiceNumber = `INV-${suffix}`;
+
+  await prisma.invoice.create({
+    data: {
+      tenantId: tenant.id,
+      clientId: data.clientId,
+      invoiceNumber,
+      dueDate: new Date(data.dueDate),
+      totalAmount,
+      status: 'PENDING',
+      items: {
+        create: invoiceItems,
+      },
+    },
+  });
+
+  // Return success needed? Server actions usually void or return data.
+  // We handle redirect in client or here.
+  // I will import redirect at the top.
+}

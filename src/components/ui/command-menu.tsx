@@ -2,11 +2,9 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useUIStore } from "@/lib/ui-store";
-import { Search, Calculator, User, CreditCard, Settings, FileText, LayoutDashboard } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Search, Calculator, User, Settings, FileText, LayoutDashboard, Globe } from "lucide-react";
 
 export function CommandMenu() {
   const router = useRouter();
@@ -31,7 +29,8 @@ export function CommandMenu() {
 
   return (
     <Dialog open={isSearchOpen} onOpenChange={setSearchOpen}>
-      <DialogContent className="p-0 overflow-hidden bg-zinc-950/90 border-white/10 text-foreground glass-panel shadow-2xl max-w-2xl">
+      <DialogContent className="p-0 overflow-hidden bg-background border-border text-foreground shadow-2xl max-w-2xl">
+        <DialogTitle className="sr-only">Command Menu</DialogTitle>
         <div className="flex items-center px-4 border-b border-white/10">
           <Search className="mr-2 h-5 w-5 shrink-0 opacity-50 text-indigo-500" />
           <input
@@ -69,11 +68,18 @@ export function CommandMenu() {
             </div>
             <div className="space-y-1">
                  <button
-                    onClick={() => runCommand(() => console.log("New Project"))}
+                    onClick={() => runCommand(() => router.push('/projects'))}
                     className="w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-white/10 hover:text-indigo-400 transition-colors text-left group"
                 >
                     <div className="h-4 w-4 border border-muted-foreground/30 rounded flex items-center justify-center text-[10px] group-hover:border-indigo-500/50">+</div>
                     <span className="font-medium">Create New Project</span>
+                </button>
+                 <button
+                    onClick={() => runCommand(() => router.push('/builder'))}
+                    className="w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-white/10 hover:text-indigo-400 transition-colors text-left group"
+                >
+                    <Globe className="h-4 w-4 text-muted-foreground group-hover:text-indigo-500 transition-colors" />
+                    <span className="font-medium">Open Site Builder</span>
                 </button>
             </div>
         </div>

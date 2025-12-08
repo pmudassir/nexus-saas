@@ -1,4 +1,5 @@
 import { Shell } from "@/components/layout/Shell";
+import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -72,16 +73,18 @@ export default async function FinancePage() {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <Button
-                variant="outline"
-              >
-                <Download className="mr-2 h-4 w-4" />
-                Reports
-              </Button>
-              <Button>
-                <Plus className="mr-2 h-4 w-4" />
-                New Invoice
-              </Button>
+              <Link href="/finance/reports">
+                <Button variant="outline">
+                  <Download className="mr-2 h-4 w-4" />
+                  Reports
+                </Button>
+              </Link>
+              <Link href="/finance/invoices/new">
+                <Button>
+                  <Plus className="mr-2 h-4 w-4" />
+                  New Invoice
+                </Button>
+              </Link>
             </div>
           </div>
 

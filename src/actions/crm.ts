@@ -11,25 +11,52 @@ export async function upsertContact(formData: FormData) {
   const { tenant } = await requireTenantMembership();
 
   const contactId = formData.get('contactId') as string | null;
-  const name = (formData.get('name') as string).trim();
-  const email = (formData.get('email') as string).trim();
-  const phone = (formData.get('phone') as string).trim() || null;
-  const company = (formData.get('company') as string).trim() || null;
-  const tags = (formData.get('tags') as string).split(',').map((t) => t.trim()).filter(Boolean);
-  const notes = (formData.get('notes') as string).trim() || null;
+  
+  // Try to get first/last name directly (from structured form)
+  const firstNameRaw = formData.get('firstName');
+  const lastNameRaw = formData.get('lastName');
+  
+  // Or fallback to 'name' (from simple form)
+  const nameRaw = formData.get('name');
+  
+  const emailRaw = formData.get('email');
+  const phoneRaw = formData.get('phone');
+  const companyRaw = formData.get('company');
+  const tagsRaw = formData.get('tags');
+  const notesRaw = formData.get('notes');
+
+  let firstName = typeof firstNameRaw === 'string' ? firstNameRaw.trim() : '';
+  let lastName = typeof lastNameRaw === 'string' ? lastNameRaw.trim() : '';
+  let name = typeof nameRaw === 'string' ? nameRaw.trim() : '';
+
+  // If we have first/last name, construct full name
+  if (firstName) {
+    name = firstName + (lastName ? ` ${lastName}` : '');
+  } 
+  // If we only have full name, try to split it to populate first/last if they are empty
+  else if (name && !firstName) {
+    const nameParts = name.split(' ');
+    firstName = nameParts[0];
+    lastName = nameParts.slice(1).join(' ') || '';
+  }
+
+  const email = typeof emailRaw === 'string' ? emailRaw.trim() : '';
+  const phone = typeof phoneRaw === 'string' ? phoneRaw.trim() : null;
+  const company = typeof companyRaw === 'string' ? companyRaw.trim() : null;
+  const tags = typeof tagsRaw === 'string' 
+    ? tagsRaw.split(',').map((t) => t.trim()).filter(Boolean) 
+    : [];
+  const notes = typeof notesRaw === 'string' ? notesRaw.trim() : null;
 
   if (!name || !email) {
+     // If this is a server action called from a form without client-side validation,
+     // we should handle this more gracefully, but throwing error is standard pattern for now.
     throw new Error('Name and email are required');
   }
 
-  // Split name into first and last
-  const nameParts = name.split(' ');
-  const firstName = nameParts[0];
-  const lastName = nameParts.slice(1).join(' ') || null;
-
   const data = {
     firstName,
-    lastName,
+    lastName: lastName || null,
     name,  // Store full name for convenience
     email,
     phone,
@@ -124,7 +151,8 @@ export async function addContactActivity(formData: FormData) {
   const { tenant } = await requireTenantMembership();
 
   const contactId = formData.get('contactId') as string;
-  const activity = (formData.get('activity') as string).trim();
+  const activityRaw = formData.get('activity');
+  const activity = typeof activityRaw === 'string' ? activityRaw.trim() : '';
 
   if (!contactId || !activity) {
     throw new Error('Contact ID and activity are required');

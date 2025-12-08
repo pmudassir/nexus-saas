@@ -24,7 +24,7 @@ export function StatCard({
   return (
     <div
       className={cn(
-        "group relative rounded-2xl glass-card p-6 overflow-hidden",
+        "group relative rounded-xl bg-card border border-border p-6 overflow-hidden shadow-sm hover:shadow-md transition-shadow",
         className
       )}
       {...props}

@@ -68,7 +68,9 @@ export async function inviteUser(formData: FormData) {
       console.error('Failed to send invitation email:', error);
     }
 
-    console.log(`Temporary password for ${email}: ${tempPassword}`);
+    if (process.env.NODE_ENV === 'development') {
+        console.log(`Temporary password for ${email}: ${tempPassword}`);
+    }
   }
 
   // Check if already a member

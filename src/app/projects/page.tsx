@@ -1,4 +1,5 @@
 import { Shell } from "@/components/layout/Shell";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { KanbanBoard } from "@/components/projects/KanbanBoard";
@@ -64,10 +65,12 @@ export default async function ProjectsPage() {
               Manage your projects and tasks with an intuitive Kanban board.
             </p>
           </div>
-          <Button>
-            <Plus className="h-4 w-4 mr-2" />
-            New Task
-          </Button>
+          <Link href="/projects/new">
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
+              New Task
+            </Button>
+          </Link>
         </div>
         <KanbanBoard initialTasks={richTasks} />
       </div>
