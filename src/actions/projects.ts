@@ -38,3 +38,51 @@ export async function createTask(data: {
 
   redirect('/projects');
 }
+
+export async function createProject(formData: FormData) {
+  const { tenant, session } = await requireTenantMembership();
+  const userId = (session.user as { id: string })?.id;
+
+  const name = formData.get('name') as string;
+  const description = formData.get('description') as string;
+
+  if (!name) throw new Error('Project name is required');
+
+  await prisma.project.create({
+    data: {
+      name,
+      description: description || null,
+      status: 'ACTIVE',
+      tenantId: tenant.id,
+      ownerId: userId,
+    },
+  });
+
+  redirect('/projects');
+}
+
+export async function deleteProject(formData: FormData) {
+  const { tenant } = await requireTenantMembership();
+
+  const id = formData.get('id') as string;
+
+  if (!id) throw new Error('Project ID is required');
+
+  const project = await prisma.project.findFirst({
+    where: { id, tenantId: tenant.id },
+  });
+
+  if (!project) throw new Error('Project not found');
+
+  // Delete all tasks in the project first
+  await prisma.task.deleteMany({
+    where: { projectId: id },
+  });
+
+  // Then delete the project
+  await prisma.project.delete({
+    where: { id },
+  });
+
+  redirect('/projects');
+}
