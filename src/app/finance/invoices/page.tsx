@@ -3,7 +3,8 @@ import { prisma } from '@/lib/prisma';
 import { requireTenantMembership } from '@/lib/tenant-auth';
 import { Button } from '@/components/ui/button';
 import { sendInvoice, sendInvoiceReminder } from '@/actions/invoices';
-import { FileText, Send, Clock } from 'lucide-react';
+import { FileText, Send, Clock, Download } from 'lucide-react';
+import Link from 'next/link';
 
 export default async function InvoicesPage() {
   const { tenant } = await requireTenantMembership();
@@ -40,7 +41,9 @@ export default async function InvoicesPage() {
               Manage and track your invoices.
             </p>
           </div>
-          <Button className="bg-primary text-white hover:bg-primary/90">Create Invoice</Button>
+          <Link href="/finance/invoices/new">
+            <Button className="bg-primary text-white hover:bg-primary/90">Create Invoice</Button>
+          </Link>
         </div>
 
         {/* Stats */}
@@ -130,6 +133,13 @@ export default async function InvoicesPage() {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
+                          <a
+                            href={`/api/invoices/${invoice.id}/download`}
+                            className="p-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                            title="Download Invoice"
+                          >
+                            <Download className="w-4 h-4" />
+                          </a>
                           {invoice.client?.email && (
                             <>
                               <form action={sendInvoice}>
