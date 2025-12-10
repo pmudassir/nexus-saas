@@ -176,7 +176,11 @@ export default async function ProjectsListPage() {
                             View Tasks
                           </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href={`/projects/${project.id}/edit`}>
+                            Edit
+                          </Link>
+                        </DropdownMenuItem>
                         <form action={deleteProject}>
                           <input type="hidden" name="id" value={project.id} />
                           <DropdownMenuItem asChild>

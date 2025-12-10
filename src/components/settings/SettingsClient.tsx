@@ -3,9 +3,9 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { User, Bell, Shield, Moon, Check } from "lucide-react";
+import { User, Bell, Shield, Moon } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { updateProfile, changePassword, updateNotificationSettings } from "@/actions/settings";
 
@@ -27,6 +27,21 @@ export function SettingsClient({ user }: { user: User }) {
   const [isPending, startTransition] = useTransition();
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [darkMode, setDarkMode] = useState(false);
+
+  // Initialize dark mode from localStorage or system preference
+  useEffect(() => {
+    const stored = localStorage.getItem('darkMode');
+    if (stored !== null) {
+      const isDark = stored === 'true';
+      setDarkMode(isDark);
+      document.documentElement.classList.toggle('dark', isDark);
+    } else {
+      // Check system preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setDarkMode(prefersDark);
+      document.documentElement.classList.toggle('dark', prefersDark);
+    }
+  }, []);
 
   const handleProfileSubmit = async (formData: FormData) => {
     setMessage(null);
@@ -65,8 +80,10 @@ export function SettingsClient({ user }: { user: User }) {
   };
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark');
+    const newValue = !darkMode;
+    setDarkMode(newValue);
+    document.documentElement.classList.toggle('dark', newValue);
+    localStorage.setItem('darkMode', String(newValue));
   };
 
   return (

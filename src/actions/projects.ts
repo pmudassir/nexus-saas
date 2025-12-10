@@ -61,6 +61,35 @@ export async function createProject(formData: FormData) {
   redirect('/projects');
 }
 
+export async function updateProject(formData: FormData) {
+  const { tenant } = await requireTenantMembership();
+
+  const id = formData.get('id') as string;
+  const name = formData.get('name') as string;
+  const description = formData.get('description') as string;
+  const status = formData.get('status') as string;
+
+  if (!id) throw new Error('Project ID is required');
+  if (!name) throw new Error('Project name is required');
+
+  const project = await prisma.project.findFirst({
+    where: { id, tenantId: tenant.id },
+  });
+
+  if (!project) throw new Error('Project not found');
+
+  await prisma.project.update({
+    where: { id },
+    data: {
+      name,
+      description: description || null,
+      status: status || project.status,
+    },
+  });
+
+  redirect('/projects');
+}
+
 export async function deleteProject(formData: FormData) {
   const { tenant } = await requireTenantMembership();
 
