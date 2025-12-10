@@ -78,4 +78,3 @@ export async function clockOut(formData: FormData) {
   revalidatePath('/hr/attendance');
 }
 
-export const LEAVE_TYPES = ['VACATION', 'SICK', 'PERSONAL', 'UNPAID'] as const;
