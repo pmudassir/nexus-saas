@@ -22,7 +22,7 @@ export default async function InventoryDashboard() {
   ];
 
   const modules = [
-    { name: 'Products', href: '/inventory', description: 'Manage product catalog and stock levels', icon: Package },
+    { name: 'Products', href: '/inventory/products', description: 'Manage product catalog and stock levels', icon: Package },
     { name: 'Suppliers', href: '/inventory/suppliers', description: 'Supplier  database and contacts', icon: SuppliersIcon },
     { name: 'Purchase Orders', href: '/inventory/purchase-orders', description: 'Create and track purchase orders', icon: FileText },
   ];
