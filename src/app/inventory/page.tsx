@@ -1,7 +1,7 @@
 import { Shell } from '@/components/layout/Shell';
 import { requireTenantMembership } from '@/lib/tenant-auth';
 import { prisma } from '@/lib/prisma';
-import { Package, Users as SuppliersIcon, FileText, TrendingUp } from 'lucide-react';
+import { Package, Users as SuppliersIcon, FileText, TrendingUp, ArrowUpDown } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function InventoryDashboard() {
@@ -23,8 +23,9 @@ export default async function InventoryDashboard() {
 
   const modules = [
     { name: 'Products', href: '/inventory/products', description: 'Manage product catalog and stock levels', icon: Package },
-    { name: 'Suppliers', href: '/inventory/suppliers', description: 'Supplier  database and contacts', icon: SuppliersIcon },
+    { name: 'Suppliers', href: '/inventory/suppliers', description: 'Supplier database and contacts', icon: SuppliersIcon },
     { name: 'Purchase Orders', href: '/inventory/purchase-orders', description: 'Create and track purchase orders', icon: FileText },
+    { name: 'Stock Movements', href: '/inventory/stock-movements', description: 'View inventory transaction history', icon: ArrowUpDown },
   ];
 
   return (
@@ -54,7 +55,7 @@ export default async function InventoryDashboard() {
           ))}
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-4">
           {modules.map((module) => (
             <Link key={module.name} href={module.href}>
               <div className="rounded-md border border-border bg-card p-6 hover:bg-muted transition-colors cursor-pointer shadow-sm">
