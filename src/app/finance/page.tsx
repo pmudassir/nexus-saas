@@ -1,6 +1,6 @@
+
 import { Shell } from "@/components/layout/Shell";
 import Link from "next/link";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   DollarSign,
@@ -11,6 +11,9 @@ import {
   Plus,
   MoreVertical,
   PieChart,
+  Filter,
+  ArrowUpRight,
+  ArrowDownRight
 } from "lucide-react";
 import { StatusBadge } from "@/components/ui/badge";
 import {
@@ -60,215 +63,155 @@ export default async function FinancePage() {
 
   return (
     <Shell>
-      <div className="relative min-h-screen w-full bg-background antialiased">
-        <div className="relative z-10 space-y-8">
-          {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col gap-8 max-w-[1400px] mx-auto w-full">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-foreground tracking-tight">
-                Financial Overview
+              <h1 className="text-4xl font-display font-bold text-foreground">
+                Finance
               </h1>
-              <p className="text-muted-foreground mt-1">
-                Monitor revenue, expenses, and manage invoices.
+              <p className="text-muted-foreground mt-2 font-medium">
+                Monitor your financial health and transactions.
               </p>
             </div>
             <div className="flex items-center gap-3">
               <Link href="/finance/reports">
-                <Button variant="outline">
+                <Button variant="outline" className="rounded-full shadow-soft hover:bg-gray-50 border-gray-200">
                   <Download className="mr-2 h-4 w-4" />
                   Reports
                 </Button>
               </Link>
               <Link href="/finance/invoices/new">
-                <Button>
+                <Button className="rounded-full bg-black text-white px-6 h-11 shadow-lg hover:bg-gray-800 transition-all font-medium">
                   <Plus className="mr-2 h-4 w-4" />
                   New Invoice
                 </Button>
               </Link>
             </div>
-          </div>
+        </div>
 
-          {/* Stats Cards */}
-          <div className="grid gap-6 md:grid-cols-4">
-            <Card className="p-6">
-              <div className="flex items-center gap-4">
-                <div className="p-2 rounded-sm bg-emerald-50 text-emerald-700">
-                  <DollarSign className="h-5 w-5" />
+        {/* Stats Cards */}
+        <div className="grid gap-6 md:grid-cols-4">
+            <div className="bg-white rounded-3xl p-6 shadow-soft flex flex-col justify-between group hover:shadow-soft-lg transition-all relative overflow-hidden">
+                <div className="flex items-center justify-between mb-4 relative z-10">
+                    <div className="h-10 w-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                        <DollarSign className="h-5 w-5" />
+                    </div>
+                    <span className="flex items-center text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+                        <ArrowUpRight className="h-3 w-3 mr-1" /> +12%
+                    </span>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Total Revenue
-                  </p>
-                  <h3 className="text-2xl font-bold text-foreground">
-                    {formatCurrency(totalRevenue)}
-                  </h3>
+                <div className="relative z-10">
+                    <p className="text-sm font-medium text-muted-foreground">Total Revenue</p>
+                    <h3 className="text-2xl font-bold font-display text-foreground mt-1">{formatCurrency(totalRevenue)}</h3>
                 </div>
-              </div>
-              <div className="mt-4 flex items-center text-sm text-emerald-600 font-medium">
-                <TrendingUp className="mr-1 h-4 w-4" />
-                <span>Based on paid invoices</span>
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <div className="flex items-center gap-4">
-                <div className="p-2 rounded-sm bg-rose-50 text-rose-700">
-                  <TrendingDown className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Total Expenses
-                  </p>
-                  <h3 className="text-2xl font-bold text-foreground">
-                    {formatCurrency(totalExpenses)}
-                  </h3>
-                </div>
-              </div>
-              <div className="mt-4 flex items-center text-sm text-rose-600 font-medium">
-                <TrendingUp className="mr-1 h-4 w-4" />
-                <span>Tracked company expenses</span>
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <div className="flex items-center gap-4">
-                <div className="p-2 rounded-sm bg-amber-50 text-amber-700">
-                  <FileText className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Pending Invoices
-                  </p>
-                  <h3 className="text-2xl font-bold text-foreground">
-                    {formatCurrency(pendingInvoicesTotal)}
-                  </h3>
-                </div>
-              </div>
-              <div className="mt-4 flex items-center text-sm text-muted-foreground">
-                <span>
-                  {
-                    invoices.filter(
-                      (inv) => inv.status.toUpperCase() === "PENDING"
-                    ).length
-                  }{" "}
-                  invoices pending
-                </span>
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <div className="flex items-center gap-4">
-                <div className="p-2 rounded-sm bg-primary/10 text-primary">
-                  <PieChart className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Net Profit
-                  </p>
-                  <h3 className="text-2xl font-bold text-foreground">
-                    {formatCurrency(netProfit)}
-                  </h3>
-                </div>
-              </div>
-              <div className="mt-4 flex items-center text-sm text-emerald-600 font-medium">
-                <TrendingUp className="mr-1 h-4 w-4" />
-                <span>Revenue minus expenses</span>
-              </div>
-            </Card>
-          </div>
-
-          {/* Recent Invoices */}
-          <Card className="overflow-hidden">
-            <div className="p-6 border-b border-border flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-foreground">
-                Recent Invoices
-              </h2>
-              <Button
-                variant="ghost"
-                className="text-primary hover:text-primary/80 hover:bg-primary/5"
-              >
-                View All
-              </Button>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left">
-                <thead className="text-xs text-muted-foreground uppercase bg-muted/50 border-b border-border">
-                  <tr>
-                    <th className="px-6 py-3 font-medium">Invoice ID</th>
-                    <th className="px-6 py-3 font-medium">Client</th>
-                    <th className="px-6 py-3 font-medium">Amount</th>
-                    <th className="px-6 py-3 font-medium">Date Issued</th>
-                    <th className="px-6 py-3 font-medium">Due Date</th>
-                    <th className="px-6 py-3 font-medium">Status</th>
-                    <th className="px-6 py-3 font-medium text-right">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border">
-                  {invoices.map((invoice) => {
-                    const statusLower = invoice.status
-                      .toLowerCase()
-                      .replace("overdue", "overdue")
-                      .replace("paid", "paid")
-                      .replace("pending", "pending") as
-                      | "paid"
-                      | "overdue"
-                      | "pending";
 
+            <div className="bg-white rounded-3xl p-6 shadow-soft flex flex-col justify-between group hover:shadow-soft-lg transition-all relative overflow-hidden">
+                <div className="flex items-center justify-between mb-4 relative z-10">
+                    <div className="h-10 w-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center">
+                        <TrendingDown className="h-5 w-5" />
+                    </div>
+                    <span className="flex items-center text-xs font-bold text-rose-600 bg-rose-50 px-2 py-1 rounded-full">
+                        <ArrowUpRight className="h-3 w-3 mr-1" /> +5%
+                    </span>
+                </div>
+                <div className="relative z-10">
+                    <p className="text-sm font-medium text-muted-foreground">Total Expenses</p>
+                    <h3 className="text-2xl font-bold font-display text-foreground mt-1">{formatCurrency(totalExpenses)}</h3>
+                </div>
+            </div>
+
+            <div className="bg-white rounded-3xl p-6 shadow-soft flex flex-col justify-between group hover:shadow-soft-lg transition-all relative overflow-hidden">
+                <div className="flex items-center justify-between mb-4 relative z-10">
+                    <div className="h-10 w-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center">
+                        <FileText className="h-5 w-5" />
+                    </div>
+                    <span className="flex items-center text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-full">
+                         {invoices.filter((inv) => inv.status.toUpperCase() === "PENDING").length} Pending
+                    </span>
+                </div>
+                <div className="relative z-10">
+                    <p className="text-sm font-medium text-muted-foreground">Pending Invoices</p>
+                    <h3 className="text-2xl font-bold font-display text-foreground mt-1">{formatCurrency(pendingInvoicesTotal)}</h3>
+                </div>
+            </div>
+
+            <div className="bg-white rounded-3xl p-6 shadow-soft flex flex-col justify-between group hover:shadow-soft-lg transition-all relative overflow-hidden">
+                <div className="flex items-center justify-between mb-4 relative z-10">
+                    <div className="h-10 w-10 rounded-full bg-black/5 text-foreground flex items-center justify-center">
+                        <PieChart className="h-5 w-5" />
+                    </div>
+                    <span className="flex items-center text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+                        <TrendingUp className="h-3 w-3 mr-1" /> Profit
+                    </span>
+                </div>
+                <div className="relative z-10">
+                    <p className="text-sm font-medium text-muted-foreground">Net Profit</p>
+                    <h3 className="text-2xl font-bold font-display text-foreground mt-1">{formatCurrency(netProfit)}</h3>
+                </div>
+            </div>
+        </div>
+
+        {/* Recent Invoices */}
+        <div className="bg-white rounded-4xl p-8 shadow-soft border border-gray-100 min-h-[500px]">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-xl font-bold font-display">Recent Invoices</h2>
+              <div className="flex gap-2">
+                  <button className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors bg-gray-50 px-4 py-2 rounded-full">
+                     <Filter className="h-4 w-4" /> Filter
+                  </button>
+                  <Button variant="ghost" className="rounded-full hover:bg-gray-100">View All</Button>
+              </div>
+            </div>
+            
+            <div className="w-full">
+                <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50/80 rounded-2xl mb-4 text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                   <div className="col-span-2">ID</div>
+                   <div className="col-span-3">Client</div>
+                   <div className="col-span-2">Amount</div>
+                   <div className="col-span-2">Date</div>
+                   <div className="col-span-2">Status</div>
+                   <div className="col-span-1 text-right">Action</div>
+                </div>
+
+                <div className="space-y-2">
+                  {invoices.map((invoice) => {
+                    const statusLower = invoice.status.toLowerCase() as "paid" | "overdue" | "pending";
                     return (
-                      <tr
-                        key={invoice.id}
-                        className="group hover:bg-black/5 transition-colors"
-                      >
-                        <td className="px-6 py-4 font-medium text-foreground font-mono text-xs">
-                          {invoice.invoiceNumber}
-                        </td>
-                        <td className="px-6 py-4 text-foreground font-medium">
-                          {invoice.client?.company ??
-                            invoice.client?.firstName ??
-                            "Client"}
-                        </td>
-                        <td className="px-6 py-4 text-foreground">
-                          {formatCurrency(invoice.totalAmount)}
-                        </td>
-                        <td className="px-6 py-4 text-muted-foreground">
-                          {format(invoice.createdAt, "PP")}
-                        </td>
-                        <td className="px-6 py-4 text-muted-foreground">
-                          {format(invoice.dueDate, "PP")}
-                        </td>
-                        <td className="px-6 py-4">
-                          <StatusBadge status={statusLower} size="sm" />
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          <DropdownMenu>
-                            <DropdownMenuTrigger className="p-1.5 hover:bg-black/5 rounded-sm text-muted-foreground hover:text-foreground transition-colors">
-                              <MoreVertical className="h-4 w-4" />
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent
-                              align="end"
-                              className="bg-card border-border text-foreground"
-                            >
-                              <DropdownMenuItem className="focus:bg-black/5 focus:text-foreground">
-                                View Details
-                              </DropdownMenuItem>
-                              <DropdownMenuItem className="focus:bg-black/5 focus:text-foreground">
-                                Download PDF
-                              </DropdownMenuItem>
-                              <DropdownMenuItem className="focus:bg-black/5 focus:text-foreground">
-                                Send Reminder
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </td>
-                      </tr>
+                        <div key={invoice.id} className="grid grid-cols-12 gap-4 px-6 py-5 bg-white hover:bg-gray-50/50 border border-gray-100 hover:border-gray-200 rounded-3xl transition-all items-center group">
+                            <div className="col-span-2 font-mono text-xs font-bold text-foreground">
+                                {invoice.invoiceNumber}
+                            </div>
+                            <div className="col-span-3 font-medium text-foreground">
+                                {invoice.client?.company ?? invoice.client?.firstName ?? "Client"}
+                            </div>
+                            <div className="col-span-2 font-bold text-foreground">
+                                {formatCurrency(invoice.totalAmount)}
+                            </div>
+                            <div className="col-span-2 text-sm text-muted-foreground">
+                                {format(invoice.createdAt, "MMM d, yyyy")}
+                            </div>
+                            <div className="col-span-2">
+                                <StatusBadge status={statusLower} size="sm" />
+                            </div>
+                            <div className="col-span-1 text-right">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger className="h-8 w-8 rounded-full hover:bg-gray-200 flex items-center justify-center transition-colors text-muted-foreground hover:text-foreground">
+                                        <MoreVertical className="h-4 w-4" />
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end" className="rounded-xl border-gray-100 shadow-lg">
+                                        <DropdownMenuItem className="font-medium cursor-pointer">View Details</DropdownMenuItem>
+                                        <DropdownMenuItem className="font-medium cursor-pointer">Download PDF</DropdownMenuItem>
+                                        <DropdownMenuItem className="font-medium cursor-pointer">Send Reminder</DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </div>
+                        </div>
                     );
                   })}
-                </tbody>
-              </table>
+                </div>
             </div>
-          </Card>
         </div>
       </div>
     </Shell>

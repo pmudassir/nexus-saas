@@ -16,13 +16,15 @@ import {
   Search,
   Plus,
   MoreHorizontal,
-  Globe
+  Globe,
+  CheckSquare
 } from "lucide-react";
 import { useUIStore } from "@/lib/ui-store";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
   { name: "Projects", href: "/projects", icon: Briefcase },
+  { name: "My Tasks", href: "/tasks", icon: CheckSquare },
   { name: "CRM", href: "/crm", icon: Users },
   { name: "Finance", href: "/finance", icon: CreditCard },
   { name: "Inventory", href: "/inventory", icon: Box },
@@ -35,17 +37,17 @@ export function Sidebar() {
   const { toggleSearch } = useUIStore();
 
   return (
-    <div className="hidden md:flex flex-col w-64 h-screen border-r border-border bg-card z-50 text-foreground transition-all duration-300">
+    <div className="hidden md:flex flex-col w-64 h-[calc(100vh-2rem)] m-4 rounded-3xl bg-white border border-transparent shadow-soft z-50 text-foreground transition-all duration-300">
       {/* Header / Workspace Switcher */}
       <div className="flex flex-col px-4 py-4 gap-4">
-        <div className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-accent transition-colors cursor-pointer group h-12 border border-transparent hover:border-border">
+        <div className="flex items-center justify-between px-2 py-2 rounded-2xl hover:bg-gray-50 transition-colors cursor-pointer group h-14 border border-transparent hover:border-gray-100/50">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-md bg-foreground flex items-center justify-center shadow-lg">
-              <span className="text-background font-display font-bold text-lg">N</span>
+            <div className="h-10 w-10 rounded-xl bg-foreground flex items-center justify-center shadow-lg shadow-black/20">
+              <span className="text-background font-display font-bold text-xl">N</span>
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-semibold text-sm tracking-tight text-foreground">Nexus SaaS</span>
-              <span className="text-[10px] text-muted-foreground">Premium Plan</span>
+              <span className="font-display font-bold text-sm tracking-tight text-foreground">Nexus SaaS</span>
+              <span className="text-[10px] font-medium text-muted-foreground">Premium Plan</span>
             </div>
           </div>
           <ChevronsLeft className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-all" />
@@ -55,13 +57,13 @@ export function Sidebar() {
         <div className="space-y-1">
             <button 
               onClick={toggleSearch}
-              className="w-full flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors text-left group"
+              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-gray-50 rounded-xl transition-all text-left group"
             >
                 <Search className="w-4 h-4 group-hover:text-foreground transition-colors" />
                 <span className="font-medium">Search</span>
-                <kbd className="ml-auto text-[10px] text-muted-foreground font-sans border border-border rounded px-1.5 bg-muted">⌘K</kbd>
+                <kbd className="ml-auto text-[10px] text-muted-foreground font-sans border border-gray-200 rounded-md px-1.5 bg-white shadow-sm">⌘K</kbd>
             </button>
-            <Link href="/builder" className="w-full flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors text-left group">
+            <Link href="/builder" className="w-full flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-gray-50 rounded-xl transition-all text-left group">
                 <Globe className="w-4 h-4 group-hover:text-foreground transition-colors" />
                 <span className="font-medium">Site Builder</span>
             </Link>

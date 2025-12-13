@@ -4,28 +4,28 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
-          "bg-linear-to-r from-indigo-600 to-violet-600 text-white hover:opacity-90 shadow-lg shadow-indigo-500/25 border border-transparent font-medium",
+          "bg-[#ea580c] text-white hover:bg-[#c2410c] shadow-lg shadow-orange-500/25 border border-transparent font-bold tracking-tight",
         destructive:
-          "bg-red-500/10 text-red-600 hover:bg-red-500/20 border border-red-500/20 shadow-sm",
+          "bg-red-500/10 text-red-700 hover:bg-red-500/20 border border-red-500/10 shadow-sm font-bold",
         outline:
-          "border border-zinc-200 dark:border-white/10 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 text-foreground backdrop-blur-sm",
+          "border border-gray-200 bg-white hover:bg-gray-50 text-foreground transition-all duration-200 font-bold",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-zinc-100 dark:hover:bg-white/10 text-foreground",
-        link: "text-indigo-600 underline-offset-4 hover:underline",
-        glass: "bg-white/10 backdrop-blur-md border border-white/20 text-foreground hover:bg-white/20 shadow-sm",
-        glow: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 hover:bg-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.3)] transition-all duration-300",
+          "bg-gray-100 text-foreground hover:bg-gray-200 font-bold",
+        ghost: "hover:bg-gray-100/50 text-foreground font-medium",
+        link: "text-orange-600 underline-offset-4 hover:underline font-bold",
+        glass: "bg-white/80 backdrop-blur-md border border-white/50 text-foreground hover:bg-white shadow-soft font-bold",
+        glow: "bg-orange-500/10 text-orange-600 border border-orange-500/20 hover:bg-orange-500/20 shadow-[0_0_15px_rgba(249,115,22,0.3)] transition-all duration-300 font-bold",
       },
       size: {
-        default: "h-8 px-3 py-1",
-        sm: "h-7 rounded-sm px-2 text-xs",
-        lg: "h-10 rounded-md px-8",
-        icon: "h-8 w-8",
+        default: "h-10 px-5 py-2",
+        sm: "h-8 px-3 text-xs",
+        lg: "h-12 px-8 text-base",
+        icon: "h-10 w-10",
       },
     },
     defaultVariants: {

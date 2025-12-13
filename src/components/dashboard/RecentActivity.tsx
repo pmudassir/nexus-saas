@@ -60,32 +60,31 @@ export function RecentActivity({ className }: { className?: string }) {
       {activity.map((item, i) => (
         <div
           key={item.id}
-          className="group flex items-center justify-between p-3 rounded-xl hover:bg-white/5 dark:hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-200"
+          className="group flex items-center justify-between p-4 rounded-3xl bg-white border border-border/50 shadow-sm hover:shadow-soft transition-all duration-300"
         >
           <div className="flex items-center gap-4">
             <div className="relative">
               <Avatar 
                 src={item.user.image} 
                 fallback={item.user.initials}
-                className="h-9 w-9 border border-white/10 dark:border-white/5 shadow-sm"
+                className="h-10 w-10 border-2 border-white shadow-sm"
               />
               <span className={cn(
-                "absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white dark:border-zinc-900",
+                "absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-white",
                 i === 0 ? "bg-emerald-500 animate-pulse" : "bg-emerald-500"
               )} />
             </div>
             <div className="flex flex-col gap-0.5">
               <p className="text-sm font-medium text-foreground">
-                <span className="font-semibold">{item.user.name}</span>{" "}
-                <span className="text-muted-foreground font-normal">{item.action}</span>
+                <span className="font-bold">{item.user.name}</span>
               </p>
-              <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">
-                {item.target}
+              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                 {item.action} <span className="text-foreground/80 font-medium">• {item.time}</span>
               </p>
             </div>
           </div>
-          <div className="text-xs text-muted-foreground/50 font-medium">
-            {item.time}
+          <div className="text-xs font-bold text-primary bg-primary/5 px-2 py-1 rounded-md">
+            {item.type}
           </div>
         </div>
       ))}

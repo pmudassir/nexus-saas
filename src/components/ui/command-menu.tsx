@@ -29,19 +29,19 @@ export function CommandMenu() {
 
   return (
     <Dialog open={isSearchOpen} onOpenChange={setSearchOpen}>
-      <DialogContent className="p-0 overflow-hidden bg-background border-border text-foreground shadow-2xl max-w-2xl">
+      <DialogContent className="p-0 overflow-hidden bg-white/95 backdrop-blur-xl border-white/50 text-foreground shadow-soft-2xl max-w-2xl rounded-4xl">
         <DialogTitle className="sr-only">Command Menu</DialogTitle>
-        <div className="flex items-center px-4 border-b border-white/10">
-          <Search className="mr-2 h-5 w-5 shrink-0 opacity-50 text-indigo-500" />
+        <div className="flex items-center px-6 border-b border-gray-100/50">
+          <Search className="mr-3 h-6 w-6 shrink-0 text-gray-400" />
           <input
-            className="flex h-14 w-full rounded-md bg-transparent py-3 text-lg outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 font-display"
+            className="flex h-20 w-full rounded-md bg-transparent py-3 text-2xl outline-none placeholder:text-muted-foreground/50 disabled:cursor-not-allowed disabled:opacity-50 font-display font-bold text-foreground"
             placeholder="Type a command or search..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
-        <div className="max-h-[300px] overflow-y-auto p-2">
-            <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">
+        <div className="max-h-[350px] overflow-y-auto p-4">
+            <div className="px-3 py-2 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
                 Suggestions
             </div>
             <div className="space-y-1">
@@ -55,36 +55,36 @@ export function CommandMenu() {
                     <button
                         key={item.href}
                         onClick={() => runCommand(() => router.push(item.href))}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-white/10 hover:text-indigo-400 transition-colors text-left group"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-base rounded-2xl hover:bg-gray-50 hover:text-foreground transition-all text-left group border border-transparent hover:border-gray-100"
                     >
-                        <item.icon className="h-4 w-4 text-muted-foreground group-hover:text-indigo-500 transition-colors" />
-                        <span className="font-medium">{item.label}</span>
+                        <item.icon className="h-5 w-5 text-muted-foreground group-hover:text-orange-600 transition-colors" />
+                        <span className="font-medium text-muted-foreground group-hover:text-foreground">{item.label}</span>
                     </button>
                 ))}
             </div>
             
-            <div className="px-2 py-1.5 mt-2 text-xs font-semibold text-muted-foreground">
+            <div className="px-3 py-2 mt-4 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
                 Actions
             </div>
             <div className="space-y-1">
                  <button
                     onClick={() => runCommand(() => router.push('/projects'))}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-white/10 hover:text-indigo-400 transition-colors text-left group"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-base rounded-2xl hover:bg-gray-50 hover:text-foreground transition-all text-left group border border-transparent hover:border-gray-100"
                 >
-                    <div className="h-4 w-4 border border-muted-foreground/30 rounded flex items-center justify-center text-[10px] group-hover:border-indigo-500/50">+</div>
-                    <span className="font-medium">Create New Project</span>
+                    <div className="h-5 w-5 border border-muted-foreground/30 rounded-full flex items-center justify-center text-[10px] group-hover:border-orange-600 group-hover:text-orange-600">+</div>
+                    <span className="font-medium text-muted-foreground group-hover:text-foreground">Create New Project</span>
                 </button>
                  <button
                     onClick={() => runCommand(() => router.push('/builder'))}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-white/10 hover:text-indigo-400 transition-colors text-left group"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-base rounded-2xl hover:bg-gray-50 hover:text-foreground transition-all text-left group border border-transparent hover:border-gray-100"
                 >
-                    <Globe className="h-4 w-4 text-muted-foreground group-hover:text-indigo-500 transition-colors" />
-                    <span className="font-medium">Open Site Builder</span>
+                    <Globe className="h-5 w-5 text-muted-foreground group-hover:text-orange-600 transition-colors" />
+                    <span className="font-medium text-muted-foreground group-hover:text-foreground">Open Site Builder</span>
                 </button>
             </div>
         </div>
-        <div className="py-2 px-4 border-t border-white/10 bg-white/5 flex items-center justify-between text-xs text-muted-foreground">
-            <span>Press <kbd className="font-sans bg-white/10 px-1 rounded">esc</kbd> to close</span>
+        <div className="py-3 px-6 border-t border-gray-100/50 bg-gray-50/50 flex items-center justify-between text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+            <span>Press <kbd className="font-sans bg-white border border-gray-200 px-1.5 py-0.5 rounded-md text-foreground shadow-sm">esc</kbd> to close</span>
             <span>Nexus Command</span>
         </div>
       </DialogContent>

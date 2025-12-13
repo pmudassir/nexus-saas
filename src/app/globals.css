@@ -31,33 +31,19 @@
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
 
-  /* Semantic Colors */
-  --color-success: hsl(var(--success));
-  --color-success-foreground: hsl(var(--success-foreground));
-
-  --color-warning: hsl(var(--warning));
-  --color-warning-foreground: hsl(var(--warning-foreground));
-
-  --color-error: hsl(var(--error));
-  --color-error-foreground: hsl(var(--error-foreground));
-
-  --color-info: hsl(var(--info));
-  --color-info-foreground: hsl(var(--info-foreground));
-
-  /* Radius System */
-  --radius-xs: calc(var(--radius) - 4px);
-  --radius-sm: calc(var(--radius) - 2px);
+  --radius-xs: calc(var(--radius) - 6px);
+  --radius-sm: calc(var(--radius) - 4px);
   --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) + 2px);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+  --radius-2xl: calc(var(--radius) + 12px);
+  --radius-3xl: calc(var(--radius) + 16px);
   --radius-full: 9999px;
 
-  /* Animation Presets */
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-float: float 6s ease-in-out infinite;
 
-  /* Keyframe Animations */
   @keyframes accordion-down {
     from { height: 0; }
     to { height: var(--radix-accordion-content-height); }
@@ -66,79 +52,79 @@
     from { height: var(--radix-accordion-content-height); }
     to { height: 0; }
   }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
 }
 
-/* Theme Colors - Clean Professional Zinc */
+/* "Soft Minimalist" Theme */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
+  /* Soft Off-White Background */
+  --background: 210 20% 98%; 
+  --foreground: 220 15% 10%; /* Soft Black */
 
+  /* Pure White Cards */
   --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
+  --card-foreground: 220 15% 10%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 3.9%;
+  --popover-foreground: 220 15% 10%;
 
-  --primary: 240 5.9% 10%;
-  --primary-foreground: 0 0% 98%;
+  /* Soft Coral Accent */
+  --primary: 10 80% 60%; 
+  --primary-foreground: 0 0% 100%;
 
-  --secondary: 240 4.8% 95.9%;
-  --secondary-foreground: 240 5.9% 10%;
+  /* Warm Secondary */
+  --secondary: 35 100% 96%;
+  --secondary-foreground: 25 90% 45%;
 
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
+  --muted: 210 20% 96%;
+  --muted-foreground: 220 10% 45%;
 
-  --accent: 240 4.8% 95.9%;
-  --accent-foreground: 240 5.9% 10%;
+  --accent: 210 20% 96%;
+  --accent-foreground: 220 15% 10%;
 
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 98%;
 
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  --ring: 240 5.9% 10%;
+  --border: 220 15% 94%;
+  --input: 220 15% 94%;
+  --ring: 10 80% 60%;
 
-  --radius: 0.5rem;
-
-  /* Semantics */
-  --success: 142 76% 36%;
-  --success-foreground: 0 0% 100%;
-  --warning: 38 92% 50%;
-  --warning-foreground: 0 0% 100%;
-  --error: 0 84.2% 60.2%;
-  --error-foreground: 0 0% 100%;
-  --info: 221 83% 53%;
-  --info-foreground: 0 0% 100%;
+  /* Heavy Roundness */
+  --radius: 1.5rem;
 }
 
 .dark {
-  --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
+  /* Keeping Dark Mode accessible but consistent with soft shapes */
+  --background: 220 15% 10%;
+  --foreground: 210 20% 98%;
 
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
+  --card: 220 15% 13%;
+  --card-foreground: 210 20% 98%;
 
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
+  --popover: 220 15% 13%;
+  --popover-foreground: 210 20% 98%;
 
-  --primary: 0 0% 98%;
-  --primary-foreground: 240 5.9% 10%;
+  --primary: 10 80% 65%;
+  --primary-foreground: 0 0% 100%;
 
-  --secondary: 240 3.7% 15.9%;
-  --secondary-foreground: 0 0% 98%;
+  --secondary: 220 15% 16%;
+  --secondary-foreground: 210 20% 98%;
 
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
+  --muted: 220 15% 16%;
+  --muted-foreground: 220 10% 65%;
 
-  --accent: 240 3.7% 15.9%;
-  --accent-foreground: 0 0% 98%;
+  --accent: 220 15% 16%;
+  --accent-foreground: 210 20% 98%;
 
   --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
+  --destructive-foreground: 210 20% 98%;
 
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --ring: 240 4.9% 83.9%;
+  --border: 220 15% 16%;
+  --input: 220 15% 16%;
+  --ring: 10 80% 60%;
 }
 
 @layer base {
@@ -146,7 +132,9 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased font-sans;
+    @apply bg-background text-foreground antialiased font-sans transition-colors duration-300;
+    /* Clean background, no noise */
+    background-image: none; 
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-display tracking-tight text-foreground;
@@ -157,11 +145,48 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Soft UI Shadows */
+  .shadow-soft {
+    box-shadow: 
+      0 4px 6px -1px rgb(0 0 0 / 0.02),
+      0 10px 15px -3px rgb(0 0 0 / 0.04),
+      0 0 0 1px rgb(0 0 0 / 0.02);
+  }
   
-  /* Modern Scrollbar */
+  .shadow-soft-lg {
+    box-shadow: 
+      0 20px 25px -5px rgb(0 0 0 / 0.05), 
+      0 8px 10px -6px rgb(0 0 0 / 0.01),
+      0 0 0 1px rgb(0 0 0 / 0.02);
+  }
+
+  .shadow-soft-xl {
+    box-shadow: 
+      0 25px 50px -12px rgb(0 0 0 / 0.1),
+      0 0 0 1px rgb(0 0 0 / 0.02);
+  }
+  
+  /* Floating Effect */
+  .floating-card {
+    @apply bg-card rounded-3xl transition-all duration-300;
+    box-shadow: 
+      0 4px 6px -1px rgb(0 0 0 / 0.02),
+      0 10px 15px -3px rgb(0 0 0 / 0.04),
+      0 0 0 1px rgb(0 0 0 / 0.02);
+  }
+
+  .floating-card:hover {
+    box-shadow: 
+      0 20px 25px -5px rgb(0 0 0 / 0.05), 
+      0 8px 10px -6px rgb(0 0 0 / 0.01),
+      0 0 0 1px rgb(0 0 0 / 0.02);
+  }
+
+  /* Scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
     @apply bg-transparent;
