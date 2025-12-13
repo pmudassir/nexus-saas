@@ -10,7 +10,6 @@ import {
   Paperclip,
   Plus,
   Share2,
-  CheckCircle,
   Circle,
   Check,
   Users
@@ -225,7 +224,7 @@ export default function TasksPage() {
                  <div className="flex gap-4">
                     <div className="mt-1"><div className="h-5 w-5 rounded-full bg-purple-200 text-purple-600 flex items-center justify-center"><Check className="h-3 w-3" /></div></div>
                     <div>
-                       <h3 className="font-bold text-foreground line-through decoration-gray-400 text-gray-400">Discussion regarding userflow improvement</h3>
+                       <h3 className="font-bold line-through decoration-gray-400 text-gray-400">Discussion regarding userflow improvement</h3>
                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                          What&apos;s the main goal of the landing page? (e.g., lead generation, product)
                        </p>

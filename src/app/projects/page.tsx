@@ -7,8 +7,6 @@ import {
   FolderOpen,
   Plus,
   MoreHorizontal,
-  Calendar,
-  Users,
   CheckCircle,
   Briefcase,
   Search,
@@ -31,7 +29,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { format } from "date-fns";
 
 export default async function ProjectsListPage() {
   const { tenant } = await requireTenantMembership();

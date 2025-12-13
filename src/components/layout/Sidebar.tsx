@@ -14,7 +14,6 @@ import {
   Box,
   ChevronsLeft,
   Search,
-  Plus,
   MoreHorizontal,
   Globe,
   CheckSquare

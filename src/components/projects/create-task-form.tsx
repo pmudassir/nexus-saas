@@ -57,8 +57,8 @@ export function CreateTaskForm({ projects, users }: { projects: Project[]; users
                 title: formData.title,
                 description: formData.description,
                 projectId: formData.projectId,
-                priority: formData.priority as any,
-                status: formData.status as any,
+                priority: formData.priority as "LOW" | "MEDIUM" | "HIGH" | "URGENT",
+                status: formData.status as "TODO" | "IN_PROGRESS" | "REVIEW" | "DONE",
                 dueDate: formData.dueDate,
                 assigneeId: formData.assigneeId
             });

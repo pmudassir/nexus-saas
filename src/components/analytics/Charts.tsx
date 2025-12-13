@@ -39,7 +39,7 @@ interface TooltipProps {
     name: string;
     value: number;
     color: string;
-    payload: any;
+    payload: Record<string, unknown>;
   }>;
   label?: string;
 }

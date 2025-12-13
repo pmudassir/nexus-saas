@@ -36,7 +36,6 @@ export function CreateInvoiceForm({ clients }: { clients: Client[] }) {
 
   const updateItem = (index: number, field: string, value: string | number) => {
     const newItems = [...items];
-    // @ts-ignore
     newItems[index] = { ...newItems[index], [field]: value };
     setItems(newItems);
   };

@@ -12,8 +12,7 @@ import {
   MoreVertical,
   PieChart,
   Filter,
-  ArrowUpRight,
-  ArrowDownRight
+  ArrowUpRight
 } from "lucide-react";
 import { StatusBadge } from "@/components/ui/badge";
 import {

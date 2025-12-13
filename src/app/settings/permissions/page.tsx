@@ -6,7 +6,6 @@ import {
   updateUserPermissions,
   updateUserRole,
   getAvailablePermissions,
-  getUserPermissions,
 } from '@/actions/permissions';
 import { Shield, Users, Check } from 'lucide-react';
 

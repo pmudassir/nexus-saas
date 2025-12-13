@@ -2,10 +2,16 @@
 
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
-import { revalidatePath } from 'next/cache';
 import { requireTenantMembership } from '@/lib/tenant-auth';
 import { sanitizeFilename } from '@/lib/sanitize';
 import { prisma } from '@/lib/prisma';
+
+interface FileMetadata {
+  filename?: string;
+  url?: string;
+  size?: number;
+  type?: string;
+}
 
 /**
  * Upload a file to the public directory
@@ -87,12 +93,15 @@ export async function getUploadedFiles() {
     take: 100,
   });
 
-  return logs.map((log) => ({
-    id: log.id,
-    filename: (log.metadata as any)?.filename || 'unknown',
-    url: (log.metadata as any)?.url || '',
-    size: (log.metadata as any)?.size || 0,
-    type: (log.metadata as any)?.type || 'image/*',
-    uploadedAt: log.createdAt,
-  }));
+  return logs.map((log) => {
+    const metadata = log.metadata as FileMetadata | null;
+    return {
+      id: log.id,
+      filename: metadata?.filename || 'unknown',
+      url: metadata?.url || '',
+      size: metadata?.size || 0,
+      type: metadata?.type || 'image/*',
+      uploadedAt: log.createdAt,
+    };
+  });
 }

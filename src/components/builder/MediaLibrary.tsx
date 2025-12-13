@@ -22,7 +22,7 @@ type MediaLibraryProps = {
 
 export function MediaLibrary({ onSelect, existingFiles = [] }: MediaLibraryProps) {
   const [uploading, setUploading] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
+  const [_uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
   const [selectedUrl, setSelectedUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);

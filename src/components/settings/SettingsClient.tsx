@@ -25,22 +25,21 @@ export function SettingsClient({ user }: { user: User }) {
   const [activeTab, setActiveTab] = useState("profile");
   const [isPending, startTransition] = useTransition();
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-  const [darkMode, setDarkMode] = useState(false);
-
-  // Initialize dark mode from localStorage or system preference
-  useEffect(() => {
+  const [darkMode, setDarkMode] = useState(() => {
+    // Check if we're in browser
+    if (typeof window === 'undefined') return false;
     const stored = localStorage.getItem('darkMode');
     if (stored !== null) {
-      const isDark = stored === 'true';
-      setDarkMode(isDark);
-      document.documentElement.classList.toggle('dark', isDark);
-    } else {
-      // Check system preference
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setDarkMode(prefersDark);
-      document.documentElement.classList.toggle('dark', prefersDark);
+      return stored === 'true';
     }
-  }, []);
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
+
+  // Sync dark mode to DOM
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode);
+    localStorage.setItem('darkMode', String(darkMode));
+  }, [darkMode]);
 
   const handleProfileSubmit = async (formData: FormData) => {
     setMessage(null);

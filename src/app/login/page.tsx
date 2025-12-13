@@ -30,7 +30,7 @@ export default function LoginPage() {
 
       <div className="w-full max-w-md p-10 rounded-4xl bg-white shadow-soft-lg relative z-10 border border-white/50">
         <div className="flex flex-col items-center mb-10">
-          <div className="h-16 w-16 rounded-3xl bg-gradient-to-tr from-orange-500 to-amber-500 flex items-center justify-center text-white font-bold text-3xl shadow-lg shadow-orange-500/30 mb-6 font-display">
+          <div className="h-16 w-16 rounded-3xl bg-linear-to-tr from-orange-500 to-amber-500 flex items-center justify-center text-white font-bold text-3xl shadow-lg shadow-orange-500/30 mb-6 font-display">
             N
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-foreground font-display">Welcome back</h1>
