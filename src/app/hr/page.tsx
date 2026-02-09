@@ -1,4 +1,3 @@
-
 import { Shell } from '@/components/layout/Shell';
 import { requireTenantMembership } from '@/lib/tenant-auth';
 import { prisma } from '@/lib/prisma';
@@ -8,10 +7,14 @@ import Link from 'next/link';
 export default async function HRDashboard() {
   const { tenant } = await requireTenantMembership();
 
+  // Get start of today for attendance query
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const [employees, leaveRequests, todayAttendance] = await Promise.all([
     prisma.employee.count({ where: { tenantId: tenant.id } }),
     prisma.leaveRequest.count({ where: { tenantId: tenant.id, status: 'PENDING' } }),
-    prisma.attendance.count({ where: { tenantId: tenant.id, date: { gte: new Date(new Date().setHours(0, 0, 0, 0)) } } }),
+    prisma.attendance.count({ where: { tenantId: tenant.id, date: { gte: today } } }),
   ]);
 
   const stats = [

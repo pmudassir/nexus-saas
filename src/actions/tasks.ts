@@ -161,3 +161,58 @@ export async function getAllTenantTasks() {
 
   return tasks;
 }
+
+export async function getProjectsForTasks() {
+  const { tenant } = await requireTenantMembership();
+
+  const projects = await prisma.project.findMany({
+    where: {
+      tenantId: tenant.id,
+      status: "ACTIVE",
+    },
+    select: {
+      id: true,
+      name: true,
+    },
+    orderBy: {
+      name: "asc",
+    },
+  });
+
+  return projects;
+}
+
+export async function getTeamMembersForTasks() {
+  const { tenant } = await requireTenantMembership();
+
+  const members = await prisma.tenantUser.findMany({
+    where: {
+      tenantId: tenant.id,
+    },
+    select: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          image: true,
+        },
+      },
+    },
+  });
+
+  return members.map((m) => m.user);
+}
+
+export async function getTaskStats() {
+  const { tenant } = await requireTenantMembership();
+
+  const [total, completed, inProgress, todo] = await Promise.all([
+    prisma.task.count({ where: { tenantId: tenant.id } }),
+    prisma.task.count({ where: { tenantId: tenant.id, status: "DONE" } }),
+    prisma.task.count({ where: { tenantId: tenant.id, status: "IN_PROGRESS" } }),
+    prisma.task.count({ where: { tenantId: tenant.id, status: "TODO" } }),
+  ]);
+
+  return { total, completed, inProgress, todo };
+}

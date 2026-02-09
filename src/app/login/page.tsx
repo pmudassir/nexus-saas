@@ -33,7 +33,7 @@ export default function LoginPage() {
           <div className="h-16 w-16 rounded-3xl bg-linear-to-tr from-orange-500 to-amber-500 flex items-center justify-center text-white font-bold text-3xl shadow-lg shadow-orange-500/30 mb-6 font-display">
             N
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground font-display">Welcome back</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 font-display">Welcome back</h1>
           <p className="text-muted-foreground mt-2 font-medium">
             Enter your credentials to access your account
           </p>

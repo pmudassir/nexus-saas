@@ -2,9 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { User, Bell, Shield, Moon } from "lucide-react";
+import { User, Bell, Shield } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar";
-import { useState, useTransition, useEffect } from "react";
+import { useState, useTransition } from "react";
 import { cn } from "@/lib/utils";
 import { updateProfile, changePassword, updateNotificationSettings } from "@/actions/settings";
 
@@ -25,21 +25,6 @@ export function SettingsClient({ user }: { user: User }) {
   const [activeTab, setActiveTab] = useState("profile");
   const [isPending, startTransition] = useTransition();
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-  const [darkMode, setDarkMode] = useState(() => {
-    // Check if we're in browser
-    if (typeof window === 'undefined') return false;
-    const stored = localStorage.getItem('darkMode');
-    if (stored !== null) {
-      return stored === 'true';
-    }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  });
-
-  // Sync dark mode to DOM
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', darkMode);
-    localStorage.setItem('darkMode', String(darkMode));
-  }, [darkMode]);
 
   const handleProfileSubmit = async (formData: FormData) => {
     setMessage(null);
@@ -77,12 +62,6 @@ export function SettingsClient({ user }: { user: User }) {
     });
   };
 
-  const toggleDarkMode = () => {
-    const newValue = !darkMode;
-    setDarkMode(newValue);
-    document.documentElement.classList.toggle('dark', newValue);
-    localStorage.setItem('darkMode', String(newValue));
-  };
 
   return (
     <div className="flex flex-col gap-8 max-w-[1400px] mx-auto w-full">
@@ -178,41 +157,6 @@ export function SettingsClient({ user }: { user: User }) {
                     </Button>
                   </div>
                 </form>
-              </div>
-
-              <div className="bg-white rounded-4xl p-6 shadow-soft border border-gray-100">
-                <h3 className="text-lg font-bold font-display text-foreground mb-4">
-                  Preferences
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 rounded-3xl bg-gray-50/50 border border-gray-100/50">
-                    <div className="flex items-center gap-4">
-                      <div className="h-10 w-10 rounded-full bg-white shadow-sm flex items-center justify-center text-foreground">
-                        <Moon className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <p className="font-bold text-foreground">
-                          Dark Mode
-                        </p>
-                        <p className="text-xs font-medium text-muted-foreground">
-                          Toggle dark theme
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={toggleDarkMode}
-                      className={cn(
-                        "w-12 h-7 rounded-full relative transition-colors duration-300 focus:outline-none",
-                        darkMode ? "bg-orange-500" : "bg-gray-200"
-                      )}
-                    >
-                      <div className={cn(
-                        "absolute top-1 w-5 h-5 rounded-full bg-white shadow-md transition-transform duration-300",
-                        darkMode ? "translate-x-6" : "translate-x-1"
-                      )} />
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
           )}
