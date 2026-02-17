@@ -4,8 +4,9 @@ import { NextResponse } from "next/server";
 
 const { auth } = NextAuth(authConfig);
 
-export default auth(async function middleware() {
-  // Add security headers
+// In Next.js 16+, 'middleware.ts' is deprecated and should be 'proxy.ts' 
+// The system runs this function as a network boundary proxy.
+export const proxy = auth(async function proxy() {
   const response = NextResponse.next();
 
   // Security headers
@@ -18,7 +19,6 @@ export default auth(async function middleware() {
   );
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   
-  // Content Security Policy (relaxed for development)
   if (process.env.NODE_ENV === 'production') {
     response.headers.set(
       'Content-Security-Policy',
@@ -30,6 +30,5 @@ export default auth(async function middleware() {
 });
 
 export const config = {
-  // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
   matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
 };

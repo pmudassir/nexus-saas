@@ -3,9 +3,6 @@
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/prisma';
 import { requireTenantMembership } from '@/lib/tenant-auth';
-import { SUPPORTED_CURRENCIES, getCurrencySymbol, formatCurrency } from '@/lib/currency';
-
-export { SUPPORTED_CURRENCIES, getCurrencySymbol, formatCurrency };
 
 /**
  * Create recurring invoice

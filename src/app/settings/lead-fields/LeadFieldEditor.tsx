@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { saveLeadFieldConfig, DEFAULT_LEAD_FIELDS, type LeadField } from '@/actions/lead-fields';
+import { saveLeadFieldConfig } from '@/actions/lead-fields';
+import { DEFAULT_LEAD_FIELDS, type LeadField } from '@/types/lead-fields';
 import { Button } from '@/components/ui/button';
 import {
   Plus,
