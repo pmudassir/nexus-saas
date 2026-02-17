@@ -1,6 +1,6 @@
 import { getPlans, createPlan, deletePlan } from "@/actions/plans";
 import { getAllTenantsUsage } from "@/actions/usage";
-import { Shell } from "@/components/layout/Shell";
+
 import { Button } from "@/components/ui/button";
 import { Settings, Plus, Trash2, Users, Briefcase, DollarSign } from "lucide-react";
 
@@ -9,8 +9,7 @@ export default async function PlansAdminPage() {
   const tenantsUsage = await getAllTenantsUsage();
 
   return (
-    <Shell>
-      <div className="space-y-6">
+    <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-foreground flex items-center gap-3">
             <Settings className="w-8 h-8" />
@@ -172,7 +171,6 @@ export default async function PlansAdminPage() {
             </table>
           </div>
         </div>
-      </div>
-    </Shell>
+    </div>
   );
 }

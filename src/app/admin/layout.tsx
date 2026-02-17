@@ -1,6 +1,7 @@
-import type { ReactNode } from "react";
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+import type { ReactNode } from 'react';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
+import { AdminShell } from '@/components/layout/AdminShell';
 
 type SessionUserWithFlags = {
   isSuperAdmin?: boolean;
@@ -18,8 +19,8 @@ export default async function AdminLayout({
   );
 
   if (!isSuperAdmin) {
-    redirect("/");
+    redirect('/');
   }
 
-  return children;
+  return <AdminShell>{children}</AdminShell>;
 }

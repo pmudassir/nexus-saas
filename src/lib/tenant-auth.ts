@@ -23,9 +23,16 @@ export async function requireTenantMembership(): Promise<TenantMembershipContext
     redirect("/login");
   }
 
-  const tenant = await getCurrentTenant("app");
+  const tenant = await getCurrentTenant("app", user.id);
 
   if (!tenant) {
+    // Check if user has ANY tenant membership
+    const anyMembership = await prisma.tenantUser.findFirst({
+      where: { userId: user.id },
+    });
+    if (!anyMembership) {
+      redirect("/onboarding");
+    }
     redirect("/");
   }
 

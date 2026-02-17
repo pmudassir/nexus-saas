@@ -9,6 +9,10 @@ import { getDashboardStats } from "@/actions/dashboard";
 import { Button } from "@/components/ui/button";
 
 export default async function Home() {
+  // Super admins check removed to allow access to dashboard
+
+  // Super admins check removed to allow access to dashboard
+
   await getDashboardStats();
 
   return (

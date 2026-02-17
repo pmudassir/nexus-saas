@@ -1,9 +1,12 @@
-import { Shell } from "@/components/layout/Shell";
-import { prisma } from "@/lib/prisma";
-import { requireTenantMembership } from "@/lib/tenant-auth";
-import { Button } from "@/components/ui/button";
-import { inviteUser, removeUser } from "@/actions/team";
-import { UserPlus, Mail, Shield, Trash2 } from "lucide-react";
+import { Shell } from '@/components/layout/Shell';
+import { prisma } from '@/lib/prisma';
+import { requireTenantMembership } from '@/lib/tenant-auth';
+import { Button } from '@/components/ui/button';
+import { inviteUser } from '@/actions/team';
+import { assignRole } from '@/actions/roles';
+import { UserPlus, Mail, Shield } from 'lucide-react';
+import { RemoveUserButton } from './RemoveUserButton';
+import { removeUser } from '@/actions/team';
 
 export default async function TeamPage() {
   const { tenant } = await requireTenantMembership();
@@ -18,8 +21,15 @@ export default async function TeamPage() {
           email: true,
         },
       },
+      customRole: true,
     },
-    orderBy: { createdAt: "asc" },
+    orderBy: { createdAt: 'asc' },
+  });
+
+  // Get custom roles for the role assignment dropdown
+  const customRoles = await prisma.customRole.findMany({
+    where: { tenantId: tenant.id },
+    orderBy: { name: 'asc' },
   });
 
   return (
@@ -36,14 +46,14 @@ export default async function TeamPage() {
         </div>
 
         {/* Invite User Form */}
-        <div className="rounded-md border border-border bg-white p-6 shadow-sm">
+        <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-soft">
           <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
             <Mail className="w-5 h-5" />
-            Invite New Member
+            Add New Member
           </h2>
-          <form action={inviteUser} className="grid gap-4 md:grid-cols-4">
+          <form action={inviteUser} className="grid gap-4 md:grid-cols-3">
             <div>
-              <label className="block text-xs font-medium text-muted-foreground mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
                 Email Address
               </label>
               <input
@@ -51,73 +61,81 @@ export default async function TeamPage() {
                 name="email"
                 required
                 placeholder="user@example.com"
-                className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-muted-foreground mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
                 Full Name
               </label>
               <input
                 type="text"
                 name="name"
                 placeholder="John Doe"
-                className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-muted-foreground mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Min 6 characters"
+                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
                 Role
               </label>
               <select
                 name="role"
                 defaultValue="TENANT_USER"
-                className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
               >
-                <option value="TENANT_USER" className="bg-white text-foreground">
-                  User
-                </option>
-                <option
-                  value="TENANT_ADMIN"
-                  className="bg-white text-foreground"
-                >
-                  Admin
-                </option>
+                <option value="TENANT_ADMIN">Admin</option>
+                <option value="TENANT_USER">User</option>
+                {customRoles.map((role) => (
+                  <option key={role.id} value={`CUSTOM:${role.id}`}>
+                    {role.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="flex items-end">
               <Button
                 type="submit"
-                className="w-full bg-primary text-white hover:bg-primary/90"
+                className="w-full rounded-full bg-black text-white hover:bg-gray-800 h-10 shadow-md font-medium"
               >
-                Send Invitation
+                Add Member
               </Button>
             </div>
           </form>
         </div>
 
         {/* Team Members List */}
-        <div className="rounded-md border border-border bg-white shadow-sm overflow-hidden">
-          <div className="px-6 py-4 bg-muted border-b border-border">
+        <div className="rounded-3xl border border-gray-100 bg-white shadow-soft overflow-hidden">
+          <div className="px-6 py-4 bg-gray-50/50 border-b border-gray-100">
             <h2 className="text-lg font-semibold text-foreground">
               Team Members ({tenantUsers.length})
             </h2>
           </div>
 
-          <div className="divide-y divide-border">
+          <div className="divide-y divide-gray-100">
             {tenantUsers.map((tenantUser) => (
               <div
                 key={tenantUser.id}
-                className="px-6 py-4 flex items-center justify-between hover:bg-muted/50 transition-colors"
+                className="px-6 py-4 flex items-center justify-between hover:bg-gray-50/50 transition-colors"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold shadow-sm">
-                    {(tenantUser.user.name ||
-                      tenantUser.user.email)[0].toUpperCase()}
+                    {(tenantUser.user.name || tenantUser.user.email)[0].toUpperCase()}
                   </div>
                   <div>
                     <div className="font-medium text-foreground">
-                      {tenantUser.user.name || "Unnamed User"}
+                      {tenantUser.user.name || 'Unnamed User'}
                     </div>
                     <div className="text-sm text-muted-foreground">
                       {tenantUser.user.email}
@@ -125,44 +143,50 @@ export default async function TeamPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    {tenantUser.role === "TENANT_ADMIN" ? (
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-medium border border-emerald-100">
-                        <Shield className="w-3 h-3" />
-                        Admin
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-medium border border-blue-100">
-                        User
-                      </span>
-                    )}
-                  </div>
+                <div className="flex items-center gap-3">
+                  {/* Role badge */}
+                  {tenantUser.role === 'TENANT_ADMIN' ? (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-medium border border-emerald-100">
+                      <Shield className="w-3 h-3" />
+                      Admin
+                    </span>
+                  ) : tenantUser.role === 'CUSTOM' && tenantUser.customRole ? (
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-orange-50 text-orange-700 text-xs font-medium border border-orange-100">
+                      {tenantUser.customRole.name}
+                    </span>
+                  ) : (
+                    <form action={assignRole} className="flex items-center">
+                      <input type="hidden" name="tenantUserId" value={tenantUser.id} />
+                      <select
+                        name="customRoleId"
+                        defaultValue=""
+                        onChange={() => {
+                          /* auto-submit handled client side */
+                        }}
+                        className="text-xs rounded-lg bg-gray-50 border border-gray-200 px-2 py-1 font-medium"
+                      >
+                        <option value="">User</option>
+                        {customRoles.map((role) => (
+                          <option key={role.id} value={role.id}>
+                            {role.name}
+                          </option>
+                        ))}
+                      </select>
+                      <Button
+                        type="submit"
+                        variant="ghost"
+                        className="ml-1 h-7 px-2 text-xs"
+                      >
+                        Set
+                      </Button>
+                    </form>
+                  )}
 
-                  <form action={removeUser}>
-                    <input
-                      type="hidden"
-                      name="tenantUserId"
-                      value={tenantUser.id}
-                    />
-                    <button
-                      type="submit"
-                      className="p-2 rounded-md hover:bg-red-50 text-muted-foreground hover:text-red-600 transition-colors"
-                      onClick={(e) => {
-                        if (
-                          !confirm(
-                            `Remove ${
-                              tenantUser.user.name || tenantUser.user.email
-                            }?`
-                          )
-                        ) {
-                          e.preventDefault();
-                        }
-                      }}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </form>
+                  <RemoveUserButton
+                    tenantUserId={tenantUser.id}
+                    userName={tenantUser.user.name || tenantUser.user.email}
+                    removeUser={removeUser}
+                  />
                 </div>
               </div>
             ))}
@@ -174,7 +198,7 @@ export default async function TeamPage() {
                   No team members yet
                 </div>
                 <div className="text-xs text-muted-foreground/70 mt-1">
-                  Invite your first team member above
+                  Add your first team member above
                 </div>
               </div>
             )}

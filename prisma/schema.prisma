@@ -320,6 +320,10 @@ model Tenant {
   leads             Lead[]
   leadActivities    LeadActivity[]
   dashboardWidgets  DashboardWidget[]
+
+  // RBAC
+  customRoles    CustomRole[]
+  leadFieldConfig LeadFieldConfig?
 }
 
 model Plan {
@@ -413,15 +417,17 @@ model RolePermission {
 }
 
 model TenantUser {
-  id        String     @id @default(cuid())
-  tenantId  String
-  userId    String
-  role      TenantRole @default(TENANT_USER)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id           String      @id @default(cuid())
+  tenantId     String
+  userId       String
+  role         TenantRole  @default(TENANT_USER)
+  customRoleId String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 
   tenant      Tenant           @relation(fields: [tenantId], references: [id])
   user        User             @relation(fields: [userId], references: [id])
+  customRole  CustomRole?      @relation(fields: [customRoleId], references: [id])
   permissions RolePermission[]
 
   @@unique([tenantId, userId])
@@ -683,4 +689,33 @@ model DashboardWidget {
 
   tenantId String
   tenant   Tenant @relation(fields: [tenantId], references: [id])
+}
+
+// ============================================
+// RBAC — CUSTOM ROLES
+// ============================================
+
+model CustomRole {
+  id          String   @id @default(cuid())
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  name        String
+  featureKeys String[] @default([])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  members     TenantUser[]
+
+  @@unique([tenantId, name])
+}
+
+// ============================================
+// CUSTOM LEAD FIELDS
+// ============================================
+
+model LeadFieldConfig {
+  id        String   @id @default(cuid())
+  tenantId  String   @unique
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  fields    Json     // Array of { key, label, type, required, options? }
+  updatedAt DateTime @updatedAt
 }

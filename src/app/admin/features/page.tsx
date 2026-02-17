@@ -1,6 +1,6 @@
-import { Shell } from '@/components/layout/Shell';
+
 import { prisma } from '@/lib/prisma';
-import { toggleFeature } from '@/actions/features';
+import { FeatureToggle } from './FeatureToggle';
 import { FEATURES } from '@/lib/features';
 import type { Tenant, TenantFeature } from '@prisma/client';
 
@@ -30,8 +30,7 @@ export default async function FeaturesPage() {
   const tenants = tenantsRaw as TenantWithFeatures[];
 
   return (
-    <Shell>
-      <div className="space-y-6">
+    <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-foreground">
             Feature Management
@@ -81,33 +80,11 @@ export default async function FeaturesPage() {
 
                         return (
                           <td key={featureKey} className="px-4 py-4 text-center">
-                            <form action={toggleFeature}>
-                              <input
-                                type="hidden"
-                                name="tenantId"
-                                value={tenant.id}
-                              />
-                              <input
-                                type="hidden"
-                                name="featureKey"
-                                value={featureKey}
-                              />
-                              <input
-                                type="hidden"
-                                name="enabled"
-                                value={String(isEnabled)}
-                              />
-                              <button
-                                type="submit"
-                                className={`inline-flex items-center justify-center rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
-                                  isEnabled
-                                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-100 hover:bg-emerald-100'
-                                    : 'bg-muted text-muted-foreground border border-border hover:bg-muted/80'
-                                }`}
-                              >
-                                {isEnabled ? 'Enabled' : 'Disabled'}
-                              </button>
-                            </form>
+                            <FeatureToggle
+                              tenantId={tenant.id}
+                              featureKey={featureKey}
+                              initialEnabled={isEnabled}
+                            />
                           </td>
                         );
                       })}
@@ -149,6 +126,5 @@ export default async function FeaturesPage() {
           </div>
         </div>
       </div>
-    </Shell>
   );
 }

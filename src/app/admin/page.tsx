@@ -1,161 +1,379 @@
-import { Shell } from "@/components/layout/Shell";
+
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { createTenant } from "@/actions/tenants";
-import type { Plan, Subscription, Tenant, TenantUser } from "@prisma/client";
+import { TenantActions } from "./TenantActions";
+import { FEATURES } from "@/lib/features";
+import Link from "next/link";
+import {
+  Users,
+  Building2,
+  DollarSign,
+  CreditCard,
+  Settings,
+  ToggleRight,
+  ArrowUpRight,
+  Plus,
+  Shield,
+} from "lucide-react";
+import type {
+  Plan,
+  Subscription,
+  Tenant,
+  TenantUser,
+  TenantFeature,
+} from "@prisma/client";
 
 type TenantWithRelations = Tenant & {
   subscriptions: (Subscription & { plan: Plan | null })[];
   memberships: TenantUser[];
+  features: TenantFeature[];
+};
+
+const FEATURE_LABELS: Record<string, string> = {
+  [FEATURES.WEBSITE_BUILDER]: "Builder",
+  [FEATURES.FINANCE]: "Finance",
+  [FEATURES.HR]: "HR",
+  [FEATURES.INVENTORY]: "Inventory",
+  [FEATURES.CRM]: "CRM",
+  [FEATURES.ANALYTICS]: "Analytics",
+  [FEATURES.PROJECTS]: "Projects",
+  [FEATURES.AUTOMATION]: "Auto",
 };
 
 export default async function AdminPage() {
-  const [tenantsRaw, plans] = await Promise.all([
+  const [tenantsRaw, plans, totalUsers] = await Promise.all([
     prisma.tenant.findMany({
       include: {
         subscriptions: {
-          include: {
-            plan: true,
-          },
+          include: { plan: true },
         },
         memberships: true,
+        features: true,
       },
       orderBy: { createdAt: "desc" },
     }),
     prisma.plan.findMany({ orderBy: { priceMonthly: "asc" } }),
+    prisma.tenantUser.count(),
   ]);
 
   const tenants = tenantsRaw as TenantWithRelations[];
 
+  // Platform stats
+  const totalTenants = tenants.length;
+  const activeTenants = tenants.filter((t) => t.status === "ACTIVE").length;
+  const mrr = tenants.reduce((sum, t) => {
+    const activeSub = t.subscriptions.find((s) => s.status === "ACTIVE");
+    return sum + (activeSub?.plan?.priceMonthly ?? 0);
+  }, 0);
+  const activeSubscriptions = tenants.filter((t) =>
+    t.subscriptions.some((s) => s.status === "ACTIVE")
+  ).length;
+
+  const stats = [
+    {
+      label: "Total Tenants",
+      value: totalTenants,
+      sub: `${activeTenants} active`,
+      icon: Building2,
+      color: "text-blue-600",
+      bg: "bg-blue-50",
+    },
+    {
+      label: "Total Users",
+      value: totalUsers,
+      sub: "across all tenants",
+      icon: Users,
+      color: "text-emerald-600",
+      bg: "bg-emerald-50",
+    },
+    {
+      label: "Monthly Revenue",
+      value: `$${(mrr / 100).toLocaleString()}`,
+      sub: `${activeSubscriptions} subscriptions`,
+      icon: DollarSign,
+      color: "text-orange-600",
+      bg: "bg-orange-50",
+    },
+    {
+      label: "Active Plans",
+      value: plans.length,
+      sub: "subscription tiers",
+      icon: CreditCard,
+      color: "text-purple-600",
+      bg: "bg-purple-50",
+    },
+  ];
+
   return (
-    <Shell>
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">
-            Platform Admin
-          </h1>
-          <p className="text-muted-foreground">
-            Manage tenants, plans, and platform-wide settings.
-          </p>
+    <div className="flex flex-col gap-8 max-w-[1400px] mx-auto w-full">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-4xl font-display font-bold text-foreground flex items-center gap-3">
+              <Shield className="w-9 h-9" />
+              Platform Admin
+            </h1>
+            <p className="text-muted-foreground mt-2 font-medium">
+              Manage tenants, monitor billing, and control features across the
+              platform.
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link href="/admin/features">
+              <Button
+                variant="ghost"
+                className="rounded-full h-11 px-5 font-medium bg-white shadow-soft hover:shadow-soft-lg"
+              >
+                <ToggleRight className="h-4 w-4 mr-2" /> Features
+              </Button>
+            </Link>
+            <Link href="/admin/plans">
+              <Button
+                variant="ghost"
+                className="rounded-full h-11 px-5 font-medium bg-white shadow-soft hover:shadow-soft-lg"
+              >
+                <Settings className="h-4 w-4 mr-2" /> Plans
+              </Button>
+            </Link>
+          </div>
         </div>
 
-        <div className="rounded-md border border-border bg-white p-6 shadow-sm space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">
-            Create Tenant
+        {/* Stats */}
+        <div className="grid gap-6 md:grid-cols-4">
+          {stats.map((stat) => (
+            <div
+              key={stat.label}
+              className="bg-white rounded-3xl p-6 shadow-soft flex flex-col justify-between group hover:shadow-soft-lg transition-all relative overflow-hidden"
+            >
+              <div className="flex items-center justify-between mb-4 relative z-10">
+                <div
+                  className={`h-12 w-12 rounded-2xl ${stat.bg} ${stat.color} flex items-center justify-center`}
+                >
+                  <stat.icon className="w-6 h-6" />
+                </div>
+                <span
+                  className={`flex items-center text-xs font-bold ${stat.color} ${stat.bg} px-2 py-1 rounded-full`}
+                >
+                  <ArrowUpRight className="h-3 w-3 mr-1" />
+                  View
+                </span>
+              </div>
+              <div className="relative z-10">
+                <p className="text-sm font-medium text-muted-foreground">
+                  {stat.label}
+                </p>
+                <h3 className="text-3xl font-bold font-display text-foreground mt-1">
+                  {stat.value}
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1">{stat.sub}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Create Tenant */}
+        <div className="bg-white rounded-3xl p-6 shadow-soft border border-gray-100">
+          <h2 className="text-lg font-bold font-display text-foreground mb-4 flex items-center gap-2">
+            <Plus className="w-5 h-5" /> Create Tenant
           </h2>
-          <form className="grid gap-4 md:grid-cols-4" action={createTenant}>
-            <div className="md:col-span-1">
-              <label className="block text-xs font-medium text-muted-foreground mb-1">
-                Name
+          <form className="grid gap-4 md:grid-cols-3" action={createTenant}>
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
+                Company Name
               </label>
               <input
                 name="name"
                 required
-                className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
                 placeholder="Acme Corp"
               />
             </div>
-            <div className="md:col-span-1">
-              <label className="block text-xs font-medium text-muted-foreground mb-1">
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
                 Slug
               </label>
               <input
                 name="slug"
                 required
-                className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
                 placeholder="acme"
               />
             </div>
-            <div className="md:col-span-1">
-              <label className="block text-xs font-medium text-muted-foreground mb-1">
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
                 Plan
               </label>
               <select
                 name="planId"
                 required
-                className="w-full rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
                 defaultValue={plans[0]?.id ?? ""}
               >
                 {plans.map((plan) => (
-                  <option
-                    key={plan.id}
-                    value={plan.id}
-                    className="bg-white text-foreground"
-                  >
+                  <option key={plan.id} value={plan.id}>
                     {plan.name} (${plan.priceMonthly / 100}/mo)
                   </option>
                 ))}
               </select>
             </div>
-            <div className="md:col-span-1 flex items-end">
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
+                Admin Email
+              </label>
+              <input
+                name="adminEmail"
+                type="email"
+                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
+                placeholder="admin@acme.com"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
+                Admin Name
+              </label>
+              <input
+                name="adminName"
+                type="text"
+                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
+                placeholder="John Doe"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
+                Admin Password
+              </label>
+              <input
+                name="adminPassword"
+                type="password"
+                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
+                placeholder="••••••••"
+              />
+            </div>
+            <div className="md:col-span-3 flex justify-end">
               <Button
                 type="submit"
-                className="w-full bg-primary text-white hover:bg-primary/90"
+                className="rounded-full bg-black text-white hover:bg-gray-800 h-11 px-8 shadow-lg font-medium"
               >
-                Create Tenant
+                <Plus className="h-4 w-4 mr-2" /> Create Tenant
               </Button>
             </div>
           </form>
         </div>
 
-        <div className="rounded-md border border-border bg-white shadow-sm overflow-hidden">
-          <table className="w-full text-sm">
-            <thead className="bg-muted text-left text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              <tr>
-                <th className="px-6 py-3">Tenant</th>
-                <th className="px-6 py-3">Slug</th>
-                <th className="px-6 py-3">Status</th>
-                <th className="px-6 py-3">Plan</th>
-                <th className="px-6 py-3">Users</th>
-                <th className="px-6 py-3">Created</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border bg-white text-foreground">
-              {tenants.map((tenant: TenantWithRelations) => {
-                const activeSubscription = tenant.subscriptions.find(
-                  (sub: TenantWithRelations["subscriptions"][number]) =>
-                    sub.status === "ACTIVE"
-                );
-                const planName = activeSubscription?.plan?.name ?? "—";
-                const usersCount = tenant.memberships.length;
+        {/* Tenants Table */}
+        <div className="bg-white rounded-3xl shadow-soft border border-gray-100 overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <h2 className="text-lg font-bold font-display">
+              All Tenants ({totalTenants})
+            </h2>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50 text-left text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                <tr>
+                  <th className="px-6 py-3">Tenant</th>
+                  <th className="px-6 py-3">Status</th>
+                  <th className="px-6 py-3">Plan</th>
+                  <th className="px-6 py-3">$/mo</th>
+                  <th className="px-6 py-3">Users</th>
+                  <th className="px-6 py-3">Features</th>
+                  <th className="px-6 py-3">Created</th>
+                  <th className="px-6 py-3 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100 text-foreground">
+                {tenants.map((tenant) => {
+                  const activeSub = tenant.subscriptions.find(
+                    (s) => s.status === "ACTIVE"
+                  );
+                  const planName = activeSub?.plan?.name ?? "—";
+                  const planPrice = activeSub?.plan?.priceMonthly ?? 0;
+                  const usersCount = tenant.memberships.length;
+                  const enabledFeatures = tenant.features.filter(
+                    (f) => f.enabled
+                  );
 
-                return (
-                  <tr
-                    key={tenant.id}
-                    className="hover:bg-muted/50 transition-colors"
-                  >
-                    <td className="px-6 py-4 text-foreground font-medium">
-                      {tenant.name}
-                    </td>
-                    <td className="px-6 py-4 text-muted-foreground font-mono text-xs">
-                      {tenant.slug}
-                    </td>
-                    <td className="px-6 py-4 text-foreground">
-                      {tenant.status}
-                    </td>
-                    <td className="px-6 py-4 text-foreground">{planName}</td>
-                    <td className="px-6 py-4 text-foreground">{usersCount}</td>
-                    <td className="px-6 py-4 text-muted-foreground text-xs">
-                      {tenant.createdAt.toLocaleDateString()}
+                  return (
+                    <tr
+                      key={tenant.id}
+                      className="hover:bg-gray-50/80 transition-colors"
+                    >
+                      <td className="px-6 py-4">
+                        <div>
+                          <div className="font-semibold text-foreground">
+                            {tenant.name}
+                          </div>
+                          <div className="text-xs text-muted-foreground font-mono">
+                            {tenant.slug}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span
+                          className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold ${
+                            tenant.status === "ACTIVE"
+                              ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
+                              : tenant.status === "SUSPENDED"
+                                ? "bg-red-50 text-red-700 border border-red-100"
+                                : "bg-gray-100 text-gray-600 border border-gray-200"
+                          }`}
+                        >
+                          {tenant.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 font-medium">{planName}</td>
+                      <td className="px-6 py-4 font-bold text-emerald-600">
+                        ${(planPrice / 100).toFixed(0)}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="inline-flex items-center gap-1.5 text-sm font-semibold">
+                          <Users className="w-3.5 h-3.5 text-muted-foreground" />
+                          {usersCount}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex flex-wrap gap-1 max-w-[250px]">
+                          {enabledFeatures.map((f) => (
+                            <span
+                              key={f.key}
+                              className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-100"
+                            >
+                              {FEATURE_LABELS[f.key] || f.key}
+                            </span>
+                          ))}
+                          {enabledFeatures.length === 0 && (
+                            <span className="text-xs text-muted-foreground">
+                              None
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-muted-foreground text-xs">
+                        {tenant.createdAt.toLocaleDateString()}
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <TenantActions tenant={tenant} />
+                      </td>
+                    </tr>
+                  );
+                })}
+
+                {tenants.length === 0 && (
+                  <tr>
+                    <td
+                      colSpan={7}
+                      className="px-6 py-16 text-center text-muted-foreground text-sm"
+                    >
+                      <Building2 className="w-12 h-12 mx-auto mb-3 text-muted-foreground/30" />
+                      No tenants found. Create your first tenant above.
                     </td>
                   </tr>
-                );
-              })}
-
-              {tenants.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={6}
-                    className="px-6 py-10 text-center text-muted-foreground text-sm"
-                  >
-                    No tenants found. Create your first tenant from this panel.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-    </Shell>
+    </div>
   );
 }

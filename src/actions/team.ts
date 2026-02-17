@@ -13,8 +13,20 @@ export async function inviteUser(formData: FormData) {
   const { tenant } = await requireTenantMembership();
 
   const email = (formData.get('email') as string).toLowerCase().trim();
-  const name = (formData.get('name') as string).trim();
-  const role = (formData.get('role') as 'TENANT_ADMIN' | 'TENANT_USER') || 'TENANT_USER';
+  const name = (formData.get('name') as string)?.trim() || '';
+  const password = (formData.get('password') as string)?.trim() || '';
+  const roleRaw = (formData.get('role') as string) || 'TENANT_USER';
+
+  // Parse role — could be "TENANT_ADMIN", "TENANT_USER", or "CUSTOM:roleId"
+  let role: 'TENANT_ADMIN' | 'TENANT_USER' | 'CUSTOM' = 'TENANT_USER';
+  let customRoleId: string | null = null;
+
+  if (roleRaw === 'TENANT_ADMIN') {
+    role = 'TENANT_ADMIN';
+  } else if (roleRaw.startsWith('CUSTOM:')) {
+    role = 'CUSTOM';
+    customRoleId = roleRaw.replace('CUSTOM:', '');
+  }
 
   if (!email) {
     throw new Error('Email is required');
@@ -25,11 +37,10 @@ export async function inviteUser(formData: FormData) {
     where: { email },
   });
 
-  // If user doesn't exist create a placeholder account
-  // In production, this would send an invitation email instead
+  // If user doesn't exist create an account
   if (!user) {
-    const tempPassword = Math.random().toString(36).substring(7);
-    const hashedPassword = await bcrypt.hash(tempPassword, 10);
+    const userPassword = password || Math.random().toString(36).substring(7);
+    const hashedPassword = await bcrypt.hash(userPassword, 10);
 
     user = await prisma.user.create({
       data: {
@@ -40,7 +51,7 @@ export async function inviteUser(formData: FormData) {
       },
     });
 
-    // Send invitation email with tempPassword
+    // Send invitation email
     try {
       if (process.env.RESEND_API_KEY) {
         await resend.emails.send({
@@ -52,11 +63,11 @@ export async function inviteUser(formData: FormData) {
               <h2>You've been invited!</h2>
               <p>Hello ${name || 'there'},</p>
               <p>You have been invited to join the workspace <strong>${tenant.name}</strong> on Nexus SaaS.</p>
-              <p>Your temporary password is:</p>
+              ${!password ? `<p>Your temporary password is:</p>
               <div style="background: #f4f4f5; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 16px; font-weight: bold; display: inline-block;">
-                ${tempPassword}
+                ${userPassword}
               </div>
-              <p>Please log in and change your password immediately.</p>
+              <p>Please log in and change your password immediately.</p>` : '<p>You can log in with the password provided by your administrator.</p>'}
               <a href="${process.env.NEXTAUTH_URL}/auth/signin" style="background: #6366f1; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; display: inline-block; margin-top: 10px;">
                 Log In to Nexus
               </a>
@@ -68,8 +79,8 @@ export async function inviteUser(formData: FormData) {
       console.error('Failed to send invitation email:', error);
     }
 
-    if (process.env.NODE_ENV === 'development') {
-        console.log(`Temporary password for ${email}: ${tempPassword}`);
+    if (process.env.NODE_ENV === 'development' && !password) {
+        console.log(`Temporary password for ${email}: ${userPassword}`);
     }
   }
 
@@ -87,12 +98,13 @@ export async function inviteUser(formData: FormData) {
     throw new Error('User is already a member of this tenant');
   }
 
-  // Add user to tenant
+  // Add user to tenant with role
   await prisma.tenantUser.create({
     data: {
       tenantId: tenant.id,
       userId: user.id,
       role,
+      customRoleId,
     },
   });
 

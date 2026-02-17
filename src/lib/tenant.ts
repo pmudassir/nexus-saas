@@ -68,8 +68,24 @@ export async function resolveTenantFromHost(
   return null;
 }
 
-export async function getCurrentTenant(kind: "app" | "site" = "app") {
+export async function getCurrentTenant(kind: "app" | "site" = "app", userId?: string) {
   const headersList = await headers();
   const host = headersList.get("host");
-  return resolveTenantFromHost(host, { kind });
+  const tenant = await resolveTenantFromHost(host, { kind });
+
+  // On localhost, if no tenant resolved and we have a userId,
+  // fall back to the first tenant the user belongs to.
+  if (!tenant && userId && process.env.NODE_ENV !== "production") {
+    const hostname = host?.split(":")[0]?.toLowerCase();
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      const membership = await prisma.tenantUser.findFirst({
+        where: { userId },
+        include: { tenant: true },
+        orderBy: { createdAt: "desc" },
+      });
+      return membership?.tenant ?? null;
+    }
+  }
+
+  return tenant;
 }
