@@ -31,6 +31,10 @@ Stabilize and harden the multi-tenant authorization model so tenant admins can a
   - cached user context in `src/lib/rbac.ts`
   - cached tenant-user permission lookup in `src/lib/features.ts`
   - replaced repeated `hasPermission()` checks with one `getUserPermissions()` read in `src/app/settings/page.tsx`
+- Fixed empty `/settings` page for tenant admins when permissions are not seeded:
+  - root cause: card visibility depended only on permission keys
+  - fix: fallback to tenant membership role check; `TENANT_ADMIN` now always sees settings cards
+  - file: `src/app/settings/page.tsx`
 - Updated ESLint ignores to exclude `.next_bak*` generated artifacts from lint runs.
 
 ## Current validation state
@@ -67,7 +71,8 @@ Required migrations:
 
 ## Resume checklist (next chat)
 1. Re-verify browser back/forward gestures on `/settings/*` routes in your target browser(s) after deploying this patch.
-2. Continue permission-gate rollout across remaining write-heavy actions (finance/invoices/projects/inventory/hr/automation/builder).
-3. Replace placeholder `npm run test` with real Vitest execution and add regression tests for tenant boundaries + role enforcement.
-4. Add explicit schema validation and user-facing action errors for critical server actions.
-5. Tighten production security headers/CSP and add rate limiting for sensitive mutations.
+2. Seed and validate the `Permission` table in each environment so non-admin role gating remains predictable.
+3. Continue permission-gate rollout across remaining write-heavy actions (finance/invoices/projects/inventory/hr/automation/builder).
+4. Replace placeholder `npm run test` with real Vitest execution and add regression tests for tenant boundaries + role enforcement.
+5. Add explicit schema validation and user-facing action errors for critical server actions.
+6. Tighten production security headers/CSP and add rate limiting for sensitive mutations.

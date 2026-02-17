@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 26, "column": 0}, "map": {"version":3,"sources":["file:///Users/md/Desktop/Desk/nexus-saas/src/app/settings/page.tsx"],"sourcesContent":["import { redirect } from \"next/navigation\";\n\nexport default function SettingsIndexPage() {\n  redirect(\"/settings/team\");\n}\n"],"names":[],"mappings":";;;;AAAA;AAAA;;AAEe,SAAS;IACtB,IAAA,iMAAQ,EAAC;AACX"}}]
-}
