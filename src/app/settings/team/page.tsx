@@ -159,10 +159,7 @@ export default async function TeamPage() {
                       <input type="hidden" name="tenantUserId" value={tenantUser.id} />
                       <select
                         name="customRoleId"
-                        defaultValue=""
-                        onChange={() => {
-                          /* auto-submit handled client side */
-                        }}
+                        defaultValue={tenantUser.customRoleId || ''}
                         className="text-xs rounded-lg bg-gray-50 border border-gray-200 px-2 py-1 font-medium"
                       >
                         <option value="">User</option>

@@ -1,4 +1,6 @@
 
+/* eslint-disable @next/next/no-img-element */
+
 import { Shell } from "@/components/layout/Shell";
 import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";

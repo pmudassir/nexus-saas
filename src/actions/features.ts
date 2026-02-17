@@ -2,11 +2,15 @@
 
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/prisma';
+import { initializeTenantFeatures } from '@/lib/features';
+import { requireSuperAdmin } from '@/lib/admin-auth';
 
 /**
  * Toggle a feature for a tenant
  */
 export async function toggleFeature(formData: FormData) {
+  await requireSuperAdmin();
+
   const tenantId = formData.get('tenantId') as string;
   const featureKey = formData.get('featureKey') as string;
   const enabled = formData.get('enabled') === 'true';
@@ -40,6 +44,8 @@ export async function updateFeatureConfig(
   featureKey: string,
   config: Record<string, unknown>,
 ) {
+  await requireSuperAdmin();
+
   await prisma.tenantFeature.upsert({
     where: {
       tenantId_key: {
@@ -65,6 +71,8 @@ export async function updateFeatureConfig(
  * Get all tenants with their features
  */
 export async function getTenantsFeatures() {
+  await requireSuperAdmin();
+
   const tenants = await prisma.tenant.findMany({
     include: {
       features: {
@@ -85,31 +93,6 @@ export async function getTenantsFeatures() {
  * Initialize features for a tenant
  */
 export async function initializeFeatures(tenantId: string) {
-  const defaultFeatures = [
-    'website_builder',
-    'finance',
-    'hr',
-    'inventory',
-    'crm',
-    'analytics',
-    'projects',
-    'automation',
-  ];
-
-  for (const key of defaultFeatures) {
-    await prisma.tenantFeature.upsert({
-      where: {
-        tenantId_key: {
-          tenantId,
-          key,
-        },
-      },
-      update: {},
-      create: {
-        tenantId,
-        key,
-        enabled: true,
-      },
-    });
-  }
+  await requireSuperAdmin();
+  await initializeTenantFeatures(tenantId);
 }

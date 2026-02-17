@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { requireTenantMembership } from "@/lib/tenant-auth";
+import { requireSuperAdmin } from "@/lib/admin-auth";
 
 export interface UsageStats {
   storage: { used: number; limit: number; unit: string };
@@ -51,6 +52,8 @@ export async function getTenantUsage(): Promise<UsageStats> {
 
 // Get all tenants usage (admin)
 export async function getAllTenantsUsage() {
+  await requireSuperAdmin();
+
   const tenants = await prisma.tenant.findMany({
     include: {
       _count: {

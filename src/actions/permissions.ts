@@ -2,13 +2,14 @@
 
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/prisma';
-import { requireTenantMembership } from '@/lib/tenant-auth';
+import { requireTenantPermission } from '@/lib/tenant-auth';
+import { PERMISSION_KEYS } from '@/lib/permission-keys';
 
 /**
  * Update permissions for a tenant user
  */
 export async function updateUserPermissions(formData: FormData) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(PERMISSION_KEYS.SETTINGS_USERS_MANAGE);
 
   const tenantUserId = formData.get('tenantUserId') as string;
   const permissionKeys = formData.getAll('permissions') as string[];
@@ -55,6 +56,8 @@ export async function updateUserPermissions(formData: FormData) {
  * Get all available permissions grouped by module
  */
 export async function getAvailablePermissions() {
+  await requireTenantPermission(PERMISSION_KEYS.SETTINGS_USERS_MANAGE);
+
   const permissions = await prisma.permission.findMany({
     orderBy: [{ module: 'asc' }, { action: 'asc' }],
   });
@@ -78,6 +81,8 @@ export async function getAvailablePermissions() {
  * Get user permissions for a tenant user
  */
 export async function getUserPermissions(tenantUserId: string) {
+  await requireTenantPermission(PERMISSION_KEYS.SETTINGS_USERS_MANAGE);
+
   const rolePermissions = await prisma.rolePermission.findMany({
     where: {
       tenantUserId,
@@ -95,7 +100,7 @@ export async function getUserPermissions(tenantUserId: string) {
  * Update tenant user role
  */
 export async function updateUserRole(formData: FormData) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(PERMISSION_KEYS.SETTINGS_USERS_MANAGE);
 
   const tenantUserId = formData.get('tenantUserId') as string;
   const role = formData.get('role') as 'TENANT_ADMIN' | 'TENANT_USER' | 'CUSTOM';

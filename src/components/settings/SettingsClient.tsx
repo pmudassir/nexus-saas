@@ -69,8 +69,6 @@ export function SettingsClient({ user, isTenantAdmin = false }: { user: User; is
     });
   };
 
-  const allTabs = isTenantAdmin ? [...personalTabs, ...adminTabs] : personalTabs;
-
   return (
     <div className="flex flex-col gap-8 max-w-[1400px] mx-auto w-full">
       <div className="mb-2">

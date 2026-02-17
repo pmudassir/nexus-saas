@@ -1,0 +1,80 @@
+{
+  "node": {
+    "00d407b4cb47e601dfebbf78dd230a8e4c5a7b9fcc": {
+      "workers": {
+        "app/inventory/products/page": {
+          "moduleId": 70981,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/products/page": "action-browser"
+      },
+      "exportedName": "logout",
+      "filename": "src/actions/auth.ts"
+    },
+    "400b35583cd90a9227ad93db3a59a1952152f36819": {
+      "workers": {
+        "app/inventory/products/page": {
+          "moduleId": 70981,
+          "async": true,
+          "exportedName": "createProduct",
+          "filename": "src/actions/products.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/products/page": "rsc"
+      },
+      "exportedName": "createProduct",
+      "filename": "src/actions/products.ts"
+    },
+    "400c0ea8f66244d9116efc63622c180e9321b2ea97": {
+      "workers": {
+        "app/inventory/products/page": {
+          "moduleId": 70981,
+          "async": true,
+          "exportedName": "deleteProduct",
+          "filename": "src/actions/products.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/products/page": "rsc"
+      },
+      "exportedName": "deleteProduct",
+      "filename": "src/actions/products.ts"
+    },
+    "40e80cc0de17c1ab90eb9560decf569223a689bb6f": {
+      "workers": {
+        "app/inventory/products/page": {
+          "moduleId": 70981,
+          "async": true,
+          "exportedName": "updateProduct",
+          "filename": "src/actions/products.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/products/page": "rsc"
+      },
+      "exportedName": "updateProduct",
+      "filename": "src/actions/products.ts"
+    },
+    "40ec324f52709b4cf95d5ab663f5c632bbfce1f9dd": {
+      "workers": {
+        "app/inventory/products/page": {
+          "moduleId": 70981,
+          "async": true,
+          "exportedName": "adjustStock",
+          "filename": "src/actions/products.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/products/page": "rsc"
+      },
+      "exportedName": "adjustStock",
+      "filename": "src/actions/products.ts"
+    }
+  },
+  "edge": {}
+}

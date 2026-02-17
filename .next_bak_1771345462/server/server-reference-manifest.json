@@ -1,0 +1,2261 @@
+{
+  "node": {
+    "00d407b4cb47e601dfebbf78dd230a8e4c5a7b9fcc": {
+      "workers": {
+        "app/_not-found/page": {
+          "moduleId": 9452,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/admin/billing/page": {
+          "moduleId": 84286,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/admin/features/page": {
+          "moduleId": 94438,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/admin/page": {
+          "moduleId": 57766,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/admin/plans/page": {
+          "moduleId": 56469,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/admin/tenants/[tenantId]/users/page": {
+          "moduleId": 71931,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/analytics/page": {
+          "moduleId": 99649,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/automation/page": {
+          "moduleId": 75041,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/builder/media/page": {
+          "moduleId": 852,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/builder/page": {
+          "moduleId": 39842,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/builder/seo/[pageId]/page": {
+          "moduleId": 54170,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/builder/templates/page": {
+          "moduleId": 24824,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/crm/leads/page": {
+          "moduleId": 90032,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/crm/page": {
+          "moduleId": 71019,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/crm/today/page": {
+          "moduleId": 14609,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/finance/expenses/page": {
+          "moduleId": 75778,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/finance/invoices/new/page": {
+          "moduleId": 84150,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/finance/invoices/page": {
+          "moduleId": 53899,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/finance/page": {
+          "moduleId": 956,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/finance/reports/page": {
+          "moduleId": 57874,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/hr/attendance/page": {
+          "moduleId": 72018,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/hr/employees/page": {
+          "moduleId": 52303,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/hr/leave/page": {
+          "moduleId": 72486,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/hr/page": {
+          "moduleId": 7436,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/inventory/page": {
+          "moduleId": 12093,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/inventory/products/page": {
+          "moduleId": 70981,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/inventory/purchase-orders/page": {
+          "moduleId": 963,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/inventory/stock-movements/page": {
+          "moduleId": 8748,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/inventory/suppliers/page": {
+          "moduleId": 77398,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/login/page": {
+          "moduleId": 3070,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/offline/page": {
+          "moduleId": 50664,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/onboarding/page": {
+          "moduleId": 38690,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/page": {
+          "moduleId": 33944,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/projects/[projectId]/edit/page": {
+          "moduleId": 24611,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/projects/[projectId]/page": {
+          "moduleId": 10516,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/projects/new/page": {
+          "moduleId": 70019,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/projects/page": {
+          "moduleId": 24037,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/settings/audit/page": {
+          "moduleId": 66529,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/settings/billing/page": {
+          "moduleId": 38251,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/settings/branding/page": {
+          "moduleId": 82704,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/settings/lead-fields/page": {
+          "moduleId": 45503,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/settings/page": {
+          "moduleId": 55233,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/settings/permissions/page": {
+          "moduleId": 46065,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/settings/roles/page": {
+          "moduleId": 1495,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/settings/team/page": {
+          "moduleId": 29631,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/site/[[...slug]]/page": {
+          "moduleId": 74402,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/tasks/[taskId]/edit/page": {
+          "moduleId": 23653,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/tasks/page": {
+          "moduleId": 55296,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        },
+        "app/workspace/page": {
+          "moduleId": 57835,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/_not-found/page": "action-browser",
+        "app/admin/billing/page": "action-browser",
+        "app/admin/features/page": "action-browser",
+        "app/admin/page": "action-browser",
+        "app/admin/plans/page": "action-browser",
+        "app/admin/tenants/[tenantId]/users/page": "action-browser",
+        "app/analytics/page": "action-browser",
+        "app/automation/page": "action-browser",
+        "app/builder/media/page": "action-browser",
+        "app/builder/page": "action-browser",
+        "app/builder/seo/[pageId]/page": "action-browser",
+        "app/builder/templates/page": "action-browser",
+        "app/crm/leads/[id]/page": "action-browser",
+        "app/crm/leads/page": "action-browser",
+        "app/crm/page": "action-browser",
+        "app/crm/today/page": "action-browser",
+        "app/finance/expenses/page": "action-browser",
+        "app/finance/invoices/new/page": "action-browser",
+        "app/finance/invoices/page": "action-browser",
+        "app/finance/page": "action-browser",
+        "app/finance/reports/page": "action-browser",
+        "app/hr/attendance/page": "action-browser",
+        "app/hr/employees/page": "action-browser",
+        "app/hr/leave/page": "action-browser",
+        "app/hr/page": "action-browser",
+        "app/hr/payroll/page": "action-browser",
+        "app/inventory/page": "action-browser",
+        "app/inventory/products/page": "action-browser",
+        "app/inventory/purchase-orders/page": "action-browser",
+        "app/inventory/stock-movements/page": "action-browser",
+        "app/inventory/suppliers/page": "action-browser",
+        "app/login/page": "action-browser",
+        "app/offline/page": "action-browser",
+        "app/onboarding/page": "action-browser",
+        "app/page": "action-browser",
+        "app/projects/[projectId]/edit/page": "action-browser",
+        "app/projects/[projectId]/page": "action-browser",
+        "app/projects/new/page": "action-browser",
+        "app/projects/page": "action-browser",
+        "app/settings/audit/page": "action-browser",
+        "app/settings/billing/page": "action-browser",
+        "app/settings/branding/page": "action-browser",
+        "app/settings/lead-fields/page": "action-browser",
+        "app/settings/page": "action-browser",
+        "app/settings/permissions/page": "action-browser",
+        "app/settings/roles/page": "action-browser",
+        "app/settings/team/page": "action-browser",
+        "app/site/[[...slug]]/page": "action-browser",
+        "app/tasks/[taskId]/edit/page": "action-browser",
+        "app/tasks/page": "action-browser",
+        "app/workspace/page": "action-browser"
+      },
+      "filename": "src/actions/auth.ts",
+      "exportedName": "logout"
+    },
+    "0068aad7282fe1deb7566e5754fd59742a9060d452": {
+      "workers": {
+        "app/page": {
+          "moduleId": 33944,
+          "async": true,
+          "exportedName": "getDashboardStats",
+          "filename": "src/actions/dashboard.ts"
+        }
+      },
+      "layer": {
+        "app/page": "rsc"
+      },
+      "filename": "src/actions/dashboard.ts",
+      "exportedName": "getDashboardStats"
+    },
+    "40c3eeff14a49790da89a8ccafc885270a63f85c85": {
+      "workers": {
+        "app/admin/page": {
+          "moduleId": 57766,
+          "async": true,
+          "exportedName": "updateTenant",
+          "filename": "src/actions/tenants.ts"
+        }
+      },
+      "layer": {
+        "app/admin/page": "action-browser"
+      },
+      "filename": "src/actions/tenants.ts",
+      "exportedName": "updateTenant"
+    },
+    "405967129581d771b5409e79e4edaa2b9729fb4e42": {
+      "workers": {
+        "app/admin/page": {
+          "moduleId": 57766,
+          "async": true,
+          "exportedName": "deleteTenant",
+          "filename": "src/actions/tenants.ts"
+        }
+      },
+      "layer": {
+        "app/admin/page": "action-browser"
+      },
+      "filename": "src/actions/tenants.ts",
+      "exportedName": "deleteTenant"
+    },
+    "40e9268802e4d14bbef238c596e20798165e94460d": {
+      "workers": {
+        "app/admin/page": {
+          "moduleId": 57766,
+          "async": true,
+          "exportedName": "createTenant",
+          "filename": "src/actions/tenants.ts"
+        }
+      },
+      "layer": {
+        "app/admin/page": "action-browser"
+      },
+      "filename": "src/actions/tenants.ts",
+      "exportedName": "createTenant"
+    },
+    "407ed394167d9929d8f0c3a2741177a8b7e3db5a1f": {
+      "workers": {
+        "app/admin/features/page": {
+          "moduleId": 94438,
+          "async": true,
+          "exportedName": "toggleFeature",
+          "filename": "src/actions/features.ts"
+        }
+      },
+      "layer": {
+        "app/admin/features/page": "action-browser"
+      },
+      "filename": "src/actions/features.ts",
+      "exportedName": "toggleFeature"
+    },
+    "00609abcb8975782c8d172400969c7974daadfdb90": {
+      "workers": {
+        "app/admin/plans/page": {
+          "moduleId": 56469,
+          "async": true,
+          "exportedName": "getPlans",
+          "filename": "src/actions/plans.ts"
+        }
+      },
+      "layer": {
+        "app/admin/plans/page": "rsc"
+      },
+      "filename": "src/actions/plans.ts",
+      "exportedName": "getPlans"
+    },
+    "4029358d8a8fc2deb91e3be536f5cc6e10e2a7f8f3": {
+      "workers": {
+        "app/admin/plans/page": {
+          "moduleId": 56469,
+          "async": true,
+          "exportedName": "createPlan",
+          "filename": "src/actions/plans.ts"
+        }
+      },
+      "layer": {
+        "app/admin/plans/page": "rsc"
+      },
+      "filename": "src/actions/plans.ts",
+      "exportedName": "createPlan"
+    },
+    "40c1cef302ad273ed2f857b48c0217f0bb1829e01e": {
+      "workers": {
+        "app/admin/plans/page": {
+          "moduleId": 56469,
+          "async": true,
+          "exportedName": "updatePlan",
+          "filename": "src/actions/plans.ts"
+        }
+      },
+      "layer": {
+        "app/admin/plans/page": "rsc"
+      },
+      "filename": "src/actions/plans.ts",
+      "exportedName": "updatePlan"
+    },
+    "40da20b28f88ffe87cdb3a79e72d2e80e5db4ed13c": {
+      "workers": {
+        "app/admin/plans/page": {
+          "moduleId": 56469,
+          "async": true,
+          "exportedName": "deletePlan",
+          "filename": "src/actions/plans.ts"
+        }
+      },
+      "layer": {
+        "app/admin/plans/page": "rsc"
+      },
+      "filename": "src/actions/plans.ts",
+      "exportedName": "deletePlan"
+    },
+    "0083672b76c738b036da27a982514f05fe667ab111": {
+      "workers": {
+        "app/admin/plans/page": {
+          "moduleId": 56469,
+          "async": true,
+          "exportedName": "getTenantUsage",
+          "filename": "src/actions/usage.ts"
+        }
+      },
+      "layer": {
+        "app/admin/plans/page": "rsc"
+      },
+      "filename": "src/actions/usage.ts",
+      "exportedName": "getTenantUsage"
+    },
+    "00c82988ccb1f9dd34c81b8c73eeed493dc515f8a8": {
+      "workers": {
+        "app/admin/plans/page": {
+          "moduleId": 56469,
+          "async": true,
+          "exportedName": "getAllTenantsUsage",
+          "filename": "src/actions/usage.ts"
+        }
+      },
+      "layer": {
+        "app/admin/plans/page": "rsc"
+      },
+      "filename": "src/actions/usage.ts",
+      "exportedName": "getAllTenantsUsage"
+    },
+    "00bf4661b6b5a34fe652a134ba282d9048e8964b1d": {
+      "workers": {
+        "app/automation/page": {
+          "moduleId": 75041,
+          "async": true,
+          "exportedName": "getAutomationTriggers",
+          "filename": "src/actions/automation.ts"
+        }
+      },
+      "layer": {
+        "app/automation/page": "rsc"
+      },
+      "filename": "src/actions/automation.ts",
+      "exportedName": "getAutomationTriggers"
+    },
+    "403b8d70018146bb93c38898e6b0910f65127d1fb4": {
+      "workers": {
+        "app/automation/page": {
+          "moduleId": 75041,
+          "async": true,
+          "exportedName": "deleteAutomation",
+          "filename": "src/actions/automation.ts"
+        }
+      },
+      "layer": {
+        "app/automation/page": "rsc"
+      },
+      "filename": "src/actions/automation.ts",
+      "exportedName": "deleteAutomation"
+    },
+    "40d1a6bad1f7eabf71fb542bb845895206b6f4739e": {
+      "workers": {
+        "app/automation/page": {
+          "moduleId": 75041,
+          "async": true,
+          "exportedName": "toggleAutomation",
+          "filename": "src/actions/automation.ts"
+        }
+      },
+      "layer": {
+        "app/automation/page": "rsc"
+      },
+      "filename": "src/actions/automation.ts",
+      "exportedName": "toggleAutomation"
+    },
+    "40fbb3053af1d4caec2ae8cd0afd4289de778bc795": {
+      "workers": {
+        "app/automation/page": {
+          "moduleId": 75041,
+          "async": true,
+          "exportedName": "createAutomation",
+          "filename": "src/actions/automation.ts"
+        }
+      },
+      "layer": {
+        "app/automation/page": "rsc"
+      },
+      "filename": "src/actions/automation.ts",
+      "exportedName": "createAutomation"
+    },
+    "403c39fff097e4a853e322283df17f06549ba8ab08": {
+      "workers": {
+        "app/builder/page": {
+          "moduleId": 39842,
+          "async": true,
+          "exportedName": "updateBlockOrder",
+          "filename": "src/actions/site.ts"
+        },
+        "app/builder/templates/page": {
+          "moduleId": 24824,
+          "async": true,
+          "exportedName": "updateBlockOrder",
+          "filename": "src/actions/site.ts"
+        }
+      },
+      "layer": {
+        "app/builder/page": "rsc",
+        "app/builder/templates/page": "rsc"
+      },
+      "filename": "src/actions/site.ts",
+      "exportedName": "updateBlockOrder"
+    },
+    "403cdf44cc5405ecb0478cae134a19d3d650141de5": {
+      "workers": {
+        "app/builder/page": {
+          "moduleId": 39842,
+          "async": true,
+          "exportedName": "applyTemplate",
+          "filename": "src/actions/site.ts"
+        },
+        "app/builder/templates/page": {
+          "moduleId": 24824,
+          "async": true,
+          "exportedName": "applyTemplate",
+          "filename": "src/actions/site.ts"
+        }
+      },
+      "layer": {
+        "app/builder/page": "rsc",
+        "app/builder/templates/page": "rsc"
+      },
+      "filename": "src/actions/site.ts",
+      "exportedName": "applyTemplate"
+    },
+    "4096f1bce7138eecadf0b1e9ad90388fc658e3b234": {
+      "workers": {
+        "app/builder/page": {
+          "moduleId": 39842,
+          "async": true,
+          "exportedName": "addSiteBlock",
+          "filename": "src/actions/site.ts"
+        },
+        "app/builder/templates/page": {
+          "moduleId": 24824,
+          "async": true,
+          "exportedName": "addSiteBlock",
+          "filename": "src/actions/site.ts"
+        }
+      },
+      "layer": {
+        "app/builder/page": "rsc",
+        "app/builder/templates/page": "rsc"
+      },
+      "filename": "src/actions/site.ts",
+      "exportedName": "addSiteBlock"
+    },
+    "40ada6ddb85a9a1defe66bd9e032a414da35a249a5": {
+      "workers": {
+        "app/builder/page": {
+          "moduleId": 39842,
+          "async": true,
+          "exportedName": "duplicateBlock",
+          "filename": "src/actions/site.ts"
+        },
+        "app/builder/templates/page": {
+          "moduleId": 24824,
+          "async": true,
+          "exportedName": "duplicateBlock",
+          "filename": "src/actions/site.ts"
+        }
+      },
+      "layer": {
+        "app/builder/page": "rsc",
+        "app/builder/templates/page": "rsc"
+      },
+      "filename": "src/actions/site.ts",
+      "exportedName": "duplicateBlock"
+    },
+    "40dd642a73bed5929631ebff8dc03974fae8d2db29": {
+      "workers": {
+        "app/builder/page": {
+          "moduleId": 39842,
+          "async": true,
+          "exportedName": "updateBlockData",
+          "filename": "src/actions/site.ts"
+        },
+        "app/builder/templates/page": {
+          "moduleId": 24824,
+          "async": true,
+          "exportedName": "updateBlockData",
+          "filename": "src/actions/site.ts"
+        }
+      },
+      "layer": {
+        "app/builder/page": "rsc",
+        "app/builder/templates/page": "rsc"
+      },
+      "filename": "src/actions/site.ts",
+      "exportedName": "updateBlockData"
+    },
+    "40ea730e59c8fb88de08473a29ed70897812853a69": {
+      "workers": {
+        "app/builder/page": {
+          "moduleId": 39842,
+          "async": true,
+          "exportedName": "deleteBlock",
+          "filename": "src/actions/site.ts"
+        },
+        "app/builder/templates/page": {
+          "moduleId": 24824,
+          "async": true,
+          "exportedName": "deleteBlock",
+          "filename": "src/actions/site.ts"
+        }
+      },
+      "layer": {
+        "app/builder/page": "rsc",
+        "app/builder/templates/page": "rsc"
+      },
+      "filename": "src/actions/site.ts",
+      "exportedName": "deleteBlock"
+    },
+    "40ef6d0f9b521c136575f23d79256b05d704326e1c": {
+      "workers": {
+        "app/builder/page": {
+          "moduleId": 39842,
+          "async": true,
+          "exportedName": "createSitePage",
+          "filename": "src/actions/site.ts"
+        },
+        "app/builder/templates/page": {
+          "moduleId": 24824,
+          "async": true,
+          "exportedName": "createSitePage",
+          "filename": "src/actions/site.ts"
+        }
+      },
+      "layer": {
+        "app/builder/page": "rsc",
+        "app/builder/templates/page": "rsc"
+      },
+      "filename": "src/actions/site.ts",
+      "exportedName": "createSitePage"
+    },
+    "000cb3ca7f617a4098bdd4386ff7818950e0414a57": {
+      "workers": {
+        "app/builder/media/page": {
+          "moduleId": 852,
+          "async": true,
+          "exportedName": "getUploadedFiles",
+          "filename": "src/actions/upload.ts"
+        }
+      },
+      "layer": {
+        "app/builder/media/page": "rsc"
+      },
+      "filename": "src/actions/upload.ts",
+      "exportedName": "getUploadedFiles"
+    },
+    "40543e5f84c1ad3497140f104e763e77644e8d46ac": {
+      "workers": {
+        "app/builder/media/page": {
+          "moduleId": 852,
+          "async": true,
+          "exportedName": "uploadFile",
+          "filename": "src/actions/upload.ts"
+        }
+      },
+      "layer": {
+        "app/builder/media/page": "action-browser"
+      },
+      "filename": "src/actions/upload.ts",
+      "exportedName": "uploadFile"
+    },
+    "009e74c02313a0e65c54903fddc65cb069f17d0db1": {
+      "workers": {
+        "app/builder/seo/[pageId]/page": {
+          "moduleId": 54170,
+          "async": true,
+          "exportedName": "generateSitemap",
+          "filename": "src/actions/seo.ts"
+        }
+      },
+      "layer": {
+        "app/builder/seo/[pageId]/page": "rsc"
+      },
+      "filename": "src/actions/seo.ts",
+      "exportedName": "generateSitemap"
+    },
+    "40351321a71ed1fa232387e5916b9a1985c383e7c5": {
+      "workers": {
+        "app/builder/seo/[pageId]/page": {
+          "moduleId": 54170,
+          "async": true,
+          "exportedName": "updatePageSEO",
+          "filename": "src/actions/seo.ts"
+        }
+      },
+      "layer": {
+        "app/builder/seo/[pageId]/page": "rsc"
+      },
+      "filename": "src/actions/seo.ts",
+      "exportedName": "updatePageSEO"
+    },
+    "408f4d1514abdb1c37adaf00b4baf016b049cb95bb": {
+      "workers": {
+        "app/crm/page": {
+          "moduleId": 71019,
+          "async": true,
+          "exportedName": "upsertContact",
+          "filename": "src/actions/crm.ts"
+        }
+      },
+      "layer": {
+        "app/crm/page": "rsc"
+      },
+      "filename": "src/actions/crm.ts",
+      "exportedName": "upsertContact"
+    },
+    "40aacced7811d1e083d035c43cd0d046bf03b3435c": {
+      "workers": {
+        "app/crm/page": {
+          "moduleId": 71019,
+          "async": true,
+          "exportedName": "addContactActivity",
+          "filename": "src/actions/crm.ts"
+        }
+      },
+      "layer": {
+        "app/crm/page": "rsc"
+      },
+      "filename": "src/actions/crm.ts",
+      "exportedName": "addContactActivity"
+    },
+    "40ededa6fc0ceda5c111bbb0ac4858d9cb9156487c": {
+      "workers": {
+        "app/crm/page": {
+          "moduleId": 71019,
+          "async": true,
+          "exportedName": "deleteContact",
+          "filename": "src/actions/crm.ts"
+        }
+      },
+      "layer": {
+        "app/crm/page": "rsc"
+      },
+      "filename": "src/actions/crm.ts",
+      "exportedName": "deleteContact"
+    },
+    "402461200f151702f7e9d6f28de360b91ca9d33934": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "createLead",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/leads/page": {
+          "moduleId": 90032,
+          "async": true,
+          "exportedName": "createLead",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/today/page": {
+          "moduleId": 14609,
+          "async": true,
+          "exportedName": "createLead",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc",
+        "app/crm/leads/page": "rsc",
+        "app/crm/today/page": "rsc"
+      },
+      "filename": "src/actions/leads.ts",
+      "exportedName": "createLead"
+    },
+    "40316af529a9fc83457515b44f5a390f434342dee8": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "completeActivity",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/leads/page": {
+          "moduleId": 90032,
+          "async": true,
+          "exportedName": "completeActivity",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/today/page": {
+          "moduleId": 14609,
+          "async": true,
+          "exportedName": "completeActivity",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc",
+        "app/crm/leads/page": "rsc",
+        "app/crm/today/page": "rsc"
+      },
+      "filename": "src/actions/leads.ts",
+      "exportedName": "completeActivity"
+    },
+    "4042b3009195cd987016985616afed7ce81f01271d": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "updateLeadScore",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/leads/page": {
+          "moduleId": 90032,
+          "async": true,
+          "exportedName": "updateLeadScore",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/today/page": {
+          "moduleId": 14609,
+          "async": true,
+          "exportedName": "updateLeadScore",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc",
+        "app/crm/leads/page": "rsc",
+        "app/crm/today/page": "rsc"
+      },
+      "filename": "src/actions/leads.ts",
+      "exportedName": "updateLeadScore"
+    },
+    "4076eb3f6e8f52db0307f849585f205bb70be3cf2d": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "deleteLead",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/leads/page": {
+          "moduleId": 90032,
+          "async": true,
+          "exportedName": "deleteLead",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/today/page": {
+          "moduleId": 14609,
+          "async": true,
+          "exportedName": "deleteLead",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc",
+        "app/crm/leads/page": "rsc",
+        "app/crm/today/page": "rsc"
+      },
+      "filename": "src/actions/leads.ts",
+      "exportedName": "deleteLead"
+    },
+    "4088bfd271ecd68c96f8dcc889e099e902fc585641": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "updateLeadStage",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/leads/page": {
+          "moduleId": 90032,
+          "async": true,
+          "exportedName": "updateLeadStage",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/today/page": {
+          "moduleId": 14609,
+          "async": true,
+          "exportedName": "updateLeadStage",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc",
+        "app/crm/leads/page": "rsc",
+        "app/crm/today/page": "rsc"
+      },
+      "filename": "src/actions/leads.ts",
+      "exportedName": "updateLeadStage"
+    },
+    "40e744b0b8bccfbbde3a9e6ea45a8941bfbb6e2bb0": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "addLeadActivity",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/leads/page": {
+          "moduleId": 90032,
+          "async": true,
+          "exportedName": "addLeadActivity",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/today/page": {
+          "moduleId": 14609,
+          "async": true,
+          "exportedName": "addLeadActivity",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc",
+        "app/crm/leads/page": "rsc",
+        "app/crm/today/page": "rsc"
+      },
+      "filename": "src/actions/leads.ts",
+      "exportedName": "addLeadActivity"
+    },
+    "40ee3c37979c06b269dbedf6359b6b9b1561b28a0a": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "scheduleFollowUp",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/leads/page": {
+          "moduleId": 90032,
+          "async": true,
+          "exportedName": "scheduleFollowUp",
+          "filename": "src/actions/leads.ts"
+        },
+        "app/crm/today/page": {
+          "moduleId": 14609,
+          "async": true,
+          "exportedName": "scheduleFollowUp",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc",
+        "app/crm/leads/page": "rsc",
+        "app/crm/today/page": "rsc"
+      },
+      "filename": "src/actions/leads.ts",
+      "exportedName": "scheduleFollowUp"
+    },
+    "400b41a64ed436aabb45c0bad6021a6fa46267e5f3": {
+      "workers": {
+        "app/finance/expenses/page": {
+          "moduleId": 75778,
+          "async": true,
+          "exportedName": "createExpense",
+          "filename": "src/actions/expenses.ts"
+        }
+      },
+      "layer": {
+        "app/finance/expenses/page": "rsc"
+      },
+      "filename": "src/actions/expenses.ts",
+      "exportedName": "createExpense"
+    },
+    "40d2d49016f2a1453efab00cf5117f9d2cdcda1b2b": {
+      "workers": {
+        "app/finance/expenses/page": {
+          "moduleId": 75778,
+          "async": true,
+          "exportedName": "rejectExpense",
+          "filename": "src/actions/expenses.ts"
+        }
+      },
+      "layer": {
+        "app/finance/expenses/page": "rsc"
+      },
+      "filename": "src/actions/expenses.ts",
+      "exportedName": "rejectExpense"
+    },
+    "40d391bfa789a533542379dc0942ad8e66e7eac8fd": {
+      "workers": {
+        "app/finance/expenses/page": {
+          "moduleId": 75778,
+          "async": true,
+          "exportedName": "approveExpense",
+          "filename": "src/actions/expenses.ts"
+        }
+      },
+      "layer": {
+        "app/finance/expenses/page": "rsc"
+      },
+      "filename": "src/actions/expenses.ts",
+      "exportedName": "approveExpense"
+    },
+    "407be5bd33f53cb83d9374eeb70344533eb1418a09": {
+      "workers": {
+        "app/finance/invoices/page": {
+          "moduleId": 53899,
+          "async": true,
+          "exportedName": "sendInvoice",
+          "filename": "src/actions/invoices.ts"
+        }
+      },
+      "layer": {
+        "app/finance/invoices/page": "rsc"
+      },
+      "filename": "src/actions/invoices.ts",
+      "exportedName": "sendInvoice"
+    },
+    "409bcdc5b7d71d8a5b9efb31b8cfd23a484dd2c00e": {
+      "workers": {
+        "app/finance/invoices/new/page": {
+          "moduleId": 84150,
+          "async": true,
+          "exportedName": "createInvoice",
+          "filename": "src/actions/invoices.ts"
+        },
+        "app/finance/invoices/page": {
+          "moduleId": 53899,
+          "async": true,
+          "exportedName": "createInvoice",
+          "filename": "src/actions/invoices.ts"
+        }
+      },
+      "layer": {
+        "app/finance/invoices/new/page": "action-browser",
+        "app/finance/invoices/page": "rsc"
+      },
+      "filename": "src/actions/invoices.ts",
+      "exportedName": "createInvoice"
+    },
+    "40f584e9201b94dc27459885483537bb2b7e9a7f09": {
+      "workers": {
+        "app/finance/invoices/page": {
+          "moduleId": 53899,
+          "async": true,
+          "exportedName": "sendInvoiceReminder",
+          "filename": "src/actions/invoices.ts"
+        }
+      },
+      "layer": {
+        "app/finance/invoices/page": "rsc"
+      },
+      "filename": "src/actions/invoices.ts",
+      "exportedName": "sendInvoiceReminder"
+    },
+    "6023b8d90e95fc4402ec7513c78591b568304372e1": {
+      "workers": {
+        "app/finance/reports/page": {
+          "moduleId": 57874,
+          "async": true,
+          "exportedName": "generateProfitLossReport",
+          "filename": "src/actions/reports.ts"
+        }
+      },
+      "layer": {
+        "app/finance/reports/page": "rsc"
+      },
+      "filename": "src/actions/reports.ts",
+      "exportedName": "generateProfitLossReport"
+    },
+    "605a8592ed331845a102ae4d9c4558d749707254f8": {
+      "workers": {
+        "app/finance/reports/page": {
+          "moduleId": 57874,
+          "async": true,
+          "exportedName": "generateCashFlowReport",
+          "filename": "src/actions/reports.ts"
+        }
+      },
+      "layer": {
+        "app/finance/reports/page": "rsc"
+      },
+      "filename": "src/actions/reports.ts",
+      "exportedName": "generateCashFlowReport"
+    },
+    "60979bd2421fb2adc57304d39c8d1722280db757a8": {
+      "workers": {
+        "app/finance/reports/page": {
+          "moduleId": 57874,
+          "async": true,
+          "exportedName": "getFinancialOverview",
+          "filename": "src/actions/reports.ts"
+        }
+      },
+      "layer": {
+        "app/finance/reports/page": "rsc"
+      },
+      "filename": "src/actions/reports.ts",
+      "exportedName": "getFinancialOverview"
+    },
+    "4023c4b6571a61d6d65110a6625e0764dbf1bb9c7c": {
+      "workers": {
+        "app/hr/attendance/page": {
+          "moduleId": 72018,
+          "async": true,
+          "exportedName": "submitLeaveRequest",
+          "filename": "src/actions/hr.ts"
+        },
+        "app/hr/leave/page": {
+          "moduleId": 72486,
+          "async": true,
+          "exportedName": "submitLeaveRequest",
+          "filename": "src/actions/hr.ts"
+        }
+      },
+      "layer": {
+        "app/hr/attendance/page": "rsc",
+        "app/hr/leave/page": "rsc"
+      },
+      "filename": "src/actions/hr.ts",
+      "exportedName": "submitLeaveRequest"
+    },
+    "404c33bd97d0dcb222d9f82631abb5c50196620184": {
+      "workers": {
+        "app/hr/attendance/page": {
+          "moduleId": 72018,
+          "async": true,
+          "exportedName": "approveLeave",
+          "filename": "src/actions/hr.ts"
+        },
+        "app/hr/leave/page": {
+          "moduleId": 72486,
+          "async": true,
+          "exportedName": "approveLeave",
+          "filename": "src/actions/hr.ts"
+        }
+      },
+      "layer": {
+        "app/hr/attendance/page": "rsc",
+        "app/hr/leave/page": "rsc"
+      },
+      "filename": "src/actions/hr.ts",
+      "exportedName": "approveLeave"
+    },
+    "40b4fa451073eeea8a218f3efd6a841878a4c28a2f": {
+      "workers": {
+        "app/hr/attendance/page": {
+          "moduleId": 72018,
+          "async": true,
+          "exportedName": "rejectLeave",
+          "filename": "src/actions/hr.ts"
+        },
+        "app/hr/leave/page": {
+          "moduleId": 72486,
+          "async": true,
+          "exportedName": "rejectLeave",
+          "filename": "src/actions/hr.ts"
+        }
+      },
+      "layer": {
+        "app/hr/attendance/page": "rsc",
+        "app/hr/leave/page": "rsc"
+      },
+      "filename": "src/actions/hr.ts",
+      "exportedName": "rejectLeave"
+    },
+    "40c0263d1ba5a524c88f5deb0c491a97fa32e9d0c1": {
+      "workers": {
+        "app/hr/attendance/page": {
+          "moduleId": 72018,
+          "async": true,
+          "exportedName": "clockOut",
+          "filename": "src/actions/hr.ts"
+        },
+        "app/hr/leave/page": {
+          "moduleId": 72486,
+          "async": true,
+          "exportedName": "clockOut",
+          "filename": "src/actions/hr.ts"
+        }
+      },
+      "layer": {
+        "app/hr/attendance/page": "rsc",
+        "app/hr/leave/page": "rsc"
+      },
+      "filename": "src/actions/hr.ts",
+      "exportedName": "clockOut"
+    },
+    "40d495ef91a24d8a3d773fe567e0e8a185ed8786a0": {
+      "workers": {
+        "app/hr/attendance/page": {
+          "moduleId": 72018,
+          "async": true,
+          "exportedName": "clockIn",
+          "filename": "src/actions/hr.ts"
+        },
+        "app/hr/leave/page": {
+          "moduleId": 72486,
+          "async": true,
+          "exportedName": "clockIn",
+          "filename": "src/actions/hr.ts"
+        }
+      },
+      "layer": {
+        "app/hr/attendance/page": "rsc",
+        "app/hr/leave/page": "rsc"
+      },
+      "filename": "src/actions/hr.ts",
+      "exportedName": "clockIn"
+    },
+    "404a1239f0cf3ad463be3581b34b03a1bfd0f5f290": {
+      "workers": {
+        "app/hr/employees/page": {
+          "moduleId": 52303,
+          "async": true,
+          "exportedName": "terminateEmployee",
+          "filename": "src/actions/employees.ts"
+        }
+      },
+      "layer": {
+        "app/hr/employees/page": "rsc"
+      },
+      "filename": "src/actions/employees.ts",
+      "exportedName": "terminateEmployee"
+    },
+    "405376cedb7cdc9d40d0a83de55a2381acd9fd89d2": {
+      "workers": {
+        "app/hr/employees/page": {
+          "moduleId": 52303,
+          "async": true,
+          "exportedName": "getEmployees",
+          "filename": "src/actions/employees.ts"
+        }
+      },
+      "layer": {
+        "app/hr/employees/page": "rsc"
+      },
+      "filename": "src/actions/employees.ts",
+      "exportedName": "getEmployees"
+    },
+    "40d150803765335af08ccde0ab71e8aa09b7182d47": {
+      "workers": {
+        "app/hr/employees/page": {
+          "moduleId": 52303,
+          "async": true,
+          "exportedName": "createEmployee",
+          "filename": "src/actions/employees.ts"
+        }
+      },
+      "layer": {
+        "app/hr/employees/page": "rsc"
+      },
+      "filename": "src/actions/employees.ts",
+      "exportedName": "createEmployee"
+    },
+    "40ea679f5dc126feb2da2824c5cad396e5a9b6c56d": {
+      "workers": {
+        "app/hr/employees/page": {
+          "moduleId": 52303,
+          "async": true,
+          "exportedName": "updateEmployee",
+          "filename": "src/actions/employees.ts"
+        }
+      },
+      "layer": {
+        "app/hr/employees/page": "rsc"
+      },
+      "filename": "src/actions/employees.ts",
+      "exportedName": "updateEmployee"
+    },
+    "40d1fdb7153d2e25ce131e245caf55cf7138081eee": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "src/app/hr/payroll/page.tsx"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "filename": "src/app/hr/payroll/page.tsx",
+      "exportedName": "$$RSC_SERVER_ACTION_0"
+    },
+    "00f1d4c07c289e461a3d2ae334c1b3921272ee8e13": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "getCurrentPayPeriod",
+          "filename": "src/actions/payroll.ts"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "filename": "src/actions/payroll.ts",
+      "exportedName": "getCurrentPayPeriod"
+    },
+    "4040cc30a700a1739ecf74fe755ad55f55ae8b0d19": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "generatePayroll",
+          "filename": "src/actions/payroll.ts"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "filename": "src/actions/payroll.ts",
+      "exportedName": "generatePayroll"
+    },
+    "40875887555b8c644b046281eb6f19c64557bc23d3": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "markPayrollPaid",
+          "filename": "src/actions/payroll.ts"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "filename": "src/actions/payroll.ts",
+      "exportedName": "markPayrollPaid"
+    },
+    "40a23ee9643d42560a05679c18066e807536f63861": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "bulkMarkPaid",
+          "filename": "src/actions/payroll.ts"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "filename": "src/actions/payroll.ts",
+      "exportedName": "bulkMarkPaid"
+    },
+    "40b88f46252c9608a2c683f825bca6c9e55f9c9520": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "processPayroll",
+          "filename": "src/actions/payroll.ts"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "filename": "src/actions/payroll.ts",
+      "exportedName": "processPayroll"
+    },
+    "40ce69bc5be81da78bdfe37f239bd6c603a5db31cb": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "bulkProcessPayroll",
+          "filename": "src/actions/payroll.ts"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "filename": "src/actions/payroll.ts",
+      "exportedName": "bulkProcessPayroll"
+    },
+    "400b35583cd90a9227ad93db3a59a1952152f36819": {
+      "workers": {
+        "app/inventory/products/page": {
+          "moduleId": 70981,
+          "async": true,
+          "exportedName": "createProduct",
+          "filename": "src/actions/products.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/products/page": "rsc"
+      },
+      "filename": "src/actions/products.ts",
+      "exportedName": "createProduct"
+    },
+    "400c0ea8f66244d9116efc63622c180e9321b2ea97": {
+      "workers": {
+        "app/inventory/products/page": {
+          "moduleId": 70981,
+          "async": true,
+          "exportedName": "deleteProduct",
+          "filename": "src/actions/products.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/products/page": "rsc"
+      },
+      "filename": "src/actions/products.ts",
+      "exportedName": "deleteProduct"
+    },
+    "40e80cc0de17c1ab90eb9560decf569223a689bb6f": {
+      "workers": {
+        "app/inventory/products/page": {
+          "moduleId": 70981,
+          "async": true,
+          "exportedName": "updateProduct",
+          "filename": "src/actions/products.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/products/page": "rsc"
+      },
+      "filename": "src/actions/products.ts",
+      "exportedName": "updateProduct"
+    },
+    "40ec324f52709b4cf95d5ab663f5c632bbfce1f9dd": {
+      "workers": {
+        "app/inventory/products/page": {
+          "moduleId": 70981,
+          "async": true,
+          "exportedName": "adjustStock",
+          "filename": "src/actions/products.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/products/page": "rsc"
+      },
+      "filename": "src/actions/products.ts",
+      "exportedName": "adjustStock"
+    },
+    "4031465d5b2ed7cbb2c69150510cc24c82c80852e6": {
+      "workers": {
+        "app/inventory/purchase-orders/page": {
+          "moduleId": 963,
+          "async": true,
+          "exportedName": "receivePurchaseOrder",
+          "filename": "src/actions/purchase-orders.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/purchase-orders/page": "rsc"
+      },
+      "filename": "src/actions/purchase-orders.ts",
+      "exportedName": "receivePurchaseOrder"
+    },
+    "406881c5677955a96e4f4ae69e339527841c533c31": {
+      "workers": {
+        "app/inventory/purchase-orders/page": {
+          "moduleId": 963,
+          "async": true,
+          "exportedName": "cancelPurchaseOrder",
+          "filename": "src/actions/purchase-orders.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/purchase-orders/page": "rsc"
+      },
+      "filename": "src/actions/purchase-orders.ts",
+      "exportedName": "cancelPurchaseOrder"
+    },
+    "40dd9a541a7417b5f4f7a2c35b9dfbe11d3ab1d6a2": {
+      "workers": {
+        "app/inventory/purchase-orders/page": {
+          "moduleId": 963,
+          "async": true,
+          "exportedName": "createPurchaseOrder",
+          "filename": "src/actions/purchase-orders.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/purchase-orders/page": "rsc"
+      },
+      "filename": "src/actions/purchase-orders.ts",
+      "exportedName": "createPurchaseOrder"
+    },
+    "40de48a45e552655f2051980505997bf1e17aab552": {
+      "workers": {
+        "app/inventory/suppliers/page": {
+          "moduleId": 77398,
+          "async": true,
+          "exportedName": "deactivateSupplier",
+          "filename": "src/actions/suppliers.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/suppliers/page": "rsc"
+      },
+      "filename": "src/actions/suppliers.ts",
+      "exportedName": "deactivateSupplier"
+    },
+    "40ee0504a3a2832cda1ecaf2067729ef30e89e96ef": {
+      "workers": {
+        "app/inventory/suppliers/page": {
+          "moduleId": 77398,
+          "async": true,
+          "exportedName": "updateSupplier",
+          "filename": "src/actions/suppliers.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/suppliers/page": "rsc"
+      },
+      "filename": "src/actions/suppliers.ts",
+      "exportedName": "updateSupplier"
+    },
+    "40eea6496e2529f73e8279b6811a193e02af8bf48c": {
+      "workers": {
+        "app/inventory/suppliers/page": {
+          "moduleId": 77398,
+          "async": true,
+          "exportedName": "createSupplier",
+          "filename": "src/actions/suppliers.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/suppliers/page": "rsc"
+      },
+      "filename": "src/actions/suppliers.ts",
+      "exportedName": "createSupplier"
+    },
+    "607051c4334dde25deecd5a7467ce9cd3142e1efc7": {
+      "workers": {
+        "app/login/page": {
+          "moduleId": 3070,
+          "async": true,
+          "exportedName": "authenticate",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/login/page": "action-browser"
+      },
+      "filename": "src/actions/auth.ts",
+      "exportedName": "authenticate"
+    },
+    "400d1f1e4f4d2259c6b0d8b295d76aab698fd7f70f": {
+      "workers": {
+        "app/onboarding/page": {
+          "moduleId": 38690,
+          "async": true,
+          "exportedName": "completeOnboarding",
+          "filename": "src/actions/onboarding.ts"
+        }
+      },
+      "layer": {
+        "app/onboarding/page": "action-browser"
+      },
+      "filename": "src/actions/onboarding.ts",
+      "exportedName": "completeOnboarding"
+    },
+    "402403859c6cffdbff89cfe3ed461ce615a877a930": {
+      "workers": {
+        "app/projects/[projectId]/edit/page": {
+          "moduleId": 24611,
+          "async": true,
+          "exportedName": "createTask",
+          "filename": "src/actions/projects.ts"
+        },
+        "app/projects/new/page": {
+          "moduleId": 70019,
+          "async": true,
+          "exportedName": "createTask",
+          "filename": "src/actions/projects.ts"
+        },
+        "app/projects/page": {
+          "moduleId": 24037,
+          "async": true,
+          "exportedName": "createTask",
+          "filename": "src/actions/projects.ts"
+        }
+      },
+      "layer": {
+        "app/projects/[projectId]/edit/page": "rsc",
+        "app/projects/new/page": "action-browser",
+        "app/projects/page": "rsc"
+      },
+      "filename": "src/actions/projects.ts",
+      "exportedName": "createTask"
+    },
+    "402e29d13f3900dd31137d7e2e8185636a2a4b9920": {
+      "workers": {
+        "app/projects/[projectId]/edit/page": {
+          "moduleId": 24611,
+          "async": true,
+          "exportedName": "updateProject",
+          "filename": "src/actions/projects.ts"
+        },
+        "app/projects/page": {
+          "moduleId": 24037,
+          "async": true,
+          "exportedName": "updateProject",
+          "filename": "src/actions/projects.ts"
+        }
+      },
+      "layer": {
+        "app/projects/[projectId]/edit/page": "rsc",
+        "app/projects/page": "rsc"
+      },
+      "filename": "src/actions/projects.ts",
+      "exportedName": "updateProject"
+    },
+    "407b329c46d78871976974d1c460f6fae213f4809a": {
+      "workers": {
+        "app/projects/[projectId]/edit/page": {
+          "moduleId": 24611,
+          "async": true,
+          "exportedName": "deleteProject",
+          "filename": "src/actions/projects.ts"
+        },
+        "app/projects/page": {
+          "moduleId": 24037,
+          "async": true,
+          "exportedName": "deleteProject",
+          "filename": "src/actions/projects.ts"
+        }
+      },
+      "layer": {
+        "app/projects/[projectId]/edit/page": "rsc",
+        "app/projects/page": "rsc"
+      },
+      "filename": "src/actions/projects.ts",
+      "exportedName": "deleteProject"
+    },
+    "40e7e9e1a9c90dfd80e121425d0e3d076f91ee963b": {
+      "workers": {
+        "app/projects/[projectId]/edit/page": {
+          "moduleId": 24611,
+          "async": true,
+          "exportedName": "createProject",
+          "filename": "src/actions/projects.ts"
+        },
+        "app/projects/page": {
+          "moduleId": 24037,
+          "async": true,
+          "exportedName": "createProject",
+          "filename": "src/actions/projects.ts"
+        }
+      },
+      "layer": {
+        "app/projects/[projectId]/edit/page": "rsc",
+        "app/projects/page": "rsc"
+      },
+      "filename": "src/actions/projects.ts",
+      "exportedName": "createProject"
+    },
+    "0089e4b4fe5af7c9231116a0af5dd779f112c173f8": {
+      "workers": {
+        "app/settings/billing/page": {
+          "moduleId": 38251,
+          "async": true,
+          "exportedName": "createPortalSession",
+          "filename": "src/actions/billing.ts"
+        }
+      },
+      "layer": {
+        "app/settings/billing/page": "rsc"
+      },
+      "filename": "src/actions/billing.ts",
+      "exportedName": "createPortalSession"
+    },
+    "00c653d7cd3fd38170b22960ed695ac3b71698d20e": {
+      "workers": {
+        "app/settings/billing/page": {
+          "moduleId": 38251,
+          "async": true,
+          "exportedName": "cancelSubscription",
+          "filename": "src/actions/billing.ts"
+        }
+      },
+      "layer": {
+        "app/settings/billing/page": "rsc"
+      },
+      "filename": "src/actions/billing.ts",
+      "exportedName": "cancelSubscription"
+    },
+    "4052a55d5167fe49c2b27ef8e69e52ef903f2fc06e": {
+      "workers": {
+        "app/settings/billing/page": {
+          "moduleId": 38251,
+          "async": true,
+          "exportedName": "createCheckoutSession",
+          "filename": "src/actions/billing.ts"
+        }
+      },
+      "layer": {
+        "app/settings/billing/page": "rsc"
+      },
+      "filename": "src/actions/billing.ts",
+      "exportedName": "createCheckoutSession"
+    },
+    "407fb9bfb1d7f03e51fa7bb472293c89cb2619db48": {
+      "workers": {
+        "app/settings/branding/page": {
+          "moduleId": 82704,
+          "async": true,
+          "exportedName": "updateBranding",
+          "filename": "src/actions/branding.ts"
+        }
+      },
+      "layer": {
+        "app/settings/branding/page": "rsc"
+      },
+      "filename": "src/actions/branding.ts",
+      "exportedName": "updateBranding"
+    },
+    "40ebe930419787e6945f2857d660489eea6e253c68": {
+      "workers": {
+        "app/settings/branding/page": {
+          "moduleId": 82704,
+          "async": true,
+          "exportedName": "updateTenantSettings",
+          "filename": "src/actions/branding.ts"
+        }
+      },
+      "layer": {
+        "app/settings/branding/page": "rsc"
+      },
+      "filename": "src/actions/branding.ts",
+      "exportedName": "updateTenantSettings"
+    },
+    "008e1e6872c0755d700efa84a7ed18e269ee7b0690": {
+      "workers": {
+        "app/settings/lead-fields/page": {
+          "moduleId": 45503,
+          "async": true,
+          "exportedName": "getLeadFieldConfig",
+          "filename": "src/actions/lead-fields.ts"
+        }
+      },
+      "layer": {
+        "app/settings/lead-fields/page": "rsc"
+      },
+      "filename": "src/actions/lead-fields.ts",
+      "exportedName": "getLeadFieldConfig"
+    },
+    "40b0a326be135f0da8d236d82ad22480c220e4db68": {
+      "workers": {
+        "app/settings/lead-fields/page": {
+          "moduleId": 45503,
+          "async": true,
+          "exportedName": "saveLeadFieldConfig",
+          "filename": "src/actions/lead-fields.ts"
+        }
+      },
+      "layer": {
+        "app/settings/lead-fields/page": "action-browser"
+      },
+      "filename": "src/actions/lead-fields.ts",
+      "exportedName": "saveLeadFieldConfig"
+    },
+    "0028248193a21cd720209b31363b77d072cfc16d80": {
+      "workers": {
+        "app/settings/permissions/page": {
+          "moduleId": 46065,
+          "async": true,
+          "exportedName": "getAvailablePermissions",
+          "filename": "src/actions/permissions.ts"
+        }
+      },
+      "layer": {
+        "app/settings/permissions/page": "rsc"
+      },
+      "filename": "src/actions/permissions.ts",
+      "exportedName": "getAvailablePermissions"
+    },
+    "4023c033faab1c22417fe386ce8b29c65c91691649": {
+      "workers": {
+        "app/settings/permissions/page": {
+          "moduleId": 46065,
+          "async": true,
+          "exportedName": "updateUserPermissions",
+          "filename": "src/actions/permissions.ts"
+        }
+      },
+      "layer": {
+        "app/settings/permissions/page": "rsc"
+      },
+      "filename": "src/actions/permissions.ts",
+      "exportedName": "updateUserPermissions"
+    },
+    "4044828e9ec56e6d779b724926d8e27942f81b7a60": {
+      "workers": {
+        "app/settings/permissions/page": {
+          "moduleId": 46065,
+          "async": true,
+          "exportedName": "updateUserRole",
+          "filename": "src/actions/permissions.ts"
+        }
+      },
+      "layer": {
+        "app/settings/permissions/page": "rsc"
+      },
+      "filename": "src/actions/permissions.ts",
+      "exportedName": "updateUserRole"
+    },
+    "409fadfc0cc0daefba2a17b848cb97b9a93a7ffde4": {
+      "workers": {
+        "app/settings/permissions/page": {
+          "moduleId": 46065,
+          "async": true,
+          "exportedName": "getUserPermissions",
+          "filename": "src/actions/permissions.ts"
+        }
+      },
+      "layer": {
+        "app/settings/permissions/page": "rsc"
+      },
+      "filename": "src/actions/permissions.ts",
+      "exportedName": "getUserPermissions"
+    },
+    "40f26b073570cdf40632cbb53abf586804950914c7": {
+      "workers": {
+        "app/settings/roles/page": {
+          "moduleId": 1495,
+          "async": true,
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "src/app/settings/roles/page.tsx"
+        }
+      },
+      "layer": {
+        "app/settings/roles/page": "rsc"
+      },
+      "filename": "src/app/settings/roles/page.tsx",
+      "exportedName": "$$RSC_SERVER_ACTION_0"
+    },
+    "405d3ecd8ec387a0b4b4ec7a25504a0acb8d435393": {
+      "workers": {
+        "app/settings/roles/page": {
+          "moduleId": 1495,
+          "async": true,
+          "exportedName": "assignRole",
+          "filename": "src/actions/roles.ts"
+        },
+        "app/settings/team/page": {
+          "moduleId": 29631,
+          "async": true,
+          "exportedName": "assignRole",
+          "filename": "src/actions/roles.ts"
+        }
+      },
+      "layer": {
+        "app/settings/roles/page": "rsc",
+        "app/settings/team/page": "rsc"
+      },
+      "filename": "src/actions/roles.ts",
+      "exportedName": "assignRole"
+    },
+    "408cc0873e5850925a2ac6e38985c977f4c02460e3": {
+      "workers": {
+        "app/settings/roles/page": {
+          "moduleId": 1495,
+          "async": true,
+          "exportedName": "createRole",
+          "filename": "src/actions/roles.ts"
+        },
+        "app/settings/team/page": {
+          "moduleId": 29631,
+          "async": true,
+          "exportedName": "createRole",
+          "filename": "src/actions/roles.ts"
+        }
+      },
+      "layer": {
+        "app/settings/roles/page": "rsc",
+        "app/settings/team/page": "rsc"
+      },
+      "filename": "src/actions/roles.ts",
+      "exportedName": "createRole"
+    },
+    "409f0e8a809a974eb660ebe02e28819161c2e9e8a2": {
+      "workers": {
+        "app/settings/roles/page": {
+          "moduleId": 1495,
+          "async": true,
+          "exportedName": "deleteRole",
+          "filename": "src/actions/roles.ts"
+        },
+        "app/settings/team/page": {
+          "moduleId": 29631,
+          "async": true,
+          "exportedName": "deleteRole",
+          "filename": "src/actions/roles.ts"
+        }
+      },
+      "layer": {
+        "app/settings/roles/page": "rsc",
+        "app/settings/team/page": "rsc"
+      },
+      "filename": "src/actions/roles.ts",
+      "exportedName": "deleteRole"
+    },
+    "40d0e1828f6c8a095bb4a1eb6b4b862fe6db1a7486": {
+      "workers": {
+        "app/settings/roles/page": {
+          "moduleId": 1495,
+          "async": true,
+          "exportedName": "updateRole",
+          "filename": "src/actions/roles.ts"
+        },
+        "app/settings/team/page": {
+          "moduleId": 29631,
+          "async": true,
+          "exportedName": "updateRole",
+          "filename": "src/actions/roles.ts"
+        }
+      },
+      "layer": {
+        "app/settings/roles/page": "rsc",
+        "app/settings/team/page": "rsc"
+      },
+      "filename": "src/actions/roles.ts",
+      "exportedName": "updateRole"
+    },
+    "40228d3efb173fd495a339a914f7529e77594e762a": {
+      "workers": {
+        "app/settings/team/page": {
+          "moduleId": 29631,
+          "async": true,
+          "exportedName": "removeUser",
+          "filename": "src/actions/team.ts"
+        }
+      },
+      "layer": {
+        "app/settings/team/page": "rsc"
+      },
+      "filename": "src/actions/team.ts",
+      "exportedName": "removeUser"
+    },
+    "40cbfe8e7232cc3d87f7acecec905616610381deec": {
+      "workers": {
+        "app/settings/team/page": {
+          "moduleId": 29631,
+          "async": true,
+          "exportedName": "inviteUser",
+          "filename": "src/actions/team.ts"
+        }
+      },
+      "layer": {
+        "app/settings/team/page": "rsc"
+      },
+      "filename": "src/actions/team.ts",
+      "exportedName": "inviteUser"
+    },
+    "4020d703428e2a9c7acf8f5aa9f8b5e7c6076e9f67": {
+      "workers": {
+        "app/tasks/[taskId]/edit/page": {
+          "moduleId": 23653,
+          "async": true,
+          "exportedName": "createTask",
+          "filename": "src/actions/tasks.ts"
+        },
+        "app/tasks/page": {
+          "moduleId": 55296,
+          "async": true,
+          "exportedName": "createTask",
+          "filename": "src/actions/tasks.ts"
+        }
+      },
+      "layer": {
+        "app/tasks/[taskId]/edit/page": "rsc",
+        "app/tasks/page": "rsc"
+      },
+      "filename": "src/actions/tasks.ts",
+      "exportedName": "createTask"
+    },
+    "4022f9ae6fbbbbc3d52aeb4c95617c415335524590": {
+      "workers": {
+        "app/tasks/[taskId]/edit/page": {
+          "moduleId": 23653,
+          "async": true,
+          "exportedName": "updateTaskStatus",
+          "filename": "src/actions/tasks.ts"
+        },
+        "app/tasks/page": {
+          "moduleId": 55296,
+          "async": true,
+          "exportedName": "updateTaskStatus",
+          "filename": "src/actions/tasks.ts"
+        }
+      },
+      "layer": {
+        "app/tasks/[taskId]/edit/page": "rsc",
+        "app/tasks/page": "rsc"
+      },
+      "filename": "src/actions/tasks.ts",
+      "exportedName": "updateTaskStatus"
+    },
+    "40df453fad3a93bc6be6c1c45ed433aaa802b64c13": {
+      "workers": {
+        "app/tasks/[taskId]/edit/page": {
+          "moduleId": 23653,
+          "async": true,
+          "exportedName": "deleteTask",
+          "filename": "src/actions/tasks.ts"
+        },
+        "app/tasks/page": {
+          "moduleId": 55296,
+          "async": true,
+          "exportedName": "deleteTask",
+          "filename": "src/actions/tasks.ts"
+        }
+      },
+      "layer": {
+        "app/tasks/[taskId]/edit/page": "rsc",
+        "app/tasks/page": "rsc"
+      },
+      "filename": "src/actions/tasks.ts",
+      "exportedName": "deleteTask"
+    },
+    "0008793beb4ef62b474c6d0e49c96fb518a2bb3e87": {
+      "workers": {
+        "app/tasks/[taskId]/edit/page": {
+          "moduleId": 23653,
+          "async": true,
+          "exportedName": "getTaskStats",
+          "filename": "src/actions/tasks.ts"
+        },
+        "app/tasks/page": {
+          "moduleId": 55296,
+          "async": true,
+          "exportedName": "getTaskStats",
+          "filename": "src/actions/tasks.ts"
+        }
+      },
+      "layer": {
+        "app/tasks/[taskId]/edit/page": "rsc",
+        "app/tasks/page": "rsc"
+      },
+      "filename": "src/actions/tasks.ts",
+      "exportedName": "getTaskStats"
+    },
+    "004ec7324b45948a501054685c21478ccb0a935ad3": {
+      "workers": {
+        "app/tasks/[taskId]/edit/page": {
+          "moduleId": 23653,
+          "async": true,
+          "exportedName": "getProjectsForTasks",
+          "filename": "src/actions/tasks.ts"
+        },
+        "app/tasks/page": {
+          "moduleId": 55296,
+          "async": true,
+          "exportedName": "getProjectsForTasks",
+          "filename": "src/actions/tasks.ts"
+        }
+      },
+      "layer": {
+        "app/tasks/[taskId]/edit/page": "rsc",
+        "app/tasks/page": "rsc"
+      },
+      "filename": "src/actions/tasks.ts",
+      "exportedName": "getProjectsForTasks"
+    },
+    "004f8264e518ab3d7570fee97e21528fa88426d6a0": {
+      "workers": {
+        "app/tasks/[taskId]/edit/page": {
+          "moduleId": 23653,
+          "async": true,
+          "exportedName": "getTasksForUser",
+          "filename": "src/actions/tasks.ts"
+        },
+        "app/tasks/page": {
+          "moduleId": 55296,
+          "async": true,
+          "exportedName": "getTasksForUser",
+          "filename": "src/actions/tasks.ts"
+        }
+      },
+      "layer": {
+        "app/tasks/[taskId]/edit/page": "rsc",
+        "app/tasks/page": "rsc"
+      },
+      "filename": "src/actions/tasks.ts",
+      "exportedName": "getTasksForUser"
+    },
+    "008e0cf1d0ff1f1a2ca84d34f7f05377756016c42d": {
+      "workers": {
+        "app/tasks/[taskId]/edit/page": {
+          "moduleId": 23653,
+          "async": true,
+          "exportedName": "getAllTenantTasks",
+          "filename": "src/actions/tasks.ts"
+        },
+        "app/tasks/page": {
+          "moduleId": 55296,
+          "async": true,
+          "exportedName": "getAllTenantTasks",
+          "filename": "src/actions/tasks.ts"
+        }
+      },
+      "layer": {
+        "app/tasks/[taskId]/edit/page": "rsc",
+        "app/tasks/page": "rsc"
+      },
+      "filename": "src/actions/tasks.ts",
+      "exportedName": "getAllTenantTasks"
+    },
+    "00f1f237afae710bf0c0ea55e21788eb7943e084ce": {
+      "workers": {
+        "app/tasks/[taskId]/edit/page": {
+          "moduleId": 23653,
+          "async": true,
+          "exportedName": "getTeamMembersForTasks",
+          "filename": "src/actions/tasks.ts"
+        },
+        "app/tasks/page": {
+          "moduleId": 55296,
+          "async": true,
+          "exportedName": "getTeamMembersForTasks",
+          "filename": "src/actions/tasks.ts"
+        }
+      },
+      "layer": {
+        "app/tasks/[taskId]/edit/page": "rsc",
+        "app/tasks/page": "rsc"
+      },
+      "filename": "src/actions/tasks.ts",
+      "exportedName": "getTeamMembersForTasks"
+    },
+    "4053567fdaf579064ddec21664c62b6cc37129ff73": {
+      "workers": {
+        "app/tasks/[taskId]/edit/page": {
+          "moduleId": 23653,
+          "async": true,
+          "exportedName": "updateTask",
+          "filename": "src/actions/tasks.ts"
+        },
+        "app/tasks/page": {
+          "moduleId": 55296,
+          "async": true,
+          "exportedName": "updateTask",
+          "filename": "src/actions/tasks.ts"
+        }
+      },
+      "layer": {
+        "app/tasks/[taskId]/edit/page": "rsc",
+        "app/tasks/page": "rsc"
+      },
+      "filename": "src/actions/tasks.ts",
+      "exportedName": "updateTask"
+    },
+    "00ff480648fe2cc4767e18c4c0429bb729dd7485b7": {
+      "workers": {
+        "app/workspace/page": {
+          "moduleId": 57835,
+          "async": true,
+          "exportedName": "getWorkspaceStats",
+          "filename": "src/actions/workspace.ts"
+        }
+      },
+      "layer": {
+        "app/workspace/page": "rsc"
+      },
+      "filename": "src/actions/workspace.ts",
+      "exportedName": "getWorkspaceStats"
+    }
+  },
+  "edge": {},
+  "encryptionKey": "hQJV+bXfINFVlAVWuL969UEgTmGUiCEdVE9L5xHxo3M="
+}

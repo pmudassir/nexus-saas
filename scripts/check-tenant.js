@@ -1,8 +1,7 @@
-const { PrismaClient } = require("@prisma/client");
-
-const prisma = new PrismaClient();
-
 async function checkTenant() {
+  const { PrismaClient } = await import("@prisma/client");
+  const prisma = new PrismaClient();
+
   try {
     const tenant = await prisma.tenant.findUnique({
       where: { slug: "default" },
@@ -16,7 +15,7 @@ async function checkTenant() {
     });
 
     if (tenant) {
-      console.log("✓ Default tenant exists:");
+      console.log("Default tenant exists:");
       console.log("  ID:", tenant.id);
       console.log("  Name:", tenant.name);
       console.log("  Slug:", tenant.slug);
@@ -27,7 +26,7 @@ async function checkTenant() {
         console.log(`    - ${m.user.email} (${m.role})`);
       });
     } else {
-      console.log("✗ Default tenant NOT found");
+      console.log("Default tenant NOT found");
     }
   } catch (error) {
     console.error("Error:", error);

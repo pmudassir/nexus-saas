@@ -1,0 +1,125 @@
+{
+  "node": {
+    "00d407b4cb47e601dfebbf78dd230a8e4c5a7b9fcc": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "action-browser"
+      },
+      "exportedName": "logout",
+      "filename": "src/actions/auth.ts"
+    },
+    "402461200f151702f7e9d6f28de360b91ca9d33934": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "createLead",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc"
+      },
+      "exportedName": "createLead",
+      "filename": "src/actions/leads.ts"
+    },
+    "40316af529a9fc83457515b44f5a390f434342dee8": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "completeActivity",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc"
+      },
+      "exportedName": "completeActivity",
+      "filename": "src/actions/leads.ts"
+    },
+    "4042b3009195cd987016985616afed7ce81f01271d": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "updateLeadScore",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc"
+      },
+      "exportedName": "updateLeadScore",
+      "filename": "src/actions/leads.ts"
+    },
+    "4076eb3f6e8f52db0307f849585f205bb70be3cf2d": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "deleteLead",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc"
+      },
+      "exportedName": "deleteLead",
+      "filename": "src/actions/leads.ts"
+    },
+    "4088bfd271ecd68c96f8dcc889e099e902fc585641": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "updateLeadStage",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc"
+      },
+      "exportedName": "updateLeadStage",
+      "filename": "src/actions/leads.ts"
+    },
+    "40e744b0b8bccfbbde3a9e6ea45a8941bfbb6e2bb0": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "addLeadActivity",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc"
+      },
+      "exportedName": "addLeadActivity",
+      "filename": "src/actions/leads.ts"
+    },
+    "40ee3c37979c06b269dbedf6359b6b9b1561b28a0a": {
+      "workers": {
+        "app/crm/leads/[id]/page": {
+          "moduleId": 84172,
+          "async": true,
+          "exportedName": "scheduleFollowUp",
+          "filename": "src/actions/leads.ts"
+        }
+      },
+      "layer": {
+        "app/crm/leads/[id]/page": "rsc"
+      },
+      "exportedName": "scheduleFollowUp",
+      "filename": "src/actions/leads.ts"
+    }
+  },
+  "edge": {}
+}

@@ -69,20 +69,11 @@ export default async function AuditLogsPage({
 
         {/* Filters */}
         <div className="rounded-md border border-border bg-white p-4 shadow-sm">
-          <div className="flex items-center gap-4">
+          <form method="get" className="flex items-center gap-4">
             <Filter className="w-5 h-5 text-muted-foreground" />
             <select
               name="action"
               defaultValue={searchParams.action || ''}
-              onChange={(e) => {
-                const url = new URL(window.location.href);
-                if (e.target.value) {
-                  url.searchParams.set('action', e.target.value);
-                } else {
-                  url.searchParams.delete('action');
-                }
-                window.location.href = url.toString();
-              }}
               className="rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
             >
               <option value="" className="bg-white text-foreground">
@@ -98,7 +89,21 @@ export default async function AuditLogsPage({
                 </option>
               ))}
             </select>
-          </div>
+            <button
+              type="submit"
+              className="px-3 py-2 rounded-md bg-white border border-border hover:bg-muted text-foreground text-sm transition-colors shadow-sm"
+            >
+              Apply
+            </button>
+            {searchParams.action && (
+              <a
+                href="?"
+                className="px-3 py-2 rounded-md bg-white border border-border hover:bg-muted text-foreground text-sm transition-colors shadow-sm"
+              >
+                Clear
+              </a>
+            )}
+          </form>
         </div>
 
         {/* Logs Table */}

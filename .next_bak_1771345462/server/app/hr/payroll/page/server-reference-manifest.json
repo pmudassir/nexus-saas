@@ -1,0 +1,125 @@
+{
+  "node": {
+    "00d407b4cb47e601dfebbf78dd230a8e4c5a7b9fcc": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "action-browser"
+      },
+      "exportedName": "logout",
+      "filename": "src/actions/auth.ts"
+    },
+    "40d1fdb7153d2e25ce131e245caf55cf7138081eee": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "src/app/hr/payroll/page.tsx"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "exportedName": "$$RSC_SERVER_ACTION_0",
+      "filename": "src/app/hr/payroll/page.tsx"
+    },
+    "00f1d4c07c289e461a3d2ae334c1b3921272ee8e13": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "getCurrentPayPeriod",
+          "filename": "src/actions/payroll.ts"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "exportedName": "getCurrentPayPeriod",
+      "filename": "src/actions/payroll.ts"
+    },
+    "4040cc30a700a1739ecf74fe755ad55f55ae8b0d19": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "generatePayroll",
+          "filename": "src/actions/payroll.ts"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "exportedName": "generatePayroll",
+      "filename": "src/actions/payroll.ts"
+    },
+    "40875887555b8c644b046281eb6f19c64557bc23d3": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "markPayrollPaid",
+          "filename": "src/actions/payroll.ts"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "exportedName": "markPayrollPaid",
+      "filename": "src/actions/payroll.ts"
+    },
+    "40a23ee9643d42560a05679c18066e807536f63861": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "bulkMarkPaid",
+          "filename": "src/actions/payroll.ts"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "exportedName": "bulkMarkPaid",
+      "filename": "src/actions/payroll.ts"
+    },
+    "40b88f46252c9608a2c683f825bca6c9e55f9c9520": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "processPayroll",
+          "filename": "src/actions/payroll.ts"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "exportedName": "processPayroll",
+      "filename": "src/actions/payroll.ts"
+    },
+    "40ce69bc5be81da78bdfe37f239bd6c603a5db31cb": {
+      "workers": {
+        "app/hr/payroll/page": {
+          "moduleId": 88937,
+          "async": true,
+          "exportedName": "bulkProcessPayroll",
+          "filename": "src/actions/payroll.ts"
+        }
+      },
+      "layer": {
+        "app/hr/payroll/page": "rsc"
+      },
+      "exportedName": "bulkProcessPayroll",
+      "filename": "src/actions/payroll.ts"
+    }
+  },
+  "edge": {}
+}

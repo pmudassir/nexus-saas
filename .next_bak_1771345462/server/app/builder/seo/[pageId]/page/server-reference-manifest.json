@@ -1,0 +1,50 @@
+{
+  "node": {
+    "00d407b4cb47e601dfebbf78dd230a8e4c5a7b9fcc": {
+      "workers": {
+        "app/builder/seo/[pageId]/page": {
+          "moduleId": 54170,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/builder/seo/[pageId]/page": "action-browser"
+      },
+      "exportedName": "logout",
+      "filename": "src/actions/auth.ts"
+    },
+    "009e74c02313a0e65c54903fddc65cb069f17d0db1": {
+      "workers": {
+        "app/builder/seo/[pageId]/page": {
+          "moduleId": 54170,
+          "async": true,
+          "exportedName": "generateSitemap",
+          "filename": "src/actions/seo.ts"
+        }
+      },
+      "layer": {
+        "app/builder/seo/[pageId]/page": "rsc"
+      },
+      "exportedName": "generateSitemap",
+      "filename": "src/actions/seo.ts"
+    },
+    "40351321a71ed1fa232387e5916b9a1985c383e7c5": {
+      "workers": {
+        "app/builder/seo/[pageId]/page": {
+          "moduleId": 54170,
+          "async": true,
+          "exportedName": "updatePageSEO",
+          "filename": "src/actions/seo.ts"
+        }
+      },
+      "layer": {
+        "app/builder/seo/[pageId]/page": "rsc"
+      },
+      "exportedName": "updatePageSEO",
+      "filename": "src/actions/seo.ts"
+    }
+  },
+  "edge": {}
+}

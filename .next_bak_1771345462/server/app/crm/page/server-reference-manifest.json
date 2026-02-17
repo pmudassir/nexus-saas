@@ -1,0 +1,65 @@
+{
+  "node": {
+    "00d407b4cb47e601dfebbf78dd230a8e4c5a7b9fcc": {
+      "workers": {
+        "app/crm/page": {
+          "moduleId": 71019,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/crm/page": "action-browser"
+      },
+      "exportedName": "logout",
+      "filename": "src/actions/auth.ts"
+    },
+    "408f4d1514abdb1c37adaf00b4baf016b049cb95bb": {
+      "workers": {
+        "app/crm/page": {
+          "moduleId": 71019,
+          "async": true,
+          "exportedName": "upsertContact",
+          "filename": "src/actions/crm.ts"
+        }
+      },
+      "layer": {
+        "app/crm/page": "rsc"
+      },
+      "exportedName": "upsertContact",
+      "filename": "src/actions/crm.ts"
+    },
+    "40aacced7811d1e083d035c43cd0d046bf03b3435c": {
+      "workers": {
+        "app/crm/page": {
+          "moduleId": 71019,
+          "async": true,
+          "exportedName": "addContactActivity",
+          "filename": "src/actions/crm.ts"
+        }
+      },
+      "layer": {
+        "app/crm/page": "rsc"
+      },
+      "exportedName": "addContactActivity",
+      "filename": "src/actions/crm.ts"
+    },
+    "40ededa6fc0ceda5c111bbb0ac4858d9cb9156487c": {
+      "workers": {
+        "app/crm/page": {
+          "moduleId": 71019,
+          "async": true,
+          "exportedName": "deleteContact",
+          "filename": "src/actions/crm.ts"
+        }
+      },
+      "layer": {
+        "app/crm/page": "rsc"
+      },
+      "exportedName": "deleteContact",
+      "filename": "src/actions/crm.ts"
+    }
+  },
+  "edge": {}
+}

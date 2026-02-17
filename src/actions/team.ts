@@ -2,15 +2,16 @@
 
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/prisma';
-import { requireTenantMembership } from '@/lib/tenant-auth';
+import { requireTenantPermission } from '@/lib/tenant-auth';
 import { resend, EMAIL_FROM } from '@/lib/email';
 import bcrypt from 'bcryptjs';
+import { PERMISSION_KEYS } from '@/lib/permission-keys';
 
 /**
  * Invite a user to the tenant
  */
 export async function inviteUser(formData: FormData) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(PERMISSION_KEYS.SETTINGS_USERS_MANAGE);
 
   const email = (formData.get('email') as string).toLowerCase().trim();
   const name = (formData.get('name') as string)?.trim() || '';
@@ -26,6 +27,18 @@ export async function inviteUser(formData: FormData) {
   } else if (roleRaw.startsWith('CUSTOM:')) {
     role = 'CUSTOM';
     customRoleId = roleRaw.replace('CUSTOM:', '');
+
+    const customRole = await prisma.customRole.findFirst({
+      where: {
+        id: customRoleId,
+        tenantId: tenant.id,
+      },
+      select: { id: true },
+    });
+
+    if (!customRole) {
+      throw new Error('Invalid custom role for this tenant');
+    }
   }
 
   if (!email) {
@@ -126,7 +139,7 @@ export async function inviteUser(formData: FormData) {
  * Remove a user from the tenant
  */
 export async function removeUser(formData: FormData) {
-  const { tenant, session } = await requireTenantMembership();
+  const { tenant, session } = await requireTenantPermission(PERMISSION_KEYS.SETTINGS_USERS_MANAGE);
 
   const tenantUserId = formData.get('tenantUserId') as string;
 

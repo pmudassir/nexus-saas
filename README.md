@@ -1,6 +1,18 @@
 # Nexus SaaS - Multi-Tenant Business Management Platform
 
-A production-ready, multi-tenant SaaS platform for deploying customized business websites and management tools. Built with Next.js 15, Prisma, PostgreSQL, and TypeScript.
+A production-ready, multi-tenant SaaS platform for deploying customized business websites and management tools. Built with Next.js 16, Prisma, PostgreSQL, and TypeScript.
+
+## 📌 Current Project Status Docs
+
+- Session context: `README_CHAT_CONTEXT.md`
+- Work completed and pending backlog: `README_WORK_DONE_PENDING.md`
+
+## ✅ Current Status
+
+- `npm run lint`: passing
+- `npm run type-check`: passing
+- `npm run build`: passing
+- Note: webhook idempotency now depends on the `WebhookEvent` table migration.
 
 ## 🌟 Features
 
@@ -151,7 +163,7 @@ nexus-saas/
 │   │   ├── features.ts         # Feature flags helpers
 │   │   └── tenant-auth.ts      # Auth utilities
 │   ├── auth.ts                 # NextAuth configuration
-│   └── middleware.ts           # Route middleware
+│   └── proxy.ts               # Next.js 16 request proxy
 ├── templates/                  # Website templates
 │   ├── restaurant.json
 │   ├── salon.json

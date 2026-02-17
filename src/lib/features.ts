@@ -1,4 +1,5 @@
 import { prisma } from './prisma';
+import { cache } from 'react';
 
 // Default feature definitions
 export const FEATURES = {
@@ -13,6 +14,35 @@ export const FEATURES = {
 } as const;
 
 export type FeatureKey = (typeof FEATURES)[keyof typeof FEATURES];
+
+const getTenantUserWithPermissions = cache(async (userId: string, tenantId: string) => {
+  return prisma.tenantUser.findUnique({
+    where: {
+      tenantId_userId: {
+        tenantId,
+        userId,
+      },
+    },
+    include: {
+      customRole: true,
+      permissions: {
+        where: {
+          granted: true,
+        },
+        include: {
+          permission: true,
+        },
+      },
+    },
+  });
+});
+
+const getAllPermissionKeys = cache(async () => {
+  const allPermissions = await prisma.permission.findMany({
+    select: { key: true },
+  });
+  return allPermissions.map((p) => p.key);
+});
 
 // Default feature configurations
 export const DEFAULT_FEATURE_CONFIG = {
@@ -99,22 +129,7 @@ export async function hasPermission(
   tenantId: string,
   permissionKey: string,
 ): Promise<boolean> {
-  // Get the tenant user record
-  const tenantUser = await prisma.tenantUser.findUnique({
-    where: {
-      tenantId_userId: {
-        tenantId,
-        userId,
-      },
-    },
-    include: {
-      permissions: {
-        include: {
-          permission: true,
-        },
-      },
-    },
-  });
+  const tenantUser = await getTenantUserWithPermissions(userId, tenantId);
 
   if (!tenantUser) {
     return false;
@@ -122,6 +137,14 @@ export async function hasPermission(
 
   // Tenant admins have all permissions
   if (tenantUser.role === 'TENANT_ADMIN') {
+    return true;
+  }
+
+  if (
+    tenantUser.role === 'CUSTOM' &&
+    tenantUser.customRole &&
+    tenantUser.customRole.permissions.includes(permissionKey)
+  ) {
     return true;
   }
 
@@ -137,24 +160,7 @@ export async function hasPermission(
  * Get all permissions for a user in a tenant
  */
 export async function getUserPermissions(userId: string, tenantId: string) {
-  const tenantUser = await prisma.tenantUser.findUnique({
-    where: {
-      tenantId_userId: {
-        tenantId,
-        userId,
-      },
-    },
-    include: {
-      permissions: {
-        where: {
-          granted: true,
-        },
-        include: {
-          permission: true,
-        },
-      },
-    },
-  });
+  const tenantUser = await getTenantUserWithPermissions(userId, tenantId);
 
   if (!tenantUser) {
     return [];
@@ -162,11 +168,16 @@ export async function getUserPermissions(userId: string, tenantId: string) {
 
   // Tenant admins get all permissions
   if (tenantUser.role === 'TENANT_ADMIN') {
-    const allPermissions = await prisma.permission.findMany();
-    return allPermissions.map((p) => p.key);
+    return getAllPermissionKeys();
   }
 
-  return tenantUser.permissions.map((rp) => rp.permission.key);
+  const directPermissions = tenantUser.permissions.map((rp) => rp.permission.key);
+  const rolePermissions =
+    tenantUser.role === 'CUSTOM' && tenantUser.customRole
+      ? tenantUser.customRole.permissions
+      : [];
+
+  return Array.from(new Set([...directPermissions, ...rolePermissions]));
 }
 
 /**

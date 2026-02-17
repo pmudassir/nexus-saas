@@ -1,0 +1,65 @@
+{
+  "node": {
+    "00d407b4cb47e601dfebbf78dd230a8e4c5a7b9fcc": {
+      "workers": {
+        "app/admin/page": {
+          "moduleId": 57766,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/admin/page": "action-browser"
+      },
+      "exportedName": "logout",
+      "filename": "src/actions/auth.ts"
+    },
+    "40c3eeff14a49790da89a8ccafc885270a63f85c85": {
+      "workers": {
+        "app/admin/page": {
+          "moduleId": 57766,
+          "async": true,
+          "exportedName": "updateTenant",
+          "filename": "src/actions/tenants.ts"
+        }
+      },
+      "layer": {
+        "app/admin/page": "action-browser"
+      },
+      "exportedName": "updateTenant",
+      "filename": "src/actions/tenants.ts"
+    },
+    "405967129581d771b5409e79e4edaa2b9729fb4e42": {
+      "workers": {
+        "app/admin/page": {
+          "moduleId": 57766,
+          "async": true,
+          "exportedName": "deleteTenant",
+          "filename": "src/actions/tenants.ts"
+        }
+      },
+      "layer": {
+        "app/admin/page": "action-browser"
+      },
+      "exportedName": "deleteTenant",
+      "filename": "src/actions/tenants.ts"
+    },
+    "40e9268802e4d14bbef238c596e20798165e94460d": {
+      "workers": {
+        "app/admin/page": {
+          "moduleId": 57766,
+          "async": true,
+          "exportedName": "createTenant",
+          "filename": "src/actions/tenants.ts"
+        }
+      },
+      "layer": {
+        "app/admin/page": "action-browser"
+      },
+      "exportedName": "createTenant",
+      "filename": "src/actions/tenants.ts"
+    }
+  },
+  "edge": {}
+}

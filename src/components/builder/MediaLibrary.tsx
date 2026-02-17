@@ -1,14 +1,10 @@
 'use client';
+/* eslint-disable @next/next/no-img-element */
 
 import { useState, useRef } from 'react';
 import { Upload, Image as ImageIcon, Check, X, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { uploadFile } from '@/actions/upload';
-
-type UploadedFile = {
-  url: string;
-  filename: string;
-};
 
 type MediaLibraryProps = {
   onSelect?: (url: string) => void;
@@ -22,7 +18,6 @@ type MediaLibraryProps = {
 
 export function MediaLibrary({ onSelect, existingFiles = [] }: MediaLibraryProps) {
   const [uploading, setUploading] = useState(false);
-  const [_uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
   const [selectedUrl, setSelectedUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -38,7 +33,6 @@ export function MediaLibrary({ onSelect, existingFiles = [] }: MediaLibraryProps
       formData.append('file', file);
 
       const result = await uploadFile(formData);
-      setUploadedFile(result);
       
       if (onSelect) {
         onSelect(result.url);

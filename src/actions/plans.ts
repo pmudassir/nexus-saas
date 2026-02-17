@@ -2,26 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
-
-// Admin check
-async function requireAdmin() {
-  const session = await auth();
-  if (!session?.user) {
-    throw new Error("Not authenticated");
-  }
-  const user = await prisma.user.findUnique({
-    where: { id: (session.user as { id: string }).id },
-  });
-  if (!user || user.role !== "ADMIN") {
-    throw new Error("Unauthorized - Admin only");
-  }
-  return user;
-}
+import { requireSuperAdmin } from "@/lib/admin-auth";
 
 // Get all plans (admin)
 export async function getPlans() {
-  await requireAdmin();
+  await requireSuperAdmin();
   return prisma.plan.findMany({
     include: {
       _count: {
@@ -34,7 +19,7 @@ export async function getPlans() {
 
 // Create plan
 export async function createPlan(formData: FormData) {
-  await requireAdmin();
+  await requireSuperAdmin();
 
   const name = formData.get("name") as string;
   const priceMonthly = parseInt(formData.get("price") as string) || 0;
@@ -55,7 +40,7 @@ export async function createPlan(formData: FormData) {
 
 // Update plan
 export async function updatePlan(formData: FormData) {
-  await requireAdmin();
+  await requireSuperAdmin();
 
   const planId = formData.get("planId") as string;
   const name = formData.get("name") as string;
@@ -74,7 +59,7 @@ export async function updatePlan(formData: FormData) {
 
 // Delete plan
 export async function deletePlan(formData: FormData) {
-  await requireAdmin();
+  await requireSuperAdmin();
 
   const planId = formData.get("planId") as string;
 

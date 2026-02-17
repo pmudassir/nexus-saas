@@ -1,0 +1,35 @@
+{
+  "node": {
+    "00d407b4cb47e601dfebbf78dd230a8e4c5a7b9fcc": {
+      "workers": {
+        "app/workspace/page": {
+          "moduleId": 57835,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/workspace/page": "action-browser"
+      },
+      "exportedName": "logout",
+      "filename": "src/actions/auth.ts"
+    },
+    "00ff480648fe2cc4767e18c4c0429bb729dd7485b7": {
+      "workers": {
+        "app/workspace/page": {
+          "moduleId": 57835,
+          "async": true,
+          "exportedName": "getWorkspaceStats",
+          "filename": "src/actions/workspace.ts"
+        }
+      },
+      "layer": {
+        "app/workspace/page": "rsc"
+      },
+      "exportedName": "getWorkspaceStats",
+      "filename": "src/actions/workspace.ts"
+    }
+  },
+  "edge": {}
+}

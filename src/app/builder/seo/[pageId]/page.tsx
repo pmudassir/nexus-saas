@@ -1,9 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
+
 import { Shell } from "@/components/layout/Shell";
 import { prisma } from "@/lib/prisma";
 import { requireTenantMembership } from "@/lib/tenant-auth";
 import { Button } from "@/components/ui/button";
 import { updatePageSEO } from "@/actions/seo";
-import { Search, FileText, Image } from "lucide-react";
+import { Search, FileText, Image as ImageIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 
 export default async function PageSEOEditor({
@@ -103,7 +105,7 @@ export default async function PageSEOEditor({
           {/* Open Graph / Social Media */}
           <div className="rounded-md border border-border bg-white p-6 shadow-sm">
             <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-              <Image className="w-5 h-5" />
+              <ImageIcon className="w-5 h-5" />
               Social Media Preview
             </h2>
             <div className="space-y-4">

@@ -204,7 +204,11 @@ export function Sidebar({ context }: { context: SidebarContext }) {
                 <span>Admin Panel</span>
               </Link>
             )}
-            {(context.tenantRole === 'TENANT_ADMIN' || context.isSuperAdmin) && (
+            {(context.tenantRole === 'TENANT_ADMIN'
+              || context.isSuperAdmin
+              || context.allowedPermissions.includes('settings.users.manage')
+              || context.allowedPermissions.includes('settings.tenant.read')
+              || context.allowedPermissions.includes('settings.tenant.update')) && (
               <Link href="/settings" className="group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-all duration-200">
                 <Settings className="h-4 w-4 text-muted-foreground group-hover:text-foreground" />
                 <span>Settings</span>

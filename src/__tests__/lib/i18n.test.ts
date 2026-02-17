@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { t, isRTL, formatCurrency, formatNumber, formatDate, getBrowserLocale } from "@/lib/i18n";
+import { t, isRTL, formatCurrency, formatNumber, formatDate } from "@/lib/i18n";
 
 describe("i18n", () => {
   describe("t (translate)", () => {

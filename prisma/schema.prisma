@@ -326,6 +326,17 @@ model Tenant {
   leadFieldConfig LeadFieldConfig?
 }
 
+model WebhookEvent {
+  id        String   @id @default(cuid())
+  provider  String
+  eventId   String
+  type      String
+  createdAt DateTime @default(now())
+
+  @@unique([provider, eventId])
+  @@index([provider, createdAt])
+}
+
 model Plan {
   id                  String   @id @default(cuid())
   name                String
@@ -701,6 +712,7 @@ model CustomRole {
   tenant      Tenant   @relation(fields: [tenantId], references: [id])
   name        String
   featureKeys String[] @default([])
+  permissions String[] @default([])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   members     TenantUser[]

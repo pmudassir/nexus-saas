@@ -84,12 +84,7 @@ export default async function BrandingPage() {
                     defaultValue={tenant.primaryColor || '#6366f1'}
                     placeholder="#6366f1"
                     className="flex-1 rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary font-mono"
-                    onChange={(e) => {
-                      const colorInput = e.currentTarget.parentElement?.querySelector(
-                        'input[type="color"]',
-                      ) as HTMLInputElement;
-                      if (colorInput) colorInput.value = e.target.value;
-                    }}
+                    readOnly
                   />
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
@@ -114,12 +109,7 @@ export default async function BrandingPage() {
                     defaultValue={tenant.secondaryColor || '#8b5cf6'}
                     placeholder="#8b5cf6"
                     className="flex-1 rounded-md bg-white border border-border px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary font-mono"
-                    onChange={(e) => {
-                      const colorInput = e.currentTarget.parentElement?.querySelector(
-                        'input[type="color"]',
-                      ) as HTMLInputElement;
-                      if (colorInput) colorInput.value = e.target.value;
-                    }}
+                    readOnly
                   />
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">

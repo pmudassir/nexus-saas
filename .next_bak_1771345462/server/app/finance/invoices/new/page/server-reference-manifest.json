@@ -1,0 +1,35 @@
+{
+  "node": {
+    "00d407b4cb47e601dfebbf78dd230a8e4c5a7b9fcc": {
+      "workers": {
+        "app/finance/invoices/new/page": {
+          "moduleId": 84150,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/finance/invoices/new/page": "action-browser"
+      },
+      "exportedName": "logout",
+      "filename": "src/actions/auth.ts"
+    },
+    "409bcdc5b7d71d8a5b9efb31b8cfd23a484dd2c00e": {
+      "workers": {
+        "app/finance/invoices/new/page": {
+          "moduleId": 84150,
+          "async": true,
+          "exportedName": "createInvoice",
+          "filename": "src/actions/invoices.ts"
+        }
+      },
+      "layer": {
+        "app/finance/invoices/new/page": "action-browser"
+      },
+      "exportedName": "createInvoice",
+      "filename": "src/actions/invoices.ts"
+    }
+  },
+  "edge": {}
+}

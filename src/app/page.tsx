@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import Link from "next/link";
 import { Shell } from "@/components/layout/Shell";
 import { RevenueChart } from "@/components/analytics/Charts";

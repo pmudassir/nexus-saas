@@ -36,6 +36,19 @@ export default async function RolesPage() {
     select: { key: true },
   });
   const enabledKeys = enabledFeatures.map((f) => f.key);
+  const permissions = await prisma.permission.findMany({
+    orderBy: [{ module: 'asc' }, { action: 'asc' }],
+  });
+  const permissionsByModule = permissions.reduce(
+    (acc, permission) => {
+      if (!acc[permission.module]) {
+        acc[permission.module] = [];
+      }
+      acc[permission.module].push(permission);
+      return acc;
+    },
+    {} as Record<string, typeof permissions>,
+  );
 
   return (
     <Shell>
@@ -92,6 +105,42 @@ export default async function RolesPage() {
               {/* Hidden input to collect selected features */}
               <input type="hidden" name="featureKeys" id="featureKeysInput" />
             </div>
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-2">
+                Allowed Actions
+              </label>
+              <div className="grid gap-3 md:grid-cols-2">
+                {Object.entries(permissionsByModule).map(([module, modulePermissions]) => (
+                  <div
+                    key={module}
+                    className="rounded-xl bg-gray-50 border border-gray-200 p-3"
+                  >
+                    <div className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground mb-2">
+                      {module}
+                    </div>
+                    <div className="space-y-1.5">
+                      {modulePermissions.map((permission) => (
+                        <label
+                          key={permission.key}
+                          className="flex items-start gap-2 text-sm text-foreground cursor-pointer"
+                        >
+                          <input
+                            type="checkbox"
+                            name="permission"
+                            value={permission.key}
+                            className="mt-0.5 rounded border-gray-300 text-orange-600 focus:ring-orange-500"
+                          />
+                          <span>
+                            {permission.description || permission.key}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <input type="hidden" name="permissions" id="permissionsInput" />
+            </div>
             <Button
               type="submit"
               className="rounded-full bg-black text-white hover:bg-gray-800 h-10 px-6 font-medium shadow-md"
@@ -99,7 +148,9 @@ export default async function RolesPage() {
                 'use server';
                 // Collect checked checkboxes into the featureKeys field
                 const features = formData.getAll('feature') as string[];
+                const permissions = formData.getAll('permission') as string[];
                 formData.set('featureKeys', features.join(','));
+                formData.set('permissions', permissions.join(','));
                 await createRole(formData);
               }}
             >
@@ -149,6 +200,9 @@ export default async function RolesPage() {
                       </span>
                     ))
                   )}
+                </div>
+                <div className="mt-2 text-xs text-muted-foreground">
+                  {role.permissions.length} permission{role.permissions.length !== 1 ? 's' : ''} assigned
                 </div>
               </div>
               <RemoveRoleButton roleId={role.id} roleName={role.name} deleteRole={deleteRole} />

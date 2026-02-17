@@ -31,7 +31,3 @@ export async function deleteWidget(formData: FormData) {
 
   revalidatePath('/analytics');
 }
-
-export const WIDGET_TYPES = ['METRIC', 'CHART', 'TABLE', 'LIST'] as const;
-export const CHART_TYPES = ['LINE', 'BAR', 'PIE', 'DOUGHNUT'] as const;
-export const DATA_SOURCES = ['Revenue', 'Expenses', 'Invoices', 'Leads', 'Employees', 'Products'] as const;

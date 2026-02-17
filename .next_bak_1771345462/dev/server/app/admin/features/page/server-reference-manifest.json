@@ -1,0 +1,35 @@
+{
+  "node": {
+    "009c4e90b78e5e1c98ea315d6b435711342956bc82": {
+      "workers": {
+        "app/admin/features/page": {
+          "moduleId": "[project]/.next-internal/server/app/admin/features/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/actions/features.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/admin/features/page": "action-browser"
+      },
+      "exportedName": "logout",
+      "filename": "src/actions/auth.ts"
+    },
+    "40dd773496617a6fdfbd56570146411580de47f5bb": {
+      "workers": {
+        "app/admin/features/page": {
+          "moduleId": "[project]/.next-internal/server/app/admin/features/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/actions/features.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "toggleFeature",
+          "filename": "src/actions/features.ts"
+        }
+      },
+      "layer": {
+        "app/admin/features/page": "action-browser"
+      },
+      "exportedName": "toggleFeature",
+      "filename": "src/actions/features.ts"
+    }
+  },
+  "edge": {}
+}

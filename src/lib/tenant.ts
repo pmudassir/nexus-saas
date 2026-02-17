@@ -1,4 +1,5 @@
 import { headers } from "next/headers";
+import { cache } from "react";
 import { prisma } from "@/lib/prisma";
 import type { Tenant } from "@prisma/client";
 
@@ -68,9 +69,11 @@ export async function resolveTenantFromHost(
   return null;
 }
 
-export async function getCurrentTenant(kind: "app" | "site" = "app", userId?: string) {
-  const headersList = await headers();
-  const host = headersList.get("host");
+const getCurrentTenantCached = cache(async (
+  kind: "app" | "site",
+  host: string | null,
+  userId: string | null,
+) => {
   const tenant = await resolveTenantFromHost(host, { kind });
 
   // On localhost, if no tenant resolved and we have a userId,
@@ -88,4 +91,10 @@ export async function getCurrentTenant(kind: "app" | "site" = "app", userId?: st
   }
 
   return tenant;
+});
+
+export async function getCurrentTenant(kind: "app" | "site" = "app", userId?: string) {
+  const headersList = await headers();
+  const host = headersList.get("host");
+  return getCurrentTenantCached(kind, host, userId ?? null);
 }

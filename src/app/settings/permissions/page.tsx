@@ -103,7 +103,6 @@ export default async function PermissionsPage() {
                           <select
                             name="role"
                             defaultValue={tenantUser.role}
-                            onChange={(e) => e.currentTarget.form?.requestSubmit()}
                             className="rounded-md bg-white border border-border px-3 py-1.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                           >
                             <option value="TENANT_ADMIN" className="bg-white text-foreground">
@@ -116,6 +115,9 @@ export default async function PermissionsPage() {
                               Custom Permissions
                             </option>
                           </select>
+                          <Button type="submit" variant="ghost" className="ml-2 h-8 px-3 text-xs">
+                            Update Role
+                          </Button>
                         </form>
                       </div>
                     </div>

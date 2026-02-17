@@ -1,6 +1,6 @@
 import { auth } from '@/auth';
-import { prisma } from '@/lib/prisma';
 import { getCurrentTenant } from '@/lib/tenant';
+import { getUserContext } from '@/lib/rbac';
 import { Sidebar } from './Sidebar';
 
 export type SidebarContext = {
@@ -10,6 +10,7 @@ export type SidebarContext = {
   tenantRole: string;
   customRoleName: string | null;
   allowedFeatures: string[];
+  allowedPermissions: string[];
   isSuperAdmin: boolean;
 };
 
@@ -31,49 +32,20 @@ export async function SidebarProvider() {
   const tenant = await getCurrentTenant('app', user.id);
   if (!tenant) return null;
 
-  // Get membership with custom role
-  const membership = await prisma.tenantUser.findUnique({
-    where: {
-      tenantId_userId: {
-        tenantId: tenant.id,
-        userId: user.id,
-      },
-    },
-    include: {
-      customRole: true,
-    },
-  });
+  const userContext = await getUserContext(tenant.id);
+  if (!userContext) return null;
 
-  // Get tenant's enabled features
-  const enabledFeatures = await prisma.tenantFeature.findMany({
-    where: { tenantId: tenant.id, enabled: true },
-    select: { key: true },
-  });
-  const enabledFeatureKeys = enabledFeatures.map((f) => f.key);
-
-  // Compute allowed features
-  let allowedFeatures: string[];
-  const tenantRole = membership?.role || (isSuperAdmin ? 'TENANT_ADMIN' : null);
-
-  if (isSuperAdmin || tenantRole === 'TENANT_ADMIN') {
-    allowedFeatures = enabledFeatureKeys;
-  } else if (tenantRole === 'CUSTOM' && membership?.customRole) {
-    allowedFeatures = membership.customRole.featureKeys.filter((key) =>
-      enabledFeatureKeys.includes(key)
-    );
-  } else {
-    // TENANT_USER default — see all enabled features
-    allowedFeatures = enabledFeatureKeys;
-  }
+  const tenantRole = userContext.tenantRole || (isSuperAdmin ? 'TENANT_ADMIN' : 'TENANT_USER');
 
   const ctx: SidebarContext = {
     userName: user.name || user.email || 'User',
     userEmail: user.email || '',
-    tenantName: tenant.name,
-    tenantRole: tenantRole || 'TENANT_USER',
-    customRoleName: membership?.customRole?.name || null,
-    allowedFeatures,
-    isSuperAdmin,
+    tenantName: userContext.tenantName || tenant.name,
+    tenantRole,
+    customRoleName: userContext.customRoleName,
+    allowedFeatures: userContext.allowedFeatures,
+    allowedPermissions: userContext.allowedPermissions,
+    isSuperAdmin: userContext.isSuperAdmin,
   };
 
   return <Sidebar context={ctx} />;

@@ -11,7 +11,7 @@ export async function GET() {
         'Cache-Control': 'public, max-age=3600, s-maxage=3600',
       },
     });
-  } catch (_error) {
+  } catch {
     return new NextResponse('Error generating sitemap', { status: 500 });
   }
 }

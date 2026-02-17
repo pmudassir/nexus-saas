@@ -1,8 +1,8 @@
-'use server';
-
 import { prisma } from './prisma';
 import { auth } from '@/auth';
 import type { TenantRole } from '@prisma/client';
+import { getUserPermissions } from './features';
+import { cache } from 'react';
 
 export type UserContext = {
   userId: string;
@@ -15,13 +15,14 @@ export type UserContext = {
   tenantRole: TenantRole | null;
   customRoleName: string | null;
   allowedFeatures: string[];
+  allowedPermissions: string[];
 };
 
 /**
  * Get the full user context including role and allowed features.
  * This is the primary function used to determine what the user can see/do.
  */
-export async function getUserContext(tenantId?: string): Promise<UserContext | null> {
+const getUserContextInternal = cache(async (tenantId?: string): Promise<UserContext | null> => {
   const session = await auth();
   if (!session?.user) return null;
 
@@ -42,6 +43,7 @@ export async function getUserContext(tenantId?: string): Promise<UserContext | n
       tenantRole: null,
       customRoleName: null,
       allowedFeatures: isSuperAdmin ? getAllFeatureKeys() : [],
+      allowedPermissions: [],
     };
   }
 
@@ -86,7 +88,7 @@ export async function getUserContext(tenantId?: string): Promise<UserContext | n
     // Super admins and tenant admins see all enabled features
     allowedFeatures = enabledFeatures;
   } else if (tenantRole === 'CUSTOM' && customRole) {
-    // Custom role: intersection of tenant-enabled features and role's feature keys
+    // Custom role: intersection of tenant-enabled features and role feature allowlist.
     allowedFeatures = customRole.featureKeys.filter((key) =>
       enabledFeatures.includes(key)
     );
@@ -105,7 +107,12 @@ export async function getUserContext(tenantId?: string): Promise<UserContext | n
     tenantRole,
     customRoleName: customRole?.name || null,
     allowedFeatures,
+    allowedPermissions: await getUserPermissions(user.id, tenantId),
   };
+});
+
+export async function getUserContext(tenantId?: string): Promise<UserContext | null> {
+  return getUserContextInternal(tenantId);
 }
 
 /**

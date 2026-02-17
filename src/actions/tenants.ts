@@ -1,22 +1,14 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import { initializeFeatures } from "./features";
+import { initializeTenantFeatures } from "@/lib/features";
+import { requireSuperAdmin } from "@/lib/admin-auth";
 import bcrypt from "bcryptjs";
 import { Prisma } from "@prisma/client";
 
 export async function createTenant(formData: FormData) {
-  const session = await auth();
-
-  const isSuperAdmin = Boolean(
-    session?.user && (session.user as { isSuperAdmin?: boolean }).isSuperAdmin,
-  );
-  if (!isSuperAdmin) {
-    redirect("/");
-  }
+  await requireSuperAdmin();
 
   const name = String(formData.get("name") ?? "").trim();
   const slug = String(formData.get("slug") ?? "")
@@ -56,7 +48,7 @@ export async function createTenant(formData: FormData) {
   });
 
   // Initialize default features for the tenant
-  await initializeFeatures(tenant.id);
+  await initializeTenantFeatures(tenant.id);
 
   // Create admin user for the tenant if email + password provided
   if (adminEmail && adminPassword) {
@@ -93,17 +85,11 @@ export async function createTenant(formData: FormData) {
   }
 
   revalidatePath("/admin");
-  redirect("/admin");
+
 }
 
 export async function updateTenant(formData: FormData) {
-  const session = await auth();
-  const isSuperAdmin = Boolean(
-    session?.user && (session.user as { isSuperAdmin?: boolean }).isSuperAdmin,
-  );
-  if (!isSuperAdmin) {
-    throw new Error("Unauthorized");
-  }
+  await requireSuperAdmin();
 
   const id = String(formData.get("id"));
   const name = String(formData.get("name"));
@@ -129,31 +115,53 @@ export async function updateTenant(formData: FormData) {
 }
 
 export async function deleteTenant(formData: FormData) {
-  const session = await auth();
-  const isSuperAdmin = Boolean(
-    session?.user && (session.user as { isSuperAdmin?: boolean }).isSuperAdmin,
-  );
-  if (!isSuperAdmin) {
-    throw new Error("Unauthorized");
-  }
+  await requireSuperAdmin();
 
   const id = String(formData.get("id"));
 
-  // Delete dependencies first to avoid FK constraints
-  // Note: This covers basic relations. If tenants have created Projects/Tasks etc, 
-  // those need to be deleted too or this will fail.
-  // For a full system reset, we'd need a recursive delete or DB CASADE.
   try {
-    await prisma.$transaction([
-      prisma.subscription.deleteMany({ where: { tenantId: id } }),
-      prisma.tenantUser.deleteMany({ where: { tenantId: id } }),
-      prisma.tenantFeature.deleteMany({ where: { tenantId: id } }),
-      // Add other cleanups as needed
-      prisma.tenant.delete({ where: { id } }),
-    ]);
+    await prisma.$transaction(async (tx) => {
+      await tx.invoiceItem.deleteMany({
+        where: { invoice: { tenantId: id } },
+      });
+      await tx.purchaseOrderItem.deleteMany({
+        where: { purchaseOrder: { tenantId: id } },
+      });
+      await tx.siteBlock.deleteMany({
+        where: { page: { tenantId: id } },
+      });
+      await tx.task.deleteMany({ where: { tenantId: id } });
+      await tx.leaveRequest.deleteMany({ where: { tenantId: id } });
+      await tx.attendance.deleteMany({ where: { tenantId: id } });
+      await tx.payroll.deleteMany({ where: { tenantId: id } });
+      await tx.leadActivity.deleteMany({ where: { tenantId: id } });
+      await tx.stockMovement.deleteMany({ where: { tenantId: id } });
+
+      await tx.project.deleteMany({ where: { tenantId: id } });
+      await tx.invoice.deleteMany({ where: { tenantId: id } });
+      await tx.expense.deleteMany({ where: { tenantId: id } });
+      await tx.contact.deleteMany({ where: { tenantId: id } });
+      await tx.automation.deleteMany({ where: { tenantId: id } });
+      await tx.purchaseOrder.deleteMany({ where: { tenantId: id } });
+      await tx.product.deleteMany({ where: { tenantId: id } });
+      await tx.supplier.deleteMany({ where: { tenantId: id } });
+      await tx.sitePage.deleteMany({ where: { tenantId: id } });
+      await tx.employee.deleteMany({ where: { tenantId: id } });
+      await tx.lead.deleteMany({ where: { tenantId: id } });
+      await tx.dashboardWidget.deleteMany({ where: { tenantId: id } });
+
+      await tx.leadFieldConfig.deleteMany({ where: { tenantId: id } });
+      await tx.auditLog.deleteMany({ where: { tenantId: id } });
+      await tx.domain.deleteMany({ where: { tenantId: id } });
+      await tx.subscription.deleteMany({ where: { tenantId: id } });
+      await tx.tenantFeature.deleteMany({ where: { tenantId: id } });
+      await tx.tenantUser.deleteMany({ where: { tenantId: id } });
+      await tx.customRole.deleteMany({ where: { tenantId: id } });
+      await tx.tenant.delete({ where: { id } });
+    });
   } catch (error) {
     console.error("Failed to delete tenant:", error);
-    throw new Error("Failed to delete tenant. It may have related data.");
+    throw new Error("Failed to delete tenant and all related data.");
   }
 
   revalidatePath("/admin");

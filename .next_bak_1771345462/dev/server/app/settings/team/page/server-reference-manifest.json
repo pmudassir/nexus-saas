@@ -1,0 +1,110 @@
+{
+  "node": {
+    "009c4e90b78e5e1c98ea315d6b435711342956bc82": {
+      "workers": {
+        "app/settings/team/page": {
+          "moduleId": "[project]/.next-internal/server/app/settings/team/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/actions/team.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/src/actions/roles.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/settings/team/page": "action-browser"
+      },
+      "exportedName": "logout",
+      "filename": "src/actions/auth.ts"
+    },
+    "406b714b6811fb1c3918a7d670415de3a08f867885": {
+      "workers": {
+        "app/settings/team/page": {
+          "moduleId": "[project]/.next-internal/server/app/settings/team/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/actions/team.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/src/actions/roles.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "removeUser",
+          "filename": "src/actions/team.ts"
+        }
+      },
+      "layer": {
+        "app/settings/team/page": "rsc"
+      },
+      "exportedName": "removeUser",
+      "filename": "src/actions/team.ts"
+    },
+    "40ea5f04aaf814257853709fa8cecfb6de1d3e216b": {
+      "workers": {
+        "app/settings/team/page": {
+          "moduleId": "[project]/.next-internal/server/app/settings/team/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/actions/team.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/src/actions/roles.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "inviteUser",
+          "filename": "src/actions/team.ts"
+        }
+      },
+      "layer": {
+        "app/settings/team/page": "rsc"
+      },
+      "exportedName": "inviteUser",
+      "filename": "src/actions/team.ts"
+    },
+    "4023c8ca00d9c01fae8a909a39b43a88e98062a09d": {
+      "workers": {
+        "app/settings/team/page": {
+          "moduleId": "[project]/.next-internal/server/app/settings/team/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/actions/team.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/src/actions/roles.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "createRole",
+          "filename": "src/actions/roles.ts"
+        }
+      },
+      "layer": {
+        "app/settings/team/page": "rsc"
+      },
+      "exportedName": "createRole",
+      "filename": "src/actions/roles.ts"
+    },
+    "40415a877977fef04af472979460c514ca8dde1984": {
+      "workers": {
+        "app/settings/team/page": {
+          "moduleId": "[project]/.next-internal/server/app/settings/team/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/actions/team.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/src/actions/roles.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "updateRole",
+          "filename": "src/actions/roles.ts"
+        }
+      },
+      "layer": {
+        "app/settings/team/page": "rsc"
+      },
+      "exportedName": "updateRole",
+      "filename": "src/actions/roles.ts"
+    },
+    "404f853658d2b4d42eabb5eabfd786c45bb39e20f6": {
+      "workers": {
+        "app/settings/team/page": {
+          "moduleId": "[project]/.next-internal/server/app/settings/team/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/actions/team.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/src/actions/roles.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "assignRole",
+          "filename": "src/actions/roles.ts"
+        }
+      },
+      "layer": {
+        "app/settings/team/page": "rsc"
+      },
+      "exportedName": "assignRole",
+      "filename": "src/actions/roles.ts"
+    },
+    "408c85a6b49293a9ac5a4c0f3b61f0bb414f191be0": {
+      "workers": {
+        "app/settings/team/page": {
+          "moduleId": "[project]/.next-internal/server/app/settings/team/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/actions/team.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/src/actions/roles.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "deleteRole",
+          "filename": "src/actions/roles.ts"
+        }
+      },
+      "layer": {
+        "app/settings/team/page": "rsc"
+      },
+      "exportedName": "deleteRole",
+      "filename": "src/actions/roles.ts"
+    }
+  },
+  "edge": {}
+}

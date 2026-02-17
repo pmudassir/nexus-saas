@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import type Stripe from 'stripe';
+import { Prisma } from '@prisma/client';
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -29,7 +30,15 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
   }
 
+  let claimedEventRowId: string | null = null;
+
   try {
+    claimedEventRowId = await claimStripeEvent(event);
+    if (!claimedEventRowId) {
+      // Event was already processed. Return 200 so Stripe stops retrying.
+      return NextResponse.json({ received: true, duplicate: true });
+    }
+
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
@@ -67,6 +76,9 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ received: true });
   } catch (error) {
+    if (claimedEventRowId) {
+      await releaseStripeEventClaim(claimedEventRowId);
+    }
     console.error('Webhook handler error:', error);
     return NextResponse.json({ error: 'Webhook handler failed' }, { status: 500 });
   }
@@ -79,6 +91,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   const subscription = await stripe.subscriptions.retrieve(
     session.subscription as string
   );
+  const { currentPeriodStart, currentPeriodEnd } = getSubscriptionPeriods(subscription);
 
   // First, try to find existing subscription
   const existingSubscription = await prisma.subscription.findUnique({
@@ -93,8 +106,8 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       where: { id: existingSubscription.id },
       data: {
         status: 'ACTIVE',
-        currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
-        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
+        currentPeriodStart,
+        currentPeriodEnd,
       },
     });
   } else {
@@ -120,8 +133,8 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
         planId: plan.id,
         status: 'ACTIVE',
         stripeSubscriptionId: subscription.id,
-        currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
-        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
+        currentPeriodStart,
+        currentPeriodEnd,
       },
     });
   }
@@ -139,6 +152,8 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 }
 
 async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
+  const { currentPeriodStart, currentPeriodEnd } = getSubscriptionPeriods(subscription);
+
   const existing = await prisma.subscription.findUnique({
     where: {
       stripeSubscriptionId: subscription.id,
@@ -150,8 +165,8 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
       where: { id: existing.id },
       data: {
         status: subscription.status === 'active' ? 'ACTIVE' : 'CANCELED',
-        currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
-        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
+        currentPeriodStart,
+        currentPeriodEnd,
       },
     });
   }
@@ -176,9 +191,7 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
 
 async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
   // Log successful payment
-  const subscriptionId = typeof (invoice as any).subscription === 'string' 
-    ? (invoice as any).subscription 
-    : (invoice as any).subscription?.id;
+  const subscriptionId = getInvoiceSubscriptionId(invoice);
     
   if (subscriptionId) {
     const subscription = await prisma.subscription.findFirst({
@@ -206,9 +219,7 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
 
 async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
   // Log failed payment
-  const subscriptionId = typeof (invoice as any).subscription === 'string' 
-    ? (invoice as any).subscription 
-    : (invoice as any).subscription?.id;
+  const subscriptionId = getInvoiceSubscriptionId(invoice);
     
   if (subscriptionId) {
     const subscription = await prisma.subscription.findFirst({
@@ -231,5 +242,57 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
         },
       });
     }
+  }
+}
+
+function getSubscriptionPeriods(subscription: Stripe.Subscription) {
+  const raw = subscription as unknown as Record<string, unknown>;
+  const startUnix = raw.current_period_start;
+  const endUnix = raw.current_period_end;
+
+  return {
+    currentPeriodStart:
+      typeof startUnix === 'number' ? new Date(startUnix * 1000) : undefined,
+    currentPeriodEnd:
+      typeof endUnix === 'number' ? new Date(endUnix * 1000) : undefined,
+  };
+}
+
+function getInvoiceSubscriptionId(invoice: Stripe.Invoice): string | null {
+  const sub = (invoice as unknown as Record<string, unknown>).subscription;
+  if (typeof sub === 'string') return sub;
+  if (sub && typeof sub === 'object' && 'id' in sub && typeof sub.id === 'string') {
+    return sub.id;
+  }
+  return null;
+}
+
+async function claimStripeEvent(event: Stripe.Event): Promise<string | null> {
+  try {
+    const row = await prisma.webhookEvent.create({
+      data: {
+        provider: 'stripe',
+        eventId: event.id,
+        type: event.type,
+      },
+      select: { id: true },
+    });
+    return row.id;
+  } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === 'P2002'
+    ) {
+      return null;
+    }
+    throw error;
+  }
+}
+
+async function releaseStripeEventClaim(id: string): Promise<void> {
+  try {
+    await prisma.webhookEvent.delete({ where: { id } });
+  } catch {
+    // Best effort cleanup; no-op on delete failure.
   }
 }

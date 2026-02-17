@@ -1,8 +1,8 @@
 
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
-import { createTenant } from "@/actions/tenants";
 import { TenantActions } from "./TenantActions";
+import { TenantCreationForm } from "./TenantCreationForm";
 import { FEATURES } from "@/lib/features";
 import Link from "next/link";
 import {
@@ -13,7 +13,6 @@ import {
   Settings,
   ToggleRight,
   ArrowUpRight,
-  Plus,
   Shield,
 } from "lucide-react";
 import type {
@@ -173,93 +172,7 @@ export default async function AdminPage() {
         </div>
 
         {/* Create Tenant */}
-        <div className="bg-white rounded-3xl p-6 shadow-soft border border-gray-100">
-          <h2 className="text-lg font-bold font-display text-foreground mb-4 flex items-center gap-2">
-            <Plus className="w-5 h-5" /> Create Tenant
-          </h2>
-          <form className="grid gap-4 md:grid-cols-3" action={createTenant}>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
-                Company Name
-              </label>
-              <input
-                name="name"
-                required
-                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
-                placeholder="Acme Corp"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
-                Slug
-              </label>
-              <input
-                name="slug"
-                required
-                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
-                placeholder="acme"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
-                Plan
-              </label>
-              <select
-                name="planId"
-                required
-                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
-                defaultValue={plans[0]?.id ?? ""}
-              >
-                {plans.map((plan) => (
-                  <option key={plan.id} value={plan.id}>
-                    {plan.name} (${plan.priceMonthly / 100}/mo)
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
-                Admin Email
-              </label>
-              <input
-                name="adminEmail"
-                type="email"
-                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
-                placeholder="admin@acme.com"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
-                Admin Name
-              </label>
-              <input
-                name="adminName"
-                type="text"
-                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
-                placeholder="John Doe"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">
-                Admin Password
-              </label>
-              <input
-                name="adminPassword"
-                type="password"
-                className="w-full rounded-xl bg-gray-50 border border-gray-200 px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 focus:bg-white transition-all"
-                placeholder="••••••••"
-              />
-            </div>
-            <div className="md:col-span-3 flex justify-end">
-              <Button
-                type="submit"
-                className="rounded-full bg-black text-white hover:bg-gray-800 h-11 px-8 shadow-lg font-medium"
-              >
-                <Plus className="h-4 w-4 mr-2" /> Create Tenant
-              </Button>
-            </div>
-          </form>
-        </div>
+        <TenantCreationForm plans={plans} />
 
         {/* Tenants Table */}
         <div className="bg-white rounded-3xl shadow-soft border border-gray-100 overflow-hidden">

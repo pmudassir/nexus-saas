@@ -14,8 +14,6 @@ import {
   Calendar,
   Clock,
   CheckCircle2,
-  MessageSquare,
-  Paperclip,
   Plus,
   Circle,
   Check,

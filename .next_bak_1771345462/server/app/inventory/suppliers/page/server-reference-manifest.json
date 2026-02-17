@@ -1,0 +1,65 @@
+{
+  "node": {
+    "00d407b4cb47e601dfebbf78dd230a8e4c5a7b9fcc": {
+      "workers": {
+        "app/inventory/suppliers/page": {
+          "moduleId": 77398,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/suppliers/page": "action-browser"
+      },
+      "exportedName": "logout",
+      "filename": "src/actions/auth.ts"
+    },
+    "40de48a45e552655f2051980505997bf1e17aab552": {
+      "workers": {
+        "app/inventory/suppliers/page": {
+          "moduleId": 77398,
+          "async": true,
+          "exportedName": "deactivateSupplier",
+          "filename": "src/actions/suppliers.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/suppliers/page": "rsc"
+      },
+      "exportedName": "deactivateSupplier",
+      "filename": "src/actions/suppliers.ts"
+    },
+    "40ee0504a3a2832cda1ecaf2067729ef30e89e96ef": {
+      "workers": {
+        "app/inventory/suppliers/page": {
+          "moduleId": 77398,
+          "async": true,
+          "exportedName": "updateSupplier",
+          "filename": "src/actions/suppliers.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/suppliers/page": "rsc"
+      },
+      "exportedName": "updateSupplier",
+      "filename": "src/actions/suppliers.ts"
+    },
+    "40eea6496e2529f73e8279b6811a193e02af8bf48c": {
+      "workers": {
+        "app/inventory/suppliers/page": {
+          "moduleId": 77398,
+          "async": true,
+          "exportedName": "createSupplier",
+          "filename": "src/actions/suppliers.ts"
+        }
+      },
+      "layer": {
+        "app/inventory/suppliers/page": "rsc"
+      },
+      "exportedName": "createSupplier",
+      "filename": "src/actions/suppliers.ts"
+    }
+  },
+  "edge": {}
+}

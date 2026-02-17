@@ -1,0 +1,50 @@
+{
+  "node": {
+    "00d407b4cb47e601dfebbf78dd230a8e4c5a7b9fcc": {
+      "workers": {
+        "app/builder/media/page": {
+          "moduleId": 852,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/builder/media/page": "action-browser"
+      },
+      "exportedName": "logout",
+      "filename": "src/actions/auth.ts"
+    },
+    "000cb3ca7f617a4098bdd4386ff7818950e0414a57": {
+      "workers": {
+        "app/builder/media/page": {
+          "moduleId": 852,
+          "async": true,
+          "exportedName": "getUploadedFiles",
+          "filename": "src/actions/upload.ts"
+        }
+      },
+      "layer": {
+        "app/builder/media/page": "rsc"
+      },
+      "exportedName": "getUploadedFiles",
+      "filename": "src/actions/upload.ts"
+    },
+    "40543e5f84c1ad3497140f104e763e77644e8d46ac": {
+      "workers": {
+        "app/builder/media/page": {
+          "moduleId": 852,
+          "async": true,
+          "exportedName": "uploadFile",
+          "filename": "src/actions/upload.ts"
+        }
+      },
+      "layer": {
+        "app/builder/media/page": "action-browser"
+      },
+      "exportedName": "uploadFile",
+      "filename": "src/actions/upload.ts"
+    }
+  },
+  "edge": {}
+}

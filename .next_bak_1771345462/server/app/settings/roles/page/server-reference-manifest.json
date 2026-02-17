@@ -1,0 +1,95 @@
+{
+  "node": {
+    "00d407b4cb47e601dfebbf78dd230a8e4c5a7b9fcc": {
+      "workers": {
+        "app/settings/roles/page": {
+          "moduleId": 1495,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/settings/roles/page": "action-browser"
+      },
+      "exportedName": "logout",
+      "filename": "src/actions/auth.ts"
+    },
+    "40f26b073570cdf40632cbb53abf586804950914c7": {
+      "workers": {
+        "app/settings/roles/page": {
+          "moduleId": 1495,
+          "async": true,
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "src/app/settings/roles/page.tsx"
+        }
+      },
+      "layer": {
+        "app/settings/roles/page": "rsc"
+      },
+      "exportedName": "$$RSC_SERVER_ACTION_0",
+      "filename": "src/app/settings/roles/page.tsx"
+    },
+    "405d3ecd8ec387a0b4b4ec7a25504a0acb8d435393": {
+      "workers": {
+        "app/settings/roles/page": {
+          "moduleId": 1495,
+          "async": true,
+          "exportedName": "assignRole",
+          "filename": "src/actions/roles.ts"
+        }
+      },
+      "layer": {
+        "app/settings/roles/page": "rsc"
+      },
+      "exportedName": "assignRole",
+      "filename": "src/actions/roles.ts"
+    },
+    "408cc0873e5850925a2ac6e38985c977f4c02460e3": {
+      "workers": {
+        "app/settings/roles/page": {
+          "moduleId": 1495,
+          "async": true,
+          "exportedName": "createRole",
+          "filename": "src/actions/roles.ts"
+        }
+      },
+      "layer": {
+        "app/settings/roles/page": "rsc"
+      },
+      "exportedName": "createRole",
+      "filename": "src/actions/roles.ts"
+    },
+    "409f0e8a809a974eb660ebe02e28819161c2e9e8a2": {
+      "workers": {
+        "app/settings/roles/page": {
+          "moduleId": 1495,
+          "async": true,
+          "exportedName": "deleteRole",
+          "filename": "src/actions/roles.ts"
+        }
+      },
+      "layer": {
+        "app/settings/roles/page": "rsc"
+      },
+      "exportedName": "deleteRole",
+      "filename": "src/actions/roles.ts"
+    },
+    "40d0e1828f6c8a095bb4a1eb6b4b862fe6db1a7486": {
+      "workers": {
+        "app/settings/roles/page": {
+          "moduleId": 1495,
+          "async": true,
+          "exportedName": "updateRole",
+          "filename": "src/actions/roles.ts"
+        }
+      },
+      "layer": {
+        "app/settings/roles/page": "rsc"
+      },
+      "exportedName": "updateRole",
+      "filename": "src/actions/roles.ts"
+    }
+  },
+  "edge": {}
+}

@@ -73,7 +73,19 @@ export default async function FinancePage() {
                 Monitor your financial health and transactions.
               </p>
             </div>
-            <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3">
+              <Link href="/finance/invoices">
+                <Button variant="outline" className="rounded-full shadow-soft hover:bg-gray-50 border-gray-200">
+                  <FileText className="mr-2 h-4 w-4" />
+                  Invoices
+                </Button>
+              </Link>
+              <Link href="/finance/expenses">
+                <Button variant="outline" className="rounded-full shadow-soft hover:bg-gray-50 border-gray-200">
+                  <TrendingDown className="mr-2 h-4 w-4" />
+                  Expenses
+                </Button>
+              </Link>
               <Link href="/finance/reports">
                 <Button variant="outline" className="rounded-full shadow-soft hover:bg-gray-50 border-gray-200">
                   <Download className="mr-2 h-4 w-4" />

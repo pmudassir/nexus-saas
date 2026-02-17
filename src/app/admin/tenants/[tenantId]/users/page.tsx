@@ -1,9 +1,9 @@
-import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import { redirect, notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import { ArrowLeft, Users } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { requireSuperAdminPageAccess } from "@/lib/admin-auth";
 
 interface TenantUsersPageProps {
   params: Promise<{
@@ -13,15 +13,7 @@ interface TenantUsersPageProps {
 
 export default async function TenantUsersPage({ params }: TenantUsersPageProps) {
   const { tenantId } = await params;
-  const session = await auth();
-  
-  const isSuperAdmin = Boolean(
-    session?.user && (session.user as { isSuperAdmin?: boolean }).isSuperAdmin,
-  );
-
-  if (!isSuperAdmin) {
-    redirect("/");
-  }
+  await requireSuperAdminPageAccess();
 
   const tenant = await prisma.tenant.findUnique({
     where: { id: tenantId },
@@ -37,7 +29,7 @@ export default async function TenantUsersPage({ params }: TenantUsersPageProps) 
   });
 
   if (!tenant) {
-    notFound(); 
+    notFound();
   }
 
   return (
