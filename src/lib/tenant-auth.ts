@@ -31,6 +31,9 @@ export async function requireTenantMembership(): Promise<TenantMembershipContext
       where: { userId: user.id },
     });
     if (!anyMembership) {
+      if (user.isSuperAdmin) {
+        redirect("/admin");
+      }
       redirect("/onboarding");
     }
     redirect("/");

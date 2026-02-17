@@ -11,7 +11,9 @@ import {
   Shield,
   LogOut,
   ChevronsLeft,
+  LayoutDashboard,
 } from 'lucide-react';
+import { logout } from '@/actions/auth';
 
 const adminNavigation = [
   { name: 'Tenants', href: '/admin', icon: Building2 },
@@ -79,14 +81,21 @@ export function AdminSidebar() {
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-border">
+      <div className="p-4 border-t border-border flex flex-col gap-2">
         <Link
           href="/"
           className="flex items-center gap-3 rounded-md p-2 hover:bg-accent transition-colors cursor-pointer group text-sm font-medium text-muted-foreground hover:text-foreground"
         >
-          <LogOut className="w-4 h-4" />
+          <LayoutDashboard className="w-4 h-4" />
           <span>Back to App</span>
         </Link>
+        <button
+          onClick={() => logout()}
+          className="flex w-full items-center gap-3 rounded-md p-2 hover:bg-red-50 transition-colors cursor-pointer group text-sm font-medium text-muted-foreground hover:text-red-600"
+        >
+          <LogOut className="w-4 h-4" />
+          <span>Log out</span>
+        </button>
       </div>
     </div>
   );
