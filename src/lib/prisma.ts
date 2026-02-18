@@ -2,7 +2,32 @@ import { PrismaClient, Prisma } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
-const connectionString = process.env.DATABASE_URL!;
+function withSecureSslMode(rawConnectionString: string): string {
+  try {
+    const url = new URL(rawConnectionString);
+    const isPostgres =
+      url.protocol === "postgres:" || url.protocol === "postgresql:";
+    const isLocalhost =
+      url.hostname === "localhost" || url.hostname === "127.0.0.1";
+
+    if (isPostgres && !isLocalhost) {
+      const sslMode = url.searchParams.get("sslmode");
+      const normalized = sslMode?.toLowerCase();
+      const aliasModes = new Set(["prefer", "require", "verify-ca"]);
+
+      if (!normalized || aliasModes.has(normalized)) {
+        url.searchParams.set("sslmode", "verify-full");
+        return url.toString();
+      }
+    }
+
+    return rawConnectionString;
+  } catch {
+    return rawConnectionString;
+  }
+}
+
+const connectionString = withSecureSslMode(process.env.DATABASE_URL!);
 
 const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);

@@ -36,11 +36,31 @@ Stabilize and harden the multi-tenant authorization model so tenant admins can a
   - fix: fallback to tenant membership role check; `TENANT_ADMIN` now always sees settings cards
   - file: `src/app/settings/page.tsx`
 - Updated ESLint ignores to exclude `.next_bak*` generated artifacts from lint runs.
+- Hardened server action authorization in core modules:
+  - `src/actions/projects.ts`: create/update/delete project + create task now require project/task permission keys
+  - `src/actions/tasks.ts`: CRUD + task reads now require task/project permission keys
+  - `src/actions/invoices.ts`: create/send/reminder paths now require invoice permissions
+  - `src/actions/expenses.ts`: create/approve/reject now require expense permissions
+  - `src/actions/reports.ts` and `src/app/finance/reports/page.tsx`: enforce finance read access
+- Fixed multi-tenant safety bug in expense approvals/rejections:
+  - added tenant-bound existence check before update in `src/actions/expenses.ts`
+  - audit entity id now records created expense id instead of description
+- Added default permission seeding so RBAC is deterministic in fresh environments:
+  - `prisma/seed.mjs`
+  - `prisma/seed.ts`
+- Added DB connection hardening in `src/lib/prisma.ts`:
+  - normalize unsafe/alias SSL modes (`prefer`, `require`, `verify-ca`) to `verify-full` for non-local Postgres hosts.
+- Rebuilt the root dashboard (`/`) to remove hardcoded/random blocks and wire real tenant data:
+  - replaced static mock financial tiles and dead buttons with live metrics + working route links
+  - added actionable sections: KPI cards, due-soon tasks, enabled module shortcuts, recent activity feed
+  - files:
+    - `src/actions/dashboard.ts` (new data model + query set)
+    - `src/app/page.tsx` (new premium, data-driven UI)
 
 ## Current validation state
 - `npm run type-check`: passing
 - `npm run lint`: passing (added `.next_bak*/**` ignore to `eslint.config.mjs` so backup build artifacts do not pollute lint output)
-- `npm run build`: passing
+- `npm run build`: blocked in restricted/offline environments because `next/font` fetches Google Fonts (`Inter`, `Outfit`); code-level checks pass.
 
 ## Key files introduced in this session
 - `src/lib/admin-auth.ts`
@@ -72,7 +92,8 @@ Required migrations:
 ## Resume checklist (next chat)
 1. Re-verify browser back/forward gestures on `/settings/*` routes in your target browser(s) after deploying this patch.
 2. Seed and validate the `Permission` table in each environment so non-admin role gating remains predictable.
-3. Continue permission-gate rollout across remaining write-heavy actions (finance/invoices/projects/inventory/hr/automation/builder).
+3. Continue permission-gate rollout across remaining write-heavy actions (inventory/hr/crm/automation/builder/site/upload/tenant-settings).
 4. Replace placeholder `npm run test` with real Vitest execution and add regression tests for tenant boundaries + role enforcement.
 5. Add explicit schema validation and user-facing action errors for critical server actions.
 6. Tighten production security headers/CSP and add rate limiting for sensitive mutations.
+7. Consider local/self-hosted fonts to make `next build` fully deterministic in restricted CI/network environments.

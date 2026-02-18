@@ -1,7 +1,8 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
-import { requireTenantMembership } from '@/lib/tenant-auth';
+import { requireAnyTenantPermission } from '@/lib/tenant-auth';
+import { PERMISSION_KEYS } from '@/lib/permission-keys';
 
 /**
  * Get financial overview for dashboard
@@ -10,7 +11,10 @@ export async function getFinancialOverview(
   startDate: Date,
   endDate: Date
 ) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireAnyTenantPermission([
+    PERMISSION_KEYS.FINANCE_INVOICE_READ,
+    PERMISSION_KEYS.FINANCE_EXPENSE_READ,
+  ]);
 
   // Get invoices in date range
   const invoices = await prisma.invoice.findMany({
@@ -62,7 +66,10 @@ export async function generateProfitLossReport(
   startDate: Date,
   endDate: Date
 ) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireAnyTenantPermission([
+    PERMISSION_KEYS.FINANCE_INVOICE_READ,
+    PERMISSION_KEYS.FINANCE_EXPENSE_READ,
+  ]);
 
   const invoices = await prisma.invoice.findMany({
     where: {
@@ -119,7 +126,10 @@ export async function generateCashFlowReport(
   startDate: Date,
   endDate: Date
 ) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireAnyTenantPermission([
+    PERMISSION_KEYS.FINANCE_INVOICE_READ,
+    PERMISSION_KEYS.FINANCE_EXPENSE_READ,
+  ]);
 
   // Get all invoices (both paid and pending)
   const allInvoices = await prisma.invoice.findMany({

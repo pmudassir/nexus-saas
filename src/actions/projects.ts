@@ -1,9 +1,10 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
-import { requireTenantMembership } from '@/lib/tenant-auth';
+import { requireTenantPermission } from '@/lib/tenant-auth';
 import type { Priority, Status } from '@prisma/client';
 import { redirect } from 'next/navigation';
+import { PERMISSION_KEYS } from '@/lib/permission-keys';
 
 export async function createTask(data: {
   title: string;
@@ -14,7 +15,9 @@ export async function createTask(data: {
   dueDate?: string;
   assigneeId?: string;
 }) {
-  const { session, tenant } = await requireTenantMembership();
+  const { session, tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.PROJECTS_TASK_CREATE,
+  );
   const userId = session.user?.id;
 
   if (!userId) throw new Error('User ID not found');
@@ -40,7 +43,9 @@ export async function createTask(data: {
 }
 
 export async function createProject(formData: FormData) {
-  const { tenant, session } = await requireTenantMembership();
+  const { tenant, session } = await requireTenantPermission(
+    PERMISSION_KEYS.PROJECTS_PROJECT_CREATE,
+  );
   const userId = (session.user as { id: string })?.id;
 
   const name = formData.get('name') as string;
@@ -62,7 +67,9 @@ export async function createProject(formData: FormData) {
 }
 
 export async function updateProject(formData: FormData) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.PROJECTS_PROJECT_UPDATE,
+  );
 
   const id = formData.get('id') as string;
   const name = formData.get('name') as string;
@@ -91,7 +98,9 @@ export async function updateProject(formData: FormData) {
 }
 
 export async function deleteProject(formData: FormData) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.PROJECTS_PROJECT_DELETE,
+  );
 
   const id = formData.get('id') as string;
 

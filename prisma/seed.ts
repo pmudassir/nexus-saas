@@ -4,7 +4,46 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
+const DEFAULT_PERMISSIONS = [
+  "settings.users.manage",
+  "settings.tenant.read",
+  "settings.tenant.update",
+  "finance.invoice.create",
+  "finance.invoice.read",
+  "finance.invoice.update",
+  "finance.invoice.delete",
+  "finance.expense.create",
+  "finance.expense.read",
+  "finance.expense.update",
+  "finance.expense.delete",
+  "projects.project.create",
+  "projects.project.read",
+  "projects.project.update",
+  "projects.project.delete",
+  "projects.task.create",
+  "projects.task.read",
+  "projects.task.update",
+  "projects.task.delete",
+];
+
+async function seedPermissions() {
+  await prisma.permission.createMany({
+    data: DEFAULT_PERMISSIONS.map((key) => {
+      const [module, resource, action] = key.split(".");
+      return {
+        key,
+        module,
+        action,
+        description: `${module}.${resource}.${action}`,
+      };
+    }),
+    skipDuplicates: true,
+  });
+}
+
 async function main() {
+  await seedPermissions();
+
   const hashedPassword = await bcrypt.hash("password", 10);
 
   // Create default tenant first

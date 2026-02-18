@@ -2,13 +2,16 @@
 
 import { resend, EMAIL_FROM } from '@/lib/email';
 import { prisma } from '@/lib/prisma';
-import { requireTenantMembership } from '@/lib/tenant-auth';
+import { requireTenantPermission } from '@/lib/tenant-auth';
+import { PERMISSION_KEYS } from '@/lib/permission-keys';
 
 /**
  * Send invoice via email
  */
 export async function sendInvoice(formData: FormData) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.FINANCE_INVOICE_UPDATE,
+  );
 
   const invoiceId = formData.get('invoiceId') as string;
 
@@ -122,7 +125,9 @@ export async function sendInvoice(formData: FormData) {
  * Send invoice reminder
  */
 export async function sendInvoiceReminder(formData: FormData) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.FINANCE_INVOICE_UPDATE,
+  );
 
   const invoiceId = formData.get('invoiceId') as string;
 
@@ -197,7 +202,9 @@ export async function createInvoice(data: {
   dueDate: string;
   items: Array<{ description: string; quantity: number; unitPrice: number }>;
 }) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.FINANCE_INVOICE_CREATE,
+  );
 
   if (!data.clientId) throw new Error('Client is required');
   if (!data.items?.length) throw new Error('At least one item is required');

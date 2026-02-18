@@ -2,10 +2,13 @@
 
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { requireTenantMembership } from "@/lib/tenant-auth";
+import { requireTenantPermission } from "@/lib/tenant-auth";
+import { PERMISSION_KEYS } from "@/lib/permission-keys";
 
 export async function createExpense(formData: FormData) {
-  const { session, tenant } = await requireTenantMembership();
+  const { session, tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.FINANCE_EXPENSE_CREATE,
+  );
 
   // Session is already validated in requireTenantMembership
   const userId = (session.user as { id: string }).id;

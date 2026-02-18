@@ -2,13 +2,16 @@
 
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/prisma';
-import { requireTenantMembership } from '@/lib/tenant-auth';
+import { requireTenantPermission } from '@/lib/tenant-auth';
+import { PERMISSION_KEYS } from '@/lib/permission-keys';
 
 /**
  * Create expense with receipt
  */
 export async function createExpense(formData: FormData) {
-  const { tenant, session } = await requireTenantMembership();
+  const { tenant, session } = await requireTenantPermission(
+    PERMISSION_KEYS.FINANCE_EXPENSE_CREATE,
+  );
 
   const description = formData.get('description') as string;
   const amount = parseFloat(formData.get('amount') as string);
@@ -18,7 +21,7 @@ export async function createExpense(formData: FormData) {
   const date = formData.get('date') ? new Date(formData.get('date') as string) : new Date();
   const userId = (session.user as { id: string }).id;
 
-  await prisma.expense.create({
+  const expense = await prisma.expense.create({
     data: {
       description,
       amount,
@@ -36,7 +39,7 @@ export async function createExpense(formData: FormData) {
       tenantId: tenant.id,
       action: 'EXPENSE_CREATED',
       entity: 'Expense',
-      entityId: description,
+      entityId: expense.id,
       metadata: { amount, category, currency },
     },
   });
@@ -48,13 +51,27 @@ export async function createExpense(formData: FormData) {
  * Approve expense
  */
 export async function approveExpense(formData: FormData) {
-  const { tenant, session } = await requireTenantMembership();
+  const { tenant, session } = await requireTenantPermission(
+    PERMISSION_KEYS.FINANCE_EXPENSE_UPDATE,
+  );
 
   const expenseId = formData.get('expenseId') as string;
   const userId = (session.user as { id: string }).id;
 
+  const expense = await prisma.expense.findFirst({
+    where: {
+      id: expenseId,
+      tenantId: tenant.id,
+    },
+    select: { id: true },
+  });
+
+  if (!expense) {
+    throw new Error('Expense not found');
+  }
+
   await prisma.expense.update({
-    where: { id: expenseId },
+    where: { id: expense.id },
     data: {
       approvalStatus: 'APPROVED',
       approvedBy: userId,
@@ -79,14 +96,28 @@ export async function approveExpense(formData: FormData) {
  * Reject expense
  */
 export async function rejectExpense(formData: FormData) {
-  const { tenant, session } = await requireTenantMembership();
+  const { tenant, session } = await requireTenantPermission(
+    PERMISSION_KEYS.FINANCE_EXPENSE_UPDATE,
+  );
 
   const expenseId = formData.get('expenseId') as string;
   const reason = formData.get('reason') as string;
   const userId = (session.user as { id: string }).id;
 
+  const expense = await prisma.expense.findFirst({
+    where: {
+      id: expenseId,
+      tenantId: tenant.id,
+    },
+    select: { id: true },
+  });
+
+  if (!expense) {
+    throw new Error('Expense not found');
+  }
+
   await prisma.expense.update({
-    where: { id: expenseId },
+    where: { id: expense.id },
     data: {
       approvalStatus: 'REJECTED',
       approvedBy: userId,
@@ -107,5 +138,4 @@ export async function rejectExpense(formData: FormData) {
 
   revalidatePath('/finance/expenses');
 }
-
 

@@ -1,12 +1,15 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { requireTenantMembership } from "@/lib/tenant-auth";
+import { requireTenantPermission } from "@/lib/tenant-auth";
 import { revalidatePath } from "next/cache";
 import { Status, Priority } from "@prisma/client";
+import { PERMISSION_KEYS } from "@/lib/permission-keys";
 
 export async function createTask(formData: FormData) {
-  const { tenant, session } = await requireTenantMembership();
+  const { tenant, session } = await requireTenantPermission(
+    PERMISSION_KEYS.PROJECTS_TASK_CREATE,
+  );
   const userId = (session.user as { id: string }).id;
 
   const title = formData.get("title") as string;
@@ -34,7 +37,9 @@ export async function createTask(formData: FormData) {
 }
 
 export async function updateTaskStatus(formData: FormData) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.PROJECTS_TASK_UPDATE,
+  );
 
   const taskId = formData.get("taskId") as string;
   const status = formData.get("status") as Status;
@@ -51,7 +56,9 @@ export async function updateTaskStatus(formData: FormData) {
 }
 
 export async function updateTask(formData: FormData) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.PROJECTS_TASK_UPDATE,
+  );
 
   const taskId = formData.get("taskId") as string;
   const title = formData.get("title") as string;
@@ -78,7 +85,9 @@ export async function updateTask(formData: FormData) {
 }
 
 export async function deleteTask(formData: FormData) {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.PROJECTS_TASK_DELETE,
+  );
 
   const taskId = formData.get("taskId") as string;
 
@@ -93,7 +102,9 @@ export async function deleteTask(formData: FormData) {
 }
 
 export async function getTasksForUser() {
-  const { tenant, session } = await requireTenantMembership();
+  const { tenant, session } = await requireTenantPermission(
+    PERMISSION_KEYS.PROJECTS_TASK_READ,
+  );
   const userId = (session.user as { id: string }).id;
 
   const tasks = await prisma.task.findMany({
@@ -130,7 +141,9 @@ export async function getTasksForUser() {
 }
 
 export async function getAllTenantTasks() {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.PROJECTS_TASK_READ,
+  );
 
   const tasks = await prisma.task.findMany({
     where: {
@@ -163,7 +176,9 @@ export async function getAllTenantTasks() {
 }
 
 export async function getProjectsForTasks() {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.PROJECTS_PROJECT_READ,
+  );
 
   const projects = await prisma.project.findMany({
     where: {
@@ -183,7 +198,9 @@ export async function getProjectsForTasks() {
 }
 
 export async function getTeamMembersForTasks() {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.PROJECTS_TASK_READ,
+  );
 
   const members = await prisma.tenantUser.findMany({
     where: {
@@ -205,7 +222,9 @@ export async function getTeamMembersForTasks() {
 }
 
 export async function getTaskStats() {
-  const { tenant } = await requireTenantMembership();
+  const { tenant } = await requireTenantPermission(
+    PERMISSION_KEYS.PROJECTS_TASK_READ,
+  );
 
   const [total, completed, inProgress, todo] = await Promise.all([
     prisma.task.count({ where: { tenantId: tenant.id } }),

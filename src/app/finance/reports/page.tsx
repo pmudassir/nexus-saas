@@ -1,11 +1,15 @@
 import { Shell } from '@/components/layout/Shell';
-import { requireTenantMembership } from '@/lib/tenant-auth';
+import { requireAnyTenantPermission } from '@/lib/tenant-auth';
+import { PERMISSION_KEYS } from '@/lib/permission-keys';
 import { generateProfitLossReport, generateCashFlowReport, getFinancialOverview } from '@/actions/reports';
 import { TrendingUp, DollarSign, TrendingDown, Calendar } from 'lucide-react';
 
 
 export default async function ReportsPage() {
-  await requireTenantMembership();
+  await requireAnyTenantPermission([
+    PERMISSION_KEYS.FINANCE_INVOICE_READ,
+    PERMISSION_KEYS.FINANCE_EXPENSE_READ,
+  ]);
 
   // Get reports for current month
   const now = new Date();

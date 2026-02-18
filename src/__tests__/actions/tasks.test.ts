@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { createTask, updateTask, deleteTask } from "@/actions/tasks";
 import { prisma } from "@/lib/prisma";
-import { requireTenantMembership } from "@/lib/tenant-auth";
+import { requireTenantPermission } from "@/lib/tenant-auth";
 
 // Mock dependencies
 vi.mock("@/lib/prisma", () => ({
@@ -15,7 +15,7 @@ vi.mock("@/lib/prisma", () => ({
 }));
 
 vi.mock("@/lib/tenant-auth", () => ({
-  requireTenantMembership: vi.fn(),
+  requireTenantPermission: vi.fn(),
 }));
 
 vi.mock("next/cache", () => ({
@@ -28,7 +28,7 @@ describe("Task Actions", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (requireTenantMembership as ReturnType<typeof vi.fn>).mockResolvedValue({
+    (requireTenantPermission as ReturnType<typeof vi.fn>).mockResolvedValue({
       tenant: mockTenant,
       session: mockSession,
     });
