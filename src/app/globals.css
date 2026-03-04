@@ -31,6 +31,12 @@
   --color-card: hsl(var(--card) / 1);
   --color-card-foreground: hsl(var(--card-foreground) / 1);
 
+  /* Stitch-specific color tokens */
+  --color-background-light: #f8f6f5;
+  --color-background-dark: #1a1c20;
+  --color-card-dark: #24272d;
+  --color-nexus-primary: #e9590c;
+
   --radius-xs: calc(var(--radius) - 6px);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: var(--radius);
@@ -58,21 +64,24 @@
   }
 }
 
-/* "Soft Minimalist" Theme */
-:root {
-  /* Soft Off-White Background */
-  --background: 210 20% 98%; 
-  --foreground: 220 15% 10%; /* Soft Black */
+/* ========================================
+   Nexus SaaS — Stitch Design System
+   Theme: "Soft Minimalist" with Dark Mode
+   ======================================== */
 
-  /* Pure White Cards */
-  --card: 0 0% 100%;
-  --card-foreground: 220 15% 10%;
+:root {
+  /* Light Mode: Soft warm off-white */
+  --background: 20 14% 97%;    /* #f8f6f5 */
+  --foreground: 215 28% 10%;   /* slate-900 approx */
+
+  --card: 0 0% 100%;           /* pure white */
+  --card-foreground: 215 28% 10%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 220 15% 10%;
+  --popover-foreground: 215 28% 10%;
 
-  /* Soft Coral Accent */
-  --primary: 10 80% 60%; 
+  /* Primary Coral / Orange — #e9590c */
+  --primary: 18 91% 48%;
   --primary-foreground: 0 0% 100%;
 
   /* Warm Secondary */
@@ -80,19 +89,51 @@
   --secondary-foreground: 25 90% 45%;
 
   --muted: 210 20% 96%;
-  --muted-foreground: 220 10% 45%;
+  --muted-foreground: 215 16% 47%;    /* slate-500 */
 
   --accent: 210 20% 96%;
-  --accent-foreground: 220 15% 10%;
+  --accent-foreground: 215 28% 10%;
 
-  --destructive: 0 84.2% 60.2%;
+  --destructive: 350 89% 60%;         /* rose-500 #f43f5e */
   --destructive-foreground: 0 0% 98%;
 
-  --border: 220 15% 94%;
-  --input: 220 15% 94%;
-  --ring: 10 80% 60%;
+  --border: 210 20% 94%;              /* slate-100 */
+  --input: 210 20% 94%;
+  --ring: 18 91% 48%;                 /* matches primary */
 
-  /* Heavy Roundness */
+  --radius: 1.5rem;
+}
+
+/* Dark Mode */
+.dark {
+  --background: 220 15% 11%;   /* #1a1c20 */
+  --foreground: 210 40% 96%;   /* slate-100 */
+
+  --card: 220 13% 16%;         /* #24272d */
+  --card-foreground: 210 40% 96%;
+
+  --popover: 220 13% 16%;
+  --popover-foreground: 210 40% 96%;
+
+  --primary: 18 91% 48%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 220 13% 20%;
+  --secondary-foreground: 210 40% 96%;
+
+  --muted: 220 13% 20%;
+  --muted-foreground: 215 20% 65%;    /* slate-400 */
+
+  --accent: 220 13% 20%;
+  --accent-foreground: 210 40% 96%;
+
+  --destructive: 350 89% 60%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 220 13% 20%;              /* slate-800 */
+  --input: 220 13% 20%;
+  --ring: 18 91% 48%;
+
   --radius: 1.5rem;
 }
 
@@ -102,8 +143,7 @@
   }
   body {
     @apply bg-background text-foreground antialiased font-sans transition-colors duration-300;
-    /* Clean background, no noise */
-    background-image: none; 
+    background-image: none;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-display tracking-tight text-foreground;
@@ -115,52 +155,92 @@
     text-wrap: balance;
   }
 
-  /* Soft UI Shadows */
+  /* ── Stitch Soft Shadows ── */
   .shadow-soft {
-    box-shadow: 
+    box-shadow:
       0 4px 6px -1px rgb(0 0 0 / 0.02),
       0 10px 15px -3px rgb(0 0 0 / 0.04),
       0 0 0 1px rgb(0 0 0 / 0.02);
   }
-  
+
   .shadow-soft-lg {
-    box-shadow: 
-      0 20px 25px -5px rgb(0 0 0 / 0.05), 
-      0 8px 10px -6px rgb(0 0 0 / 0.01),
-      0 0 0 1px rgb(0 0 0 / 0.02);
+    box-shadow:
+      0 10px 25px -5px rgba(238, 95, 43, 0.05),
+      0 8px 10px -6px rgba(238, 95, 43, 0.05);
   }
 
   .shadow-soft-xl {
-    box-shadow: 
+    box-shadow:
       0 25px 50px -12px rgb(0 0 0 / 0.1),
       0 0 0 1px rgb(0 0 0 / 0.02);
   }
-  
-  /* Floating Effect */
+
+  /* ── Coral Glow (Stitch accent effect) ── */
+  .coral-glow {
+    box-shadow: 0 0 20px rgba(233, 89, 12, 0.15);
+  }
+
+  /* ── Glass Effect (Dark mode glassmorphism) ── */
+  .glass-effect {
+    background: rgba(36, 39, 45, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  /* ── Heading Font Utility ── */
+  .heading-font {
+    font-family: var(--font-outfit), 'Outfit', sans-serif;
+  }
+
+  /* ── Active Navigation Item ── */
+  .active-nav {
+    background-color: #e9590c;
+    color: white;
+  }
+
+  /* ── Floating Card ── */
   .floating-card {
     @apply bg-card rounded-3xl transition-all duration-300;
-    box-shadow: 
+    box-shadow:
       0 4px 6px -1px rgb(0 0 0 / 0.02),
       0 10px 15px -3px rgb(0 0 0 / 0.04),
       0 0 0 1px rgb(0 0 0 / 0.02);
   }
 
   .floating-card:hover {
-    box-shadow: 
-      0 20px 25px -5px rgb(0 0 0 / 0.05), 
+    box-shadow:
+      0 20px 25px -5px rgb(0 0 0 / 0.05),
       0 8px 10px -6px rgb(0 0 0 / 0.01),
       0 0 0 1px rgb(0 0 0 / 0.02);
   }
 
-  /* Scrollbar */
+  /* ── Neon Text Utilities ── */
+  .neon-emerald-text { color: #10b981; }
+  .neon-coral-text { color: #e9590c; }
+
+  /* ── No Scrollbar Utility ── */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* ── Custom Scrollbar ── */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-transparent;
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground/20 rounded-full hover:bg-muted-foreground/30 transition-colors;
+    background: rgba(233, 89, 12, 0.15);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(233, 89, 12, 0.3);
+  }
+
+  /* ── Material Symbols Config ── */
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
 }

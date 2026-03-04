@@ -1,140 +1,118 @@
-import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
-import { X } from "lucide-react";
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex items-center gap-1 rounded-sm px-1.5 py-0.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center gap-1.5 rounded-full text-xs font-bold transition-colors",
   {
     variants: {
       variant: {
-        default: "bg-[rgba(235,236,252,1)] text-[rgb(69,75,230)]", // Indigo soft
+        default:
+          "bg-[#e9590c]/10 text-[#e9590c] px-3 py-1",
         secondary:
-          "bg-[rgba(227,226,224,0.5)] text-[#32302c]", // Gray soft
-        success: "bg-[rgba(219,237,219,1)] text-[rgb(28,56,41)]", // Green soft
-        warning: "bg-[rgba(250,222,201,1)] text-[rgb(73,41,14)]", // Orange soft
-        error: "bg-[rgba(255,226,221,1)] text-[rgb(93,23,21)]", // Red soft
-        info: "bg-[rgba(227,226,224,0.5)] text-[#32302c]", // Default to gray for info or use blue
-        outline: "border border-[#E9E9E8] text-[#37352f]",
-        ghost: "hover:bg-[rgba(55,53,47,0.08)] text-[#37352f]",
+          "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-3 py-1",
+        success:
+          "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 px-3 py-1",
+        warning:
+          "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-3 py-1",
+        error:
+          "bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 px-3 py-1",
+        info:
+          "bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400 px-3 py-1",
+        outline:
+          "border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 px-3 py-1",
+        ghost:
+          "text-slate-500 dark:text-slate-400 px-2 py-1",
+        purple:
+          "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 px-3 py-1",
       },
       size: {
-        sm: "text-[10px] px-1 py-0",
-        md: "text-xs px-1.5 py-0.5",
-        lg: "text-sm px-2 py-1",
+        default: "text-xs px-3 py-1",
+        sm: "text-[10px] px-2 py-0.5",
+        lg: "text-sm px-4 py-1.5",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "md",
+      size: "default",
     },
   }
-);
+)
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof badgeVariants> {
-  onRemove?: () => void;
-  icon?: React.ReactNode;
+  dot?: boolean
+  dotColor?: string
 }
 
-export function Badge({
-  className,
-  variant,
-  size,
-  onRemove,
-  icon,
-  children,
-  ...props
-}: BadgeProps) {
+function Badge({ className, variant, size, dot, dotColor, ...props }: BadgeProps) {
   return (
     <div className={cn(badgeVariants({ variant, size }), className)} {...props}>
-      {icon && <span className="inline-flex mr-1">{icon}</span>}
-      {children}
-      {onRemove && (
-        <button
-          onClick={onRemove}
-          className="ml-1 -mr-0.5 inline-flex h-3 w-3 items-center justify-center rounded-sm hover:bg-black/5 transition-colors"
-        >
-          <X className="h-2.5 w-2.5" />
-        </button>
+      {dot && (
+        <span
+          className={cn(
+            "w-1.5 h-1.5 rounded-full",
+            dotColor || (
+              variant === "success" ? "bg-emerald-500" :
+              variant === "warning" ? "bg-amber-500" :
+              variant === "error" ? "bg-rose-500" :
+              variant === "info" ? "bg-sky-500" :
+              "bg-[#e9590c]"
+            )
+          )}
+        />
       )}
+      {props.children}
     </div>
-  );
+  )
 }
 
-interface StatusBadgeProps {
-  status:
-    | "active"
-    | "inactive"
-    | "pending"
-    | "completed"
-    | "cancelled"
-    | "lead"
-    | "in_stock"
-    | "low_stock"
-    | "out_of_stock"
-    | "paid"
-    | "overdue"
-    | "on_leave";
-  size?: BadgeProps["size"];
-  className?: string;
+// Convenience composites
+const STATUS_MAP: Record<string, { variant: BadgeProps["variant"]; label: string }> = {
+  active: { variant: "success", label: "Active" },
+  completed: { variant: "success", label: "Completed" },
+  paid: { variant: "success", label: "Paid" },
+  pending: { variant: "warning", label: "Pending" },
+  in_progress: { variant: "warning", label: "In Progress" },
+  overdue: { variant: "error", label: "Overdue" },
+  failed: { variant: "error", label: "Failed" },
+  cancelled: { variant: "error", label: "Cancelled" },
+  suspended: { variant: "warning", label: "Suspended" },
+  draft: { variant: "secondary", label: "Draft" },
+  inactive: { variant: "secondary", label: "Inactive" },
 }
 
-export function StatusBadge({ status, size, className }: StatusBadgeProps) {
-  const variants: Record<
-    typeof status,
-    { variant: BadgeProps["variant"]; label: string }
-  > = {
-    active: { variant: "success", label: "Active" },
-    inactive: { variant: "secondary", label: "Inactive" },
-    pending: { variant: "warning", label: "Pending" },
-    completed: { variant: "success", label: "Completed" },
-    cancelled: { variant: "secondary", label: "Cancelled" },
-    lead: { variant: "default", label: "Lead" },
-    in_stock: { variant: "success", label: "In Stock" },
-    low_stock: { variant: "warning", label: "Low Stock" },
-    out_of_stock: { variant: "error", label: "Out of Stock" },
-    paid: { variant: "success", label: "Paid" },
-    overdue: { variant: "error", label: "Overdue" },
-    on_leave: { variant: "warning", label: "On Leave" },
-  };
-
-  const config = variants[status];
-
+function StatusBadge({ status, className }: { status: string; className?: string }) {
+  const config = STATUS_MAP[status.toLowerCase().replace(/\s+/g, '_')] || {
+    variant: "secondary" as const,
+    label: status,
+  }
   return (
-    <Badge variant={config.variant} size={size} className={className}>
+    <Badge variant={config.variant} dot className={className}>
       {config.label}
     </Badge>
-  );
+  )
 }
 
-interface PriorityBadgeProps {
-  priority: "low" | "medium" | "high" | "urgent";
-  size?: BadgeProps["size"];
-  className?: string;
+const PRIORITY_MAP: Record<string, { variant: BadgeProps["variant"]; label: string }> = {
+  high: { variant: "error", label: "High Priority" },
+  urgent: { variant: "error", label: "Urgent" },
+  medium: { variant: "warning", label: "Medium Priority" },
+  low: { variant: "info", label: "Low Priority" },
+  none: { variant: "secondary", label: "No Priority" },
 }
 
-export function PriorityBadge({
-  priority,
-  size,
-  className,
-}: PriorityBadgeProps) {
-  const variants: Record<
-    typeof priority,
-    { variant: BadgeProps["variant"]; label: string }
-  > = {
-    low: { variant: "secondary", label: "Low" },
-    medium: { variant: "default", label: "Medium" },
-    high: { variant: "warning", label: "High" },
-    urgent: { variant: "error", label: "Urgent" },
-  };
-
-  const config = variants[priority];
-
+function PriorityBadge({ priority, className }: { priority: string; className?: string }) {
+  const config = PRIORITY_MAP[priority.toLowerCase()] || {
+    variant: "secondary" as const,
+    label: priority,
+  }
   return (
-    <Badge variant={config.variant} size={size} className={className}>
+    <Badge variant={config.variant} size="sm" className={cn("uppercase tracking-wide", className)}>
       {config.label}
     </Badge>
-  );
+  )
 }
+
+export { Badge, badgeVariants, StatusBadge, PriorityBadge }

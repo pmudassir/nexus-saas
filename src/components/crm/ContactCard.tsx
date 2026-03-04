@@ -56,7 +56,7 @@ export function ContactCard({
         </div>
 
         <div className="flex items-center gap-2">
-          <StatusBadge status={status} size="sm" />
+          <StatusBadge status={status} />
           <DropdownMenu>
             <DropdownMenuTrigger className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-slate-100 rounded text-slate-400 hover:text-slate-600">
               <MoreVertical className="h-4 w-4" />

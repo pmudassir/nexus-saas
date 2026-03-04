@@ -156,7 +156,7 @@ export function TaskCard({
         </div>
 
         <div className="flex items-center gap-2">
-          <PriorityBadge priority={priorityMap[priority]} size="sm" />
+          <PriorityBadge priority={priorityMap[priority]} />
           {assignees.length > 0 && (
             <AvatarStack avatars={assignees} max={3} size="xs" />
           )}

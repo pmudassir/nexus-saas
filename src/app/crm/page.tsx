@@ -3,16 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar } from "@/components/ui/avatar";
 import {
-  Plus,
-  Users,
-  UserCheck,
-  UserPlus,
-  Mail,
-  Phone,
   MoreVertical,
-  Building2,
-  Search,
-  Filter
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -76,30 +67,32 @@ export default async function CRMPage() {
           </div>
           <div className="flex items-center gap-3">
              <Link href="/crm/leads">
-               <Button variant="outline" className="rounded-full shadow-soft hover:bg-gray-50 border-gray-200">
-                 <Users className="h-4 w-4 mr-2" /> Leads
+               <Button variant="outline">
+                 <span className="material-symbols-outlined text-lg mr-2">group</span> Leads
                </Button>
              </Link>
              <Link href="/crm/today">
-               <Button variant="outline" className="rounded-full shadow-soft hover:bg-gray-50 border-gray-200">
-                 <Phone className="h-4 w-4 mr-2" /> Follow-ups
+               <Button variant="outline">
+                 <span className="material-symbols-outlined text-lg mr-2">call</span> Follow-ups
                </Button>
              </Link>
              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                  <span className="material-symbols-outlined text-lg">search</span>
+                </span>
                 <input 
                   type="text" 
                   placeholder="Search contacts..." 
-                  className="pl-9 pr-4 py-2.5 rounded-full bg-white border border-transparent shadow-soft text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/20 w-64"
+                  className="pl-10 pr-4 py-2.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#e9590c]/20 w-64 text-slate-900 dark:text-slate-100"
                 />
              </div>
              <Dialog>
                <DialogTrigger asChild>
-                  <Button className="rounded-full bg-black text-white px-6 h-11 shadow-lg hover:bg-gray-800 transition-all font-medium">
-                    <Plus className="h-4 w-4 mr-2" /> Add Contact
+                  <Button>
+                    <span className="material-symbols-outlined text-lg mr-2">person_add</span> Add Contact
                   </Button>
                </DialogTrigger>
-               <DialogContent className="sm:max-w-[500px] rounded-3xl p-6">
+               <DialogContent className="sm:max-w-[500px]">
                   <DialogHeader>
                     <DialogTitle className="text-2xl font-bold font-display">Add New Contact</DialogTitle>
                   </DialogHeader>
@@ -132,8 +125,8 @@ export default async function CRMPage() {
                     </div>
 
                     <div className="flex justify-end mt-4">
-                      <Button type="submit" className="rounded-full bg-orange-600 hover:bg-orange-700 text-white px-8">
-                        <UserPlus className="h-4 w-4 mr-2" /> Save Contact
+                      <Button type="submit">
+                        <span className="material-symbols-outlined text-lg mr-2">person_add</span> Save Contact
                       </Button>
                     </div>
                   </form>
@@ -144,53 +137,53 @@ export default async function CRMPage() {
 
         {/* Stats */}
         <div className="grid gap-6 md:grid-cols-3">
-          <div className="bg-white rounded-3xl p-6 shadow-soft flex items-center justify-between group hover:shadow-soft-lg transition-all">
+          <div className="bg-white dark:bg-[#24272d] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-shadow">
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center">
-                <Users className="h-6 w-6" />
+              <div className="p-2.5 rounded-lg bg-[#e9590c]/10 text-[#e9590c]">
+                <span className="material-symbols-outlined">contacts</span>
               </div>
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Total Contacts</p>
-                <h3 className="text-3xl font-bold font-display text-foreground mt-1">
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Total Contacts</p>
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-1">
                   {totalContacts}
                 </h3>
               </div>
             </div>
           </div>
           
-          <div className="bg-white rounded-3xl p-6 shadow-soft flex items-center justify-between group hover:shadow-soft-lg transition-all">
+          <div className="bg-white dark:bg-[#24272d] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-shadow">
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                <UserCheck className="h-6 w-6" />
+              <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-500">
+                <span className="material-symbols-outlined">how_to_reg</span>
               </div>
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Active Clients</p>
-                <h3 className="text-3xl font-bold font-display text-foreground mt-1">
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Active Clients</p>
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-1">
                   {activeContacts}
                 </h3>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl p-6 shadow-soft flex items-center justify-between group hover:shadow-soft-lg transition-all">
+          <div className="bg-white dark:bg-[#24272d] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-shadow">
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
-                <UserPlus className="h-6 w-6" />
+              <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-500">
+                <span className="material-symbols-outlined">person_search</span>
               </div>
               <div>
-                <p className="text-sm font-medium text-muted-foreground">New Leads</p>
-                <h3 className="text-3xl font-bold font-display text-foreground mt-1">{leads}</h3>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">New Leads</p>
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-1">{leads}</h3>
               </div>
             </div>
           </div>
         </div>
 
         {/* Contact Grid */}
-        <div className="bg-white rounded-4xl p-8 shadow-soft border border-gray-100 min-h-[500px]">
+        <div className="bg-white dark:bg-[#24272d] rounded-xl p-8 shadow-sm border border-slate-100 dark:border-slate-800 min-h-[500px]">
            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-bold font-display">All Contacts</h2>
-              <button className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors bg-gray-50 px-4 py-2 rounded-full">
-                 <Filter className="h-4 w-4" /> Filter
+              <h2 className="text-xl font-bold font-display text-slate-900 dark:text-white">All Contacts</h2>
+              <button className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors bg-slate-50 dark:bg-slate-800 px-4 py-2 rounded-full">
+                 <span className="material-symbols-outlined text-lg">filter_list</span> Filter
               </button>
            </div>
            
@@ -198,7 +191,7 @@ export default async function CRMPage() {
             {contacts.map((contact) => (
               <div
                 key={contact.id}
-                className="group relative bg-white border border-gray-100 hover:border-orange-200 hover:shadow-soft-lg p-5 rounded-3xl transition-all duration-300"
+                className="group relative bg-white dark:bg-[#24272d] border border-slate-100 dark:border-slate-800 hover:border-[#e9590c]/30 hover:shadow-md p-5 rounded-xl transition-all duration-300"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
@@ -255,8 +248,8 @@ export default async function CRMPage() {
                 </div>
 
                 {/* Company */}
-                <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground mb-4 bg-gray-50 w-fit px-3 py-1.5 rounded-full">
-                  <Building2 className="h-3 w-3" />
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400 mb-4 bg-slate-50 dark:bg-slate-800 w-fit px-3 py-1.5 rounded-full">
+                  <span className="material-symbols-outlined text-sm">domain</span>
                   <span>{contact.company || "No Company"}</span>
                 </div>
 
@@ -264,10 +257,10 @@ export default async function CRMPage() {
                 <div className="flex flex-col gap-2.5 mb-4">
                   <a
                     href={`mailto:${contact.email}`}
-                    className="flex items-center gap-2.5 text-sm text-foreground hover:text-orange-600 transition-colors group/link p-2 rounded-xl hover:bg-orange-50"
+                    className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300 hover:text-[#e9590c] transition-colors group/link p-2 rounded-xl hover:bg-[#e9590c]/5"
                   >
-                    <div className="h-6 w-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 group-hover/link:bg-orange-200 group-hover/link:text-orange-700 transition-colors">
-                        <Mail className="h-3 w-3 shrink-0" />
+                    <div className="h-6 w-6 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 group-hover/link:bg-[#e9590c]/20 group-hover/link:text-[#e9590c] transition-colors">
+                        <span className="material-symbols-outlined text-sm">mail</span>
                     </div>
                     <span className="truncate font-medium">
                       {contact.email}
@@ -276,10 +269,10 @@ export default async function CRMPage() {
                   {contact.phone && (
                       <a
                         href={`tel:${contact.phone}`}
-                        className="flex items-center gap-2.5 text-sm text-foreground hover:text-orange-600 transition-colors group/link p-2 rounded-xl hover:bg-orange-50"
+                        className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300 hover:text-[#e9590c] transition-colors group/link p-2 rounded-xl hover:bg-[#e9590c]/5"
                       >
-                        <div className="h-6 w-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 group-hover/link:bg-orange-200 group-hover/link:text-orange-700 transition-colors">
-                            <Phone className="h-3 w-3 shrink-0" />
+                        <div className="h-6 w-6 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 group-hover/link:bg-[#e9590c]/20 group-hover/link:text-[#e9590c] transition-colors">
+                            <span className="material-symbols-outlined text-sm">call</span>
                         </div>
                         <span className="font-medium">
                           {contact.phone}
@@ -290,7 +283,7 @@ export default async function CRMPage() {
 
                 {/* Footer */}
                 <div className="absolute bottom-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity">
-                   <Button size="sm" className="rounded-full h-8 px-4 text-xs font-bold bg-black hover:bg-gray-800 text-white shadow-md">View Profile</Button> 
+                   <Button size="sm">View Profile</Button> 
                 </div>
               </div>
             ))}

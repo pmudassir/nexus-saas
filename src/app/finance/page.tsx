@@ -3,16 +3,7 @@ import { Shell } from "@/components/layout/Shell";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
-  DollarSign,
-  TrendingUp,
-  TrendingDown,
-  FileText,
-  Download,
-  Plus,
   MoreVertical,
-  PieChart,
-  Filter,
-  ArrowUpRight
 } from "lucide-react";
 import { StatusBadge } from "@/components/ui/badge";
 import {
@@ -75,26 +66,26 @@ export default async function FinancePage() {
             </div>
           <div className="flex items-center gap-3">
               <Link href="/finance/invoices">
-                <Button variant="outline" className="rounded-full shadow-soft hover:bg-gray-50 border-gray-200">
-                  <FileText className="mr-2 h-4 w-4" />
+                <Button variant="outline">
+                  <span className="material-symbols-outlined text-lg mr-2">description</span>
                   Invoices
                 </Button>
               </Link>
               <Link href="/finance/expenses">
-                <Button variant="outline" className="rounded-full shadow-soft hover:bg-gray-50 border-gray-200">
-                  <TrendingDown className="mr-2 h-4 w-4" />
+                <Button variant="outline">
+                  <span className="material-symbols-outlined text-lg mr-2">trending_down</span>
                   Expenses
                 </Button>
               </Link>
               <Link href="/finance/reports">
-                <Button variant="outline" className="rounded-full shadow-soft hover:bg-gray-50 border-gray-200">
-                  <Download className="mr-2 h-4 w-4" />
+                <Button variant="outline">
+                  <span className="material-symbols-outlined text-lg mr-2">download</span>
                   Reports
                 </Button>
               </Link>
               <Link href="/finance/invoices/new">
-                <Button className="rounded-full bg-black text-white px-6 h-11 shadow-lg hover:bg-gray-800 transition-all font-medium">
-                  <Plus className="mr-2 h-4 w-4" />
+                <Button>
+                  <span className="material-symbols-outlined text-lg mr-2">add</span>
                   New Invoice
                 </Button>
               </Link>
@@ -103,81 +94,73 @@ export default async function FinancePage() {
 
         {/* Stats Cards */}
         <div className="grid gap-6 md:grid-cols-4">
-            <div className="bg-white rounded-3xl p-6 shadow-soft flex flex-col justify-between group hover:shadow-soft-lg transition-all relative overflow-hidden">
-                <div className="flex items-center justify-between mb-4 relative z-10">
-                    <div className="h-10 w-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                        <DollarSign className="h-5 w-5" />
+            <div className="bg-white dark:bg-[#24272d] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-4">
+                    <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-500">
+                        <span className="material-symbols-outlined">payments</span>
                     </div>
-                    <span className="flex items-center text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
-                        <ArrowUpRight className="h-3 w-3 mr-1" /> +12%
+                    <span className="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2.5 py-1 rounded-full">
+                        +12%
                     </span>
                 </div>
-                <div className="relative z-10">
-                    <p className="text-sm font-medium text-muted-foreground">Total Revenue</p>
-                    <h3 className="text-2xl font-bold font-display text-foreground mt-1">{formatCurrency(totalRevenue)}</h3>
-                </div>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Total Revenue</p>
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-1">{formatCurrency(totalRevenue)}</h3>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 shadow-soft flex flex-col justify-between group hover:shadow-soft-lg transition-all relative overflow-hidden">
-                <div className="flex items-center justify-between mb-4 relative z-10">
-                    <div className="h-10 w-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center">
-                        <TrendingDown className="h-5 w-5" />
+            <div className="bg-white dark:bg-[#24272d] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-4">
+                    <div className="p-2.5 rounded-lg bg-rose-500/10 text-rose-500">
+                        <span className="material-symbols-outlined">trending_down</span>
                     </div>
-                    <span className="flex items-center text-xs font-bold text-rose-600 bg-rose-50 px-2 py-1 rounded-full">
-                        <ArrowUpRight className="h-3 w-3 mr-1" /> +5%
+                    <span className="text-xs font-bold text-rose-600 bg-rose-50 dark:bg-rose-900/20 px-2.5 py-1 rounded-full">
+                        +5%
                     </span>
                 </div>
-                <div className="relative z-10">
-                    <p className="text-sm font-medium text-muted-foreground">Total Expenses</p>
-                    <h3 className="text-2xl font-bold font-display text-foreground mt-1">{formatCurrency(totalExpenses)}</h3>
-                </div>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Total Expenses</p>
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-1">{formatCurrency(totalExpenses)}</h3>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 shadow-soft flex flex-col justify-between group hover:shadow-soft-lg transition-all relative overflow-hidden">
-                <div className="flex items-center justify-between mb-4 relative z-10">
-                    <div className="h-10 w-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center">
-                        <FileText className="h-5 w-5" />
+            <div className="bg-white dark:bg-[#24272d] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-4">
+                    <div className="p-2.5 rounded-lg bg-amber-500/10 text-amber-500">
+                        <span className="material-symbols-outlined">pending_actions</span>
                     </div>
-                    <span className="flex items-center text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-full">
+                    <span className="text-xs font-bold text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-2.5 py-1 rounded-full">
                          {invoices.filter((inv) => inv.status.toUpperCase() === "PENDING").length} Pending
                     </span>
                 </div>
-                <div className="relative z-10">
-                    <p className="text-sm font-medium text-muted-foreground">Pending Invoices</p>
-                    <h3 className="text-2xl font-bold font-display text-foreground mt-1">{formatCurrency(pendingInvoicesTotal)}</h3>
-                </div>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Pending Invoices</p>
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-1">{formatCurrency(pendingInvoicesTotal)}</h3>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 shadow-soft flex flex-col justify-between group hover:shadow-soft-lg transition-all relative overflow-hidden">
-                <div className="flex items-center justify-between mb-4 relative z-10">
-                    <div className="h-10 w-10 rounded-full bg-black/5 text-foreground flex items-center justify-center">
-                        <PieChart className="h-5 w-5" />
+            <div className="bg-white dark:bg-[#24272d] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-4">
+                    <div className="p-2.5 rounded-lg bg-teal-500/10 text-teal-500">
+                        <span className="material-symbols-outlined">donut_large</span>
                     </div>
-                    <span className="flex items-center text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
-                        <TrendingUp className="h-3 w-3 mr-1" /> Profit
+                    <span className="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2.5 py-1 rounded-full">
+                        Profit
                     </span>
                 </div>
-                <div className="relative z-10">
-                    <p className="text-sm font-medium text-muted-foreground">Net Profit</p>
-                    <h3 className="text-2xl font-bold font-display text-foreground mt-1">{formatCurrency(netProfit)}</h3>
-                </div>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Net Profit</p>
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-1">{formatCurrency(netProfit)}</h3>
             </div>
         </div>
 
         {/* Recent Invoices */}
-        <div className="bg-white rounded-4xl p-8 shadow-soft border border-gray-100 min-h-[500px]">
+        <div className="bg-white dark:bg-[#24272d] rounded-xl p-8 shadow-sm border border-slate-100 dark:border-slate-800 min-h-[500px]">
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-bold font-display">Recent Invoices</h2>
+              <h2 className="text-xl font-bold font-display text-slate-900 dark:text-white">Recent Invoices</h2>
               <div className="flex gap-2">
-                  <button className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors bg-gray-50 px-4 py-2 rounded-full">
-                     <Filter className="h-4 w-4" /> Filter
+                  <button className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors bg-slate-50 dark:bg-slate-800 px-4 py-2 rounded-full">
+                     <span className="material-symbols-outlined text-lg">filter_list</span> Filter
                   </button>
-                  <Button variant="ghost" className="rounded-full hover:bg-gray-100">View All</Button>
+                  <Button variant="ghost">View All</Button>
               </div>
             </div>
             
             <div className="w-full">
-                <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50/80 rounded-2xl mb-4 text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl mb-4 text-xs font-bold text-slate-400 uppercase tracking-wider">
                    <div className="col-span-2">ID</div>
                    <div className="col-span-3">Client</div>
                    <div className="col-span-2">Amount</div>
@@ -190,7 +173,7 @@ export default async function FinancePage() {
                   {invoices.map((invoice) => {
                     const statusLower = invoice.status.toLowerCase() as "paid" | "overdue" | "pending";
                     return (
-                        <div key={invoice.id} className="grid grid-cols-12 gap-4 px-6 py-5 bg-white hover:bg-gray-50/50 border border-gray-100 hover:border-gray-200 rounded-3xl transition-all items-center group">
+                        <div key={invoice.id} className="grid grid-cols-12 gap-4 px-6 py-5 bg-white dark:bg-[#24272d] hover:bg-slate-50 dark:hover:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 rounded-xl transition-all items-center group">
                             <div className="col-span-2 font-mono text-xs font-bold text-foreground">
                                 {invoice.invoiceNumber}
                             </div>
@@ -204,7 +187,7 @@ export default async function FinancePage() {
                                 {format(invoice.createdAt, "MMM d, yyyy")}
                             </div>
                             <div className="col-span-2">
-                                <StatusBadge status={statusLower} size="sm" />
+                                <StatusBadge status={statusLower} />
                             </div>
                             <div className="col-span-1 text-right">
                                 <DropdownMenu>

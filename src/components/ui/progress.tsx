@@ -1,135 +1,125 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
+"use client"
 
-interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
-  value?: number;
-  max?: number;
-  showLabel?: boolean;
-  size?: "sm" | "md" | "lg";
-  variant?: "default" | "success" | "warning" | "error" | "info";
+import * as React from "react"
+import { cn } from "@/lib/utils"
+import { cva, type VariantProps } from "class-variance-authority"
+
+/* ── Linear Progress ── */
+
+const progressVariants = cva("h-full rounded-full transition-all duration-500", {
+  variants: {
+    variant: {
+      default: "bg-[#e9590c]",
+      success: "bg-emerald-500",
+      warning: "bg-amber-500",
+      error: "bg-rose-500",
+      info: "bg-sky-500",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
+
+interface ProgressProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof progressVariants> {
+  value?: number
+  max?: number
+  showLabel?: boolean
+  size?: "sm" | "default" | "lg"
 }
 
-const sizeClasses = {
-  sm: "h-1.5",
-  md: "h-2.5",
-  lg: "h-4",
-};
+const sizeMap = {
+  sm: "h-1",
+  default: "h-1.5",
+  lg: "h-2.5",
+}
 
-const variantClasses = {
-  default: "bg-primary",
-  success: "bg-success",
-  warning: "bg-warning",
-  error: "bg-error",
-  info: "bg-info",
-};
+const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
+  ({ className, value = 0, max = 100, variant, showLabel, size = "default", ...props }, ref) => {
+    const percentage = Math.min(100, Math.max(0, (value / max) * 100))
 
-export function Progress({
+    return (
+      <div className={cn("w-full", className)} ref={ref} {...props}>
+        {showLabel && (
+          <div className="flex justify-between text-[10px] font-bold text-slate-400 uppercase mb-1">
+            <span>Progress</span>
+            <span>{Math.round(percentage)}%</span>
+          </div>
+        )}
+        <div className={cn("w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden", sizeMap[size])}>
+          <div
+            className={cn(progressVariants({ variant }))}
+            style={{ width: `${percentage}%` }}
+          />
+        </div>
+      </div>
+    )
+  }
+)
+Progress.displayName = "Progress"
+
+/* ── Circular Progress ── */
+
+interface CircularProgressProps extends React.HTMLAttributes<HTMLDivElement> {
+  value?: number
+  max?: number
+  size?: number
+  strokeWidth?: number
+  variant?: "default" | "success" | "warning" | "error"
+  showValue?: boolean
+}
+
+const circularColorMap = {
+  default: "text-[#e9590c]",
+  success: "text-emerald-500",
+  warning: "text-amber-500",
+  error: "text-rose-500",
+}
+
+function CircularProgress({
   value = 0,
   max = 100,
-  showLabel = false,
-  size = "md",
+  size = 128,
+  strokeWidth = 3,
   variant = "default",
+  showValue = true,
   className,
   ...props
-}: ProgressProps) {
-  const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
-
-  return (
-    <div className={cn("w-full", className)} {...props}>
-      {showLabel && (
-        <div className="flex items-center justify-between mb-1 text-sm text-muted-foreground">
-          <span>Progress</span>
-          <span className="font-medium">{Math.round(percentage)}%</span>
-        </div>
-      )}
-      <div
-        className={cn(
-          "relative w-full overflow-hidden rounded-full bg-muted",
-          sizeClasses[size]
-        )}
-      >
-        <div
-          className={cn(
-            "h-full rounded-full transition-all duration-500 ease-out",
-            variantClasses[variant]
-          )}
-          style={{ width: `${percentage}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
-interface CircularProgressProps {
-  value?: number;
-  max?: number;
-  size?: number;
-  strokeWidth?: number;
-  showLabel?: boolean;
-  variant?: "default" | "success" | "warning" | "error" | "info";
-  className?: string;
-}
-
-export function CircularProgress({
-  value = 0,
-  max = 100,
-  size = 120,
-  strokeWidth = 8,
-  showLabel = true,
-  variant = "default",
-  className,
 }: CircularProgressProps) {
-  const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
-  const radius = (size - strokeWidth) / 2;
-  const circumference = radius * 2 * Math.PI;
-  const offset = circumference - (percentage / 100) * circumference;
-
-  const variantColors = {
-    default: "text-primary",
-    success: "text-success",
-    warning: "text-warning",
-    error: "text-error",
-    info: "text-info",
-  };
+  const percentage = Math.min(100, Math.max(0, (value / max) * 100))
+  const radius = 15.9155
+  const circumference = 2 * Math.PI * radius
 
   return (
-    <div
-      className={cn(
-        "relative inline-flex items-center justify-center",
-        className
-      )}
-    >
-      <svg width={size} height={size} className="transform -rotate-90">
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          stroke="currentColor"
-          strokeWidth={strokeWidth}
+    <div className={cn("relative", className)} style={{ width: size, height: size }} {...props}>
+      <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+        <path
+          className="text-slate-200 dark:text-slate-800"
+          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
           fill="none"
-          className="text-muted"
+          stroke="currentColor"
+          strokeDasharray="100, 100"
+          strokeWidth={strokeWidth}
         />
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          stroke="currentColor"
-          strokeWidth={strokeWidth}
+        <path
+          className={circularColorMap[variant]}
+          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
           fill="none"
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
+          stroke="currentColor"
+          strokeDasharray={`${percentage}, 100`}
           strokeLinecap="round"
-          className={cn(
-            "transition-all duration-500 ease-out",
-            variantColors[variant]
-          )}
+          strokeWidth={strokeWidth}
         />
       </svg>
-      {showLabel && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-2xl font-bold">{Math.round(percentage)}%</span>
+      {showValue && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-2xl font-bold dark:text-white">{Math.round(percentage)}%</span>
         </div>
       )}
     </div>
-  );
+  )
 }
+
+export { Progress, CircularProgress }
