@@ -1,7 +1,6 @@
 import { Shell } from '@/components/layout/Shell';
 import { requireTenantMembership } from '@/lib/tenant-auth';
 import { prisma } from '@/lib/prisma';
-import { Users, Calendar, DollarSign, Clock, ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function HRDashboard() {
@@ -18,15 +17,15 @@ export default async function HRDashboard() {
   ]);
 
   const stats = [
-    { name: 'Total Employees', value: employees, icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
-    { name: 'Pending Leaves', value: leaveRequests, icon: Calendar, color: 'text-amber-600', bg: 'bg-amber-50' },
-    { name: 'Clocked In', value: todayAttendance, icon: Clock, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+    { name: 'Total Employees', value: employees, icon: 'group', color: 'text-blue-600', bg: 'bg-blue-500/10' },
+    { name: 'Pending Leaves', value: leaveRequests, icon: 'event_busy', color: 'text-amber-600', bg: 'bg-amber-500/10' },
+    { name: 'Clocked In', value: todayAttendance, icon: 'schedule', color: 'text-emerald-600', bg: 'bg-emerald-500/10' },
   ];
 
   const modules = [
-    { name: 'Leave Management', href: '/hr/leave', description: 'Manage leave requests and approvals', icon: Calendar },
-    { name: 'Attendance Tracking', href: '/hr/attendance', description: 'Clock in/out and overtime tracking', icon: Clock },
-    { name: 'Payroll Processing', href: '/hr/payroll', description: 'Monthly payroll and pay slips', icon: DollarSign },
+    { name: 'Leave Management', href: '/hr/leave', description: 'Manage leave requests and approvals', icon: 'event_available' },
+    { name: 'Attendance Tracking', href: '/hr/attendance', description: 'Clock in/out and overtime tracking', icon: 'schedule' },
+    { name: 'Payroll Processing', href: '/hr/payroll', description: 'Monthly payroll and pay slips', icon: 'payments' },
   ];
 
   return (
@@ -45,36 +44,36 @@ export default async function HRDashboard() {
 
         <div className="grid gap-6 md:grid-cols-3">
           {stats.map((stat) => (
-             <div key={stat.name} className="bg-white rounded-3xl p-6 shadow-soft flex flex-col justify-between group hover:shadow-soft-lg transition-all relative overflow-hidden">
-                <div className="flex items-center justify-between mb-4 relative z-10">
-                    <div className={`h-12 w-12 rounded-2xl ${stat.bg} ${stat.color} flex items-center justify-center`}>
-                        <stat.icon className="w-6 h-6" />
+             <div key={stat.name} className="bg-white dark:bg-[#24272d] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-4">
+                    <div className={`p-2.5 rounded-lg ${stat.bg} ${stat.color}`}>
+                        <span className="material-symbols-outlined">{stat.icon}</span>
                     </div>
                     <span className={`flex items-center text-xs font-bold ${stat.color} ${stat.bg} px-2 py-1 rounded-full`}>
-                        <ArrowUpRight className="h-3 w-3 mr-1" /> View
+                        <span className="material-symbols-outlined text-xs mr-1">north_east</span> View
                     </span>
                 </div>
-                <div className="relative z-10">
-                    <p className="text-sm font-medium text-muted-foreground">{stat.name}</p>
-                    <h3 className="text-3xl font-bold font-display text-foreground mt-1">{stat.value}</h3>
+                <div>
+                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{stat.name}</p>
+                    <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-1">{stat.value}</h3>
                 </div>
             </div>
           ))}
         </div>
 
-        <div className="bg-white rounded-4xl p-8 shadow-soft border border-gray-100">
+        <div className="bg-white dark:bg-[#24272d] rounded-xl p-8 shadow-sm border border-slate-100 dark:border-slate-800">
            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-bold font-display">HR Modules</h2>
+              <h2 className="text-xl font-bold font-display text-slate-900 dark:text-white">HR Modules</h2>
            </div>
            <div className="grid gap-6 md:grid-cols-3">
               {modules.map((module) => (
                 <Link key={module.name} href={module.href} className="group">
-                  <div className="h-full bg-gray-50 hover:bg-white border border-gray-100 hover:border-orange-200 rounded-3xl p-6 transition-all hover:shadow-soft flex flex-col items-center text-center cursor-pointer">
-                    <div className="h-14 w-14 rounded-2xl bg-white shadow-sm flex items-center justify-center text-orange-600 mb-4 group-hover:scale-110 transition-transform">
-                        <module.icon className="w-7 h-7" />
+                  <div className="h-full bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-[#24272d] border border-slate-100 dark:border-slate-700 hover:border-[#e9590c]/30 rounded-xl p-6 transition-all hover:shadow-md flex flex-col items-center text-center cursor-pointer">
+                    <div className="h-14 w-14 rounded-xl bg-white dark:bg-slate-700 shadow-sm flex items-center justify-center text-[#e9590c] mb-4 group-hover:scale-110 transition-transform">
+                        <span className="material-symbols-outlined text-2xl">{module.icon}</span>
                     </div>
-                    <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-orange-600 transition-colors">{module.name}</h3>
-                    <p className="text-sm font-medium text-muted-foreground">{module.description}</p>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-[#e9590c] transition-colors">{module.name}</h3>
+                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{module.description}</p>
                   </div>
                 </Link>
               ))}

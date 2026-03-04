@@ -7,13 +7,6 @@ import { FEATURES } from "@/lib/features";
 import Link from "next/link";
 import {
   Users,
-  Building2,
-  DollarSign,
-  CreditCard,
-  Settings,
-  ToggleRight,
-  ArrowUpRight,
-  Shield,
 } from "lucide-react";
 import type {
   Plan,
@@ -69,38 +62,41 @@ export default async function AdminPage() {
     t.subscriptions.some((s) => s.status === "ACTIVE")
   ).length;
 
+  const iconMap: Record<string, string> = {
+    "Total Tenants": "domain",
+    "Total Users": "group",
+    "Monthly Revenue": "payments",
+    "Active Plans": "credit_card",
+  };
+
   const stats = [
     {
       label: "Total Tenants",
       value: totalTenants,
       sub: `${activeTenants} active`,
-      icon: Building2,
       color: "text-blue-600",
-      bg: "bg-blue-50",
+      bg: "bg-blue-500/10",
     },
     {
       label: "Total Users",
       value: totalUsers,
       sub: "across all tenants",
-      icon: Users,
       color: "text-emerald-600",
-      bg: "bg-emerald-50",
+      bg: "bg-emerald-500/10",
     },
     {
       label: "Monthly Revenue",
       value: `$${(mrr / 100).toLocaleString()}`,
       sub: `${activeSubscriptions} subscriptions`,
-      icon: DollarSign,
-      color: "text-orange-600",
-      bg: "bg-orange-50",
+      color: "text-[#e9590c]",
+      bg: "bg-[#e9590c]/10",
     },
     {
       label: "Active Plans",
       value: plans.length,
       sub: "subscription tiers",
-      icon: CreditCard,
       color: "text-purple-600",
-      bg: "bg-purple-50",
+      bg: "bg-purple-500/10",
     },
   ];
 
@@ -109,30 +105,24 @@ export default async function AdminPage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-display font-bold text-foreground flex items-center gap-3">
-              <Shield className="w-9 h-9" />
+            <h1 className="text-4xl font-display font-bold text-slate-900 dark:text-white flex items-center gap-3">
+              <span className="material-symbols-outlined text-4xl">admin_panel_settings</span>
               Platform Admin
             </h1>
-            <p className="text-muted-foreground mt-2 font-medium">
+            <p className="text-slate-500 dark:text-slate-400 mt-2 font-medium">
               Manage tenants, monitor billing, and control features across the
               platform.
             </p>
           </div>
           <div className="flex items-center gap-3">
             <Link href="/admin/features">
-              <Button
-                variant="ghost"
-                className="rounded-full h-11 px-5 font-medium bg-white shadow-soft hover:shadow-soft-lg"
-              >
-                <ToggleRight className="h-4 w-4 mr-2" /> Features
+              <Button variant="outline">
+                <span className="material-symbols-outlined text-lg mr-2">toggle_on</span> Features
               </Button>
             </Link>
             <Link href="/admin/plans">
-              <Button
-                variant="ghost"
-                className="rounded-full h-11 px-5 font-medium bg-white shadow-soft hover:shadow-soft-lg"
-              >
-                <Settings className="h-4 w-4 mr-2" /> Plans
+              <Button variant="outline">
+                <span className="material-symbols-outlined text-lg mr-2">settings</span> Plans
               </Button>
             </Link>
           </div>
@@ -143,29 +133,29 @@ export default async function AdminPage() {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="bg-white rounded-3xl p-6 shadow-soft flex flex-col justify-between group hover:shadow-soft-lg transition-all relative overflow-hidden"
+              className="bg-white dark:bg-[#24272d] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-shadow"
             >
-              <div className="flex items-center justify-between mb-4 relative z-10">
+              <div className="flex items-center justify-between mb-4">
                 <div
-                  className={`h-12 w-12 rounded-2xl ${stat.bg} ${stat.color} flex items-center justify-center`}
+                  className={`p-2.5 rounded-lg ${stat.bg} ${stat.color}`}
                 >
-                  <stat.icon className="w-6 h-6" />
+                  <span className="material-symbols-outlined">{iconMap[stat.label]}</span>
                 </div>
                 <span
                   className={`flex items-center text-xs font-bold ${stat.color} ${stat.bg} px-2 py-1 rounded-full`}
                 >
-                  <ArrowUpRight className="h-3 w-3 mr-1" />
+                  <span className="material-symbols-outlined text-xs mr-1">north_east</span>
                   View
                 </span>
               </div>
-              <div className="relative z-10">
-                <p className="text-sm font-medium text-muted-foreground">
+              <div>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
                   {stat.label}
                 </p>
-                <h3 className="text-3xl font-bold font-display text-foreground mt-1">
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-1">
                   {stat.value}
                 </h3>
-                <p className="text-xs text-muted-foreground mt-1">{stat.sub}</p>
+                <p className="text-xs text-slate-400 mt-1">{stat.sub}</p>
               </div>
             </div>
           ))}
@@ -175,15 +165,15 @@ export default async function AdminPage() {
         <TenantCreationForm plans={plans} />
 
         {/* Tenants Table */}
-        <div className="bg-white rounded-3xl shadow-soft border border-gray-100 overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="text-lg font-bold font-display">
+        <div className="bg-white dark:bg-[#24272d] rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
+          <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <h2 className="text-lg font-bold font-display text-slate-900 dark:text-white">
               All Tenants ({totalTenants})
             </h2>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-left text-xs font-bold uppercase tracking-wide text-muted-foreground">
+              <thead className="bg-slate-50 dark:bg-slate-800/50 text-left text-xs font-bold uppercase tracking-wide text-slate-400">
                 <tr>
                   <th className="px-6 py-3">Tenant</th>
                   <th className="px-6 py-3">Status</th>
@@ -195,7 +185,7 @@ export default async function AdminPage() {
                   <th className="px-6 py-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100 text-foreground">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
                 {tenants.map((tenant) => {
                   const activeSub = tenant.subscriptions.find(
                     (s) => s.status === "ACTIVE"
@@ -210,14 +200,14 @@ export default async function AdminPage() {
                   return (
                     <tr
                       key={tenant.id}
-                      className="hover:bg-gray-50/80 transition-colors"
+                      className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
                     >
                       <td className="px-6 py-4">
                         <div>
-                          <div className="font-semibold text-foreground">
+                          <div className="font-semibold text-slate-900 dark:text-white">
                             {tenant.name}
                           </div>
-                          <div className="text-xs text-muted-foreground font-mono">
+                          <div className="text-xs text-slate-400 font-mono">
                             {tenant.slug}
                           </div>
                         </div>
@@ -262,7 +252,7 @@ export default async function AdminPage() {
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-muted-foreground text-xs">
+                      <td className="px-6 py-4 text-slate-400 text-xs">
                         {tenant.createdAt.toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 text-right">
@@ -276,9 +266,9 @@ export default async function AdminPage() {
                   <tr>
                     <td
                       colSpan={7}
-                      className="px-6 py-16 text-center text-muted-foreground text-sm"
+                      className="px-6 py-16 text-center text-slate-400 text-sm"
                     >
-                      <Building2 className="w-12 h-12 mx-auto mb-3 text-muted-foreground/30" />
+                      <span className="material-symbols-outlined text-5xl text-slate-200 block mx-auto mb-3">domain</span>
                       No tenants found. Create your first tenant above.
                     </td>
                   </tr>
